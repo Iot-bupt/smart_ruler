@@ -6,8 +6,6 @@ import akka.actor.SupervisorStrategy.Directive;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Function;
-import com.tjlcast.common.message.device.DeviceRecognitionMsg;
-import com.tjlcast.common.message.device.ToDeviceActorNotificationMsg;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.service.ActorService;
 import com.tjlcast.server.actors.service.ContextAwareActor;
@@ -15,7 +13,6 @@ import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.actors.tenant.TenantActor;
 
-import com.tjlcast.server.utils.http.demo.OkHttpUtil;
 import scala.concurrent.duration.Duration;
 
 import java.util.HashMap;
@@ -41,8 +38,22 @@ public class AppActor extends ContextAwareActor {
 
     @Override
     public void onReceive(Object message) throws Throwable {
-        logger.info("appActor receive a msg") ;
         // todo
+//        logger.info("appActor receive a msg") ;
+//
+//        if (message == ActorService.Msg.get) {
+//            try {
+//                String url = "http://www.baidu.com";
+//                String stringFromServer = OkHttpUtil.getStringFromServer(url);
+//                logger.info(stringFromServer);
+//            } catch (Exception e) {
+//                logger.error(e.toString()) ;
+//            }
+//        } else if (message instanceof ToDeviceActorNotificationMsg) {
+//            onToDeviceActorMsg((ToDeviceActorNotificationMsg) message);
+//        } else if (message instanceof DeviceRecognitionMsg) {
+//            getOrCreateTenantActor(((DeviceRecognitionMsg) message).getTenantId()).tell(message,ActorRef.noSender());
+//        }
     }
 
     @Override
@@ -92,7 +103,7 @@ public class AppActor extends ContextAwareActor {
                 }
             }) ;
 
-    private void onToDeviceActorMsg(ToDeviceActorNotificationMsg msg) {
-        getOrCreateTenantActor(msg.getTenantId()).tell(msg, ActorRef.noSender());
-    }
+//    private void onToDeviceActorMsg(ToDeviceActorNotificationMsg msg) {
+//        getOrCreateTenantActor(msg.getTenantId()).tell(msg, ActorRef.noSender());
+//    }
 }
