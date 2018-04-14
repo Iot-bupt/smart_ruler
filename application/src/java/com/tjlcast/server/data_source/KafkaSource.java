@@ -1,0 +1,34 @@
+package com.tjlcast.server.data_source;
+
+import java.util.Properties;
+
+/**
+ * Created by tangjialiang on 2018/4/13.
+ */
+
+public class KafkaSource {
+
+    public static void main(String[] args){
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "192.168.12.65:9092");
+        props.put("group.id", "test");
+        props.put("enable.auto.commit", "true");
+        props.put("auto.commit.interval.ms", "1000");
+        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        final KafkaConsumer<String, String> consumer = new KafkaConsumer<String,String>(props);
+        consumer.subscribe(Arrays.asList("topic-test"),new ConsumerRebalanceListener() {
+            public void onPartitionsRevoked(Collection<TopicPartition> collection) {
+            }
+            public void onPartitionsAssigned(Collection<TopicPartition> collection) {
+                //将偏移设置到最开始
+                consumer.seekToBeginning(collection);
+            }
+        });
+        while (true) {
+            ConsumerRecords<String, String> records = consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records)
+                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+        }
+    }
+}
