@@ -1,6 +1,14 @@
 package com.tjlcast.server.data_source;
 
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
+
+import java.util.Arrays;
 import java.util.Properties;
+import java.util.Collection;
 
 /**
  * Created by tangjialiang on 2018/4/13.
