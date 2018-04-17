@@ -1,18 +1,19 @@
 package com.tjlcast.server.actors.app;
 
 
-import akka.actor.*;
+import akka.actor.ActorRef;
+import akka.actor.OneForOneStrategy;
+import akka.actor.Props;
+import akka.actor.SupervisorStrategy;
 import akka.actor.SupervisorStrategy.Directive;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Function;
 import com.tjlcast.server.actors.ActorSystemContext;
-import com.tjlcast.server.actors.service.ActorService;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.actors.tenant.TenantActor;
-
 import scala.concurrent.duration.Duration;
 
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class AppActor extends ContextAwareActor {
 //            onToDeviceActorMsg((ToDeviceActorNotificationMsg) message);
 //        } else if (message instanceof DeviceRecognitionMsg) {
 //            getOrCreateTenantActor(((DeviceRecognitionMsg) message).getTenantId()).tell(message,ActorRef.noSender());
-//        }
+//        }//TODO get tenant and tenantActor
     }
 
     @Override

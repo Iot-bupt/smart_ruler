@@ -1,10 +1,7 @@
-package com.tjlcast.server.actors.device;
+package com.tjlcast.server.actors.rule;
 
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import com.tjlcast.common.message.device.DeviceRecognitionMsg;
-import com.tjlcast.common.message.device.DeviceShadowMsg;
-import com.tjlcast.common.message.device.ToDeviceActorNotificationMsg;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
@@ -31,9 +28,9 @@ public class RuleActor extends ContextAwareActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
-        if(message instanceof DeviceRecognitionMsg){
-            processor.process((DeviceRecognitionMsg)message);
-        } else if (message instanceof ToDeviceActorNotificationMsg) {
+//        if(message instanceof DeviceRecognitionMsg){
+//            processor.process((DeviceRecognitionMsg)message);
+//        } else if (message instanceof ToDeviceActorNotificationMsg) {
 //            if (msg instanceof DeviceAttributesEventNotificationMsg) {
 //                processor.processAttributesUpdate(context(), (DeviceAttributesEventNotificationMsg) msg);
 //            } else if (msg instanceof ToDeviceRpcRequestPluginMsg) {
@@ -44,10 +41,10 @@ public class RuleActor extends ContextAwareActor {
 //                processor.processNameOrTypeUpdate((DeviceNameOrTypeUpdateMsg) msg);
 //                //TODO modified by cc
 //            }
-            if(message instanceof DeviceShadowMsg){
-                processor.processDeviceShadowMsg((DeviceShadowMsg)message);
-            }
-        }
+//            if(message instanceof DeviceShadowMsg){
+//                processor.processDeviceShadowMsg((DeviceShadowMsg)message);
+//           }
+//        }//TODO filter and process
     }
 
     public static class ActorCreator extends ContextBasedCreator<RuleActor> {

@@ -1,4 +1,4 @@
-package com.tjlcast.server.actors.device;
+package com.tjlcast.server.actors.rule;
 
 import akka.event.LoggingAdapter;
 import com.google.gson.JsonObject;

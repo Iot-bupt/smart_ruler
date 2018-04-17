@@ -9,7 +9,7 @@ import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
-
+import com.tjlcast.server.actors.rule.RuleActor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,12 +25,12 @@ public class TenantActor extends ContextAwareActor {
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
     private final UUID tenantId ;
-    private final Map<UUID, ActorRef> deviceActors ;
+    private final Map<UUID, ActorRef> ruleActors ;
 
     public TenantActor(ActorSystemContext context, UUID tenantId) {
         super(context) ;
         this.tenantId = tenantId;
-        deviceActors = new HashMap<UUID, ActorRef>() ;
+        ruleActors = new HashMap<UUID, ActorRef>() ;
     }
 
     @Override
@@ -42,11 +42,11 @@ public class TenantActor extends ContextAwareActor {
 //        }
     }
 
-    private ActorRef getOrCreateDeviceActor(final UUID deviceId) {
-        return deviceActors.computeIfAbsent(
-                deviceId,
-                k -> context().actorOf(Props.create(new DeviceActor.ActorCreator(systemContext, tenantId, deviceId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
-                        deviceId.toString())
+    private ActorRef getOrCreateDeviceActor(final UUID ruleId) {
+        return ruleActors.computeIfAbsent(
+                ruleId,
+                k -> context().actorOf(Props.create(new RuleActor.ActorCreator(systemContext, tenantId, ruleId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
+                        ruleId.toString())
         ) ;
     }
 
