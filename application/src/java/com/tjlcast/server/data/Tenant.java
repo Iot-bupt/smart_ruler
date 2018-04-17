@@ -1,4 +1,4 @@
-package com.tjlcast.server.dataFromSql;
+package com.tjlcast.server.data;
 
 import javax.persistence.Entity;
 import java.util.UUID;

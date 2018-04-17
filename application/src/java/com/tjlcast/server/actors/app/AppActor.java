@@ -14,6 +14,9 @@ import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.actors.tenant.TenantActor;
+import com.tjlcast.server.data.Device;
+import com.tjlcast.server.message.DeviceRecognitionMsg;
+import com.tjlcast.server.services.DeviceService;
 import scala.concurrent.duration.Duration;
 
 import java.util.HashMap;
@@ -28,6 +31,8 @@ import java.util.UUID;
 
 public class AppActor extends ContextAwareActor {
 
+    private DeviceService deviceService;
+
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
     private final Map<UUID, ActorRef> tenantActors ;
@@ -39,7 +44,14 @@ public class AppActor extends ContextAwareActor {
 
     @Override
     public void onReceive(Object message) throws Throwable {
-        // todo
+        if(message instanceof DeviceRecognitionMsg)
+        {
+            UUID deviceId =((DeviceRecognitionMsg) message).getDeviceId();
+            Device device=deviceService.findDeviceById(deviceId);
+            UUID tenantId=device.getTenantId();
+            getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender());
+        }
+        /**判断为设备验证类型，根据设备获取租户ID，查询租户Actor**/
 //        logger.info("appActor receive a msg") ;
 //
 //        if (message == ActorService.Msg.get) {

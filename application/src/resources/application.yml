@@ -13,6 +13,7 @@ spring:
     username: mysql
     password: mysql
 
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,3 +22,13 @@ spring:
 accsess:
   bind_address: localhost
   bind_port: 8989
+
+mybatis:
+  configuration:
+    cache-enabled: true
+    lazy-loading-enabled: false
+    aggressive-lazy-loading: false
+    multiple-result-sets-enabled: true
+    default-executor-type: reuse
+    default-statement-timeout: 25000
+  type-aliases-package: org.spring.springboot.domain

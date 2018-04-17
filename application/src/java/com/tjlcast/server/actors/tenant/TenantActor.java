@@ -6,12 +6,16 @@ import akka.actor.Props;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import com.tjlcast.server.actors.ActorSystemContext;
+import com.tjlcast.server.actors.rule.RuleActor;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
-import com.tjlcast.server.actors.rule.RuleActor;
+import com.tjlcast.server.data.Rule;
+import com.tjlcast.server.message.DeviceRecognitionMsg;
+import com.tjlcast.server.services.RulerService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,6 +25,7 @@ import java.util.UUID;
  */
 
 public class TenantActor extends ContextAwareActor {
+    private RulerService ruleService;
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
@@ -35,6 +40,14 @@ public class TenantActor extends ContextAwareActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
+        if(message instanceof DeviceRecognitionMsg)
+        {
+            List<Rule> rules=ruleService.findRuleByTenantId(tenantId);
+            for (Rule rule : rules)
+            {
+                getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());
+            }
+        }
 //        if (message instanceof ToDeviceActorNotificationMsg) {
 //            onToDeviceActorMsg((ToDeviceActorNotificationMsg) message);
 //        } else if(message instanceof DeviceRecognitionMsg){
@@ -42,7 +55,7 @@ public class TenantActor extends ContextAwareActor {
 //        }
     }
 
-    private ActorRef getOrCreateDeviceActor(final UUID ruleId) {
+    private ActorRef getOrCreateRuleActor(final UUID ruleId) {
         return ruleActors.computeIfAbsent(
                 ruleId,
                 k -> context().actorOf(Props.create(new RuleActor.ActorCreator(systemContext, tenantId, ruleId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
