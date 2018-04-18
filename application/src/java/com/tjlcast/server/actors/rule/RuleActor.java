@@ -5,6 +5,7 @@ import akka.event.LoggingAdapter;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
+import com.tjlcast.server.message.DeviceRecognitionMsg;
 
 import java.util.UUID;
 
@@ -28,7 +29,9 @@ public class RuleActor extends ContextAwareActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
-//        if(message instanceof DeviceRecognitionMsg){
+        if(message instanceof DeviceRecognitionMsg){
+
+        }
 //            processor.process((DeviceRecognitionMsg)message);
 //        } else if (message instanceof ToDeviceActorNotificationMsg) {
 //            if (msg instanceof DeviceAttributesEventNotificationMsg) {
