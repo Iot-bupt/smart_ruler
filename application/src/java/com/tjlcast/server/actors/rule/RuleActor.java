@@ -35,7 +35,7 @@ public class RuleActor extends ContextAwareActor {
         if(message instanceof DeviceRecognitionMsg){
             NashornTest noshorn=new NashornTest(jsCode, ((DeviceRecognitionMsg) message).getKey(), ((DeviceRecognitionMsg) message).getValue());
             if(noshorn.invokeFunction()){
-                //processor.process((DeviceRecognitionMsg) message);
+                processor.process((DeviceRecognitionMsg) message);
             }
         }
 //            processor.process((DeviceRecognitionMsg)message);
