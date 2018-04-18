@@ -6,6 +6,7 @@ import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
+import com.tjlcast.server.nashorn.NashornTest;
 
 import java.util.UUID;
 
@@ -19,18 +20,23 @@ public class RuleActor extends ContextAwareActor {
     private final UUID tenantId ;
     private final UUID ruleId ;
     private final RuleActorMessageProcessor processor;
+    private final String jsCode;
 
-    private RuleActor(ActorSystemContext context, UUID tenantId, UUID ruleId) {
+    private RuleActor(ActorSystemContext context, UUID tenantId, String jsCode, UUID ruleId) {
         super(context) ;
         this.tenantId = tenantId ;
         this.ruleId = ruleId ;
+        this.jsCode=jsCode;
         this.processor = new RuleActorMessageProcessor(systemContext, logger, ruleId);
     }
 
     @Override
     public void onReceive(Object message) throws Exception {
         if(message instanceof DeviceRecognitionMsg){
-
+            NashornTest noshorn=new NashornTest(jsCode, ((DeviceRecognitionMsg) message).getKey(), ((DeviceRecognitionMsg) message).getValue());
+            if(noshorn.invokeFunction()){
+                //processor.process((DeviceRecognitionMsg) message);
+            }
         }
 //            processor.process((DeviceRecognitionMsg)message);
 //        } else if (message instanceof ToDeviceActorNotificationMsg) {
@@ -55,16 +61,18 @@ public class RuleActor extends ContextAwareActor {
 
         private final UUID tenantId ;
         private final UUID ruleId ;
+        private final String jsCode;
 
-        public ActorCreator(ActorSystemContext context, UUID tenantId, UUID ruleId) {
+        public ActorCreator(ActorSystemContext context, UUID tenantId, String jsCode,UUID ruleId) {
             super(context) ;
             this.tenantId = tenantId ;
             this.ruleId = ruleId ;
+            this.jsCode=jsCode;
         }
 
         @Override
         public RuleActor create() throws Exception {
-            return new RuleActor(context, tenantId, ruleId) ;
+            return new RuleActor(context, tenantId, jsCode, ruleId) ;
         }
     }
 }

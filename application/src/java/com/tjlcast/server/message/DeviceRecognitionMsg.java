@@ -31,6 +31,28 @@ public class DeviceRecognitionMsg implements Serializable{
     public UUID getDeviceId() {
         return deviceId;
     }
+
+    public  String getDeviceName(){
+        return deviceName;
+    }
+
+    public  String getTs()
+    {
+        return ts;
+    }
+
+
+    public String getKey()
+    {
+        return key;
+    }
+
+    public Double getValue()
+    {
+        return  value;
+    }
+
+
     /**
     @Override
     public UUID getTenantId() {

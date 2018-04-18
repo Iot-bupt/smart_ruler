@@ -1,17 +1,17 @@
 package com.tjlcast.server.actors.rule;
 
+
 import akka.event.LoggingAdapter;
-import com.google.gson.JsonObject;
-import com.tjlcast.common.data.DeviceShadow;
-import com.tjlcast.common.message.device.DeviceRecognitionMsg;
-import com.tjlcast.common.message.device.DeviceShadowMsg;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.shared.AbstractContextAwareMsgProcessor;
-import com.tjlcast.server.utils.http.demo.OkHttpUtil;
+import com.tjlcast.server.message.DeviceRecognitionMsg;
+import okhttp3.*;
 import scala.concurrent.duration.Duration;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,7 +24,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
     private final Map<UUID, UUID> attributeSubscriptions;
     private final Map<UUID, UUID> rpcSubscriptions;
 
-   private DeviceShadow deviceShadow;
+   //private DeviceShadow deviceShadow;
 
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId) {
         super(systemContext, logger);
@@ -78,6 +78,28 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
     public void process(DeviceRecognitionMsg msg){
 
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder formBody =new FormBody.Builder();
+        formBody.add("deviceId",msg.getDeviceId().toString());
+        formBody.add("deviceName",msg.getDeviceName());
+        formBody.add("ts",msg.getTs());
+        formBody.add("key",msg.getKey());
+        formBody.add("value",msg.getValue().toString());
+        Request request = new Request.Builder()
+                .url("") //Todo 输入URL
+                .post(formBody.build())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    //Todo something
+                }
+            }
+        });
 //        Device device = systemContext.getDeviceService().findDeviceById(deviceId);
 //        String manufacture = msg.getManufacture();
 //        String deviceType = msg.getDeviceType();
@@ -89,6 +111,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 //        }
     }
 
+    /**
     public void processDeviceShadowMsg(DeviceShadowMsg msg){
         //TODO  deiceactor中处理数据http请求
         JsonObject payLoad = msg.getPayLoad();
@@ -125,4 +148,5 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
             msg.setResult("Unrecognized methodName");
         }
     }
+     **/
 }
