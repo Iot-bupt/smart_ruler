@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `t_ruler`
+-- Table structure for table `t_rule`
 --
 
-DROP TABLE IF EXISTS `t_ruler`;
+DROP TABLE IF EXISTS `t_rule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_ruler` (
+CREATE TABLE `t_rule` (
   `id` varchar(36) NOT NULL,
   `tenantId` varchar(36) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -31,12 +31,12 @@ CREATE TABLE `t_ruler` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_ruler`
+-- Dumping data for table `t_rule`
 --
 
-LOCK TABLES `t_ruler` WRITE;
-/*!40000 ALTER TABLE `t_ruler` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_ruler` ENABLE KEYS */;
+LOCK TABLES `` WRITE;
+/*!40000 ALTER TABLE `t_rule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -13,26 +13,6 @@ spring:
     username: root
     password: 123
 
-  #redis:
-    #host: 10.108.218.64
-    #post:
-    #password:
-    #database:
-    #pool:
-      #max-idle: 8
-      #min-idle: 0
-      #max-active: 8
-      #max-wait: -1
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-accsess:
-  bind_address: localhost
-  bind_port: 8989
-
 mybatis:
   configuration:
     cache-enabled: true

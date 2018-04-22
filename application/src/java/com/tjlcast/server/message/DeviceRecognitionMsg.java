@@ -1,6 +1,6 @@
 package com.tjlcast.server.message;
 
-import lombok.ToString;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -9,7 +9,7 @@ import java.util.UUID;
  * Created by tangjialiang on 2017/12/19.
  */
 
-@ToString
+@Data
 public class DeviceRecognitionMsg implements Serializable{
 
     private final UUID deviceId;
@@ -25,50 +25,4 @@ public class DeviceRecognitionMsg implements Serializable{
         this.ts = ts;
         this.value = value;
     }
-
-
-    //@Override
-    public UUID getDeviceId() {
-        return deviceId;
-    }
-
-    public  String getDeviceName(){
-        return deviceName;
-    }
-
-    public  String getTs()
-    {
-        return ts;
-    }
-
-
-    public String getKey()
-    {
-        return key;
-    }
-
-    public Double getValue()
-    {
-        return  value;
-    }
-
-
-    /**
-    @Override
-    public UUID getTenantId() {
-        return device.getTenantId();
-    }
-
-    public String getManufacture() {
-        return manufacture;
-    }
-
-    public String getDeviceType() {
-        return deviceType;
-    }
-
-    public String getModel() {
-        return model;
-    }
-    **/
 }

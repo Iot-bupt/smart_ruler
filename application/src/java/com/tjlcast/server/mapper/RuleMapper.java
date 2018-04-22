@@ -1,9 +1,8 @@
 package com.tjlcast.server.mapper;
 
+import com.tjlcast.server.data.Device;
 import com.tjlcast.server.data.Rule;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +12,15 @@ import java.util.UUID;
  */
 @Mapper
 public interface RuleMapper {
-    @Select("select * from rule where tenantid= #{tenantId}")
+    @Select("select * from t_rule where id=#{Id}")
+    List<Rule> findRuleById(@Param("Id")UUID id) ;
+
+    @Select("select * from t_rule where tenantid=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")UUID tenantId);
+
+    @Insert("INSERT INTO t_rule(id, tenantId, rulerName) VALUES(#{id}, #{tenantId}, #{rulerName})")
+    int AddARule(Rule rule);
+
+    @Delete("DELETE FROM t_rule WHERE id = #{id}")
+    void removeRule(UUID id);
 }

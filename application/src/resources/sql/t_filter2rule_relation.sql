@@ -19,10 +19,10 @@
 -- Table structure for table `relation`
 --
 
-DROP TABLE IF EXISTS `t_filter2ruler_relation`;
+DROP TABLE IF EXISTS `t_filter2rule_relation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_filter2ruler_relation` (
+CREATE TABLE `t_filter2rule_relation` (
   `ruleId` varchar(36) NOT NULL,
   `filterId` varchar(36) NOT NULL,
   KEY `ruleId` (`ruleId`),
@@ -33,12 +33,12 @@ CREATE TABLE `t_filter2ruler_relation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_filter2ruler_relation`
+-- Dumping data for table `t_filter2rule_relation`
 --
 
-LOCK TABLES `t_filter2ruler_relation` WRITE;
-/*!40000 ALTER TABLE `t_filter2ruler_relation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_filter2ruler_relation` ENABLE KEYS */;
+LOCK TABLES `t_filter2rule_relation` WRITE;
+/*!40000 ALTER TABLE `t_filter2rule_relation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_filter2rule_relation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

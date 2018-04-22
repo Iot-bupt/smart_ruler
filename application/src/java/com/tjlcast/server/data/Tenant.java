@@ -1,29 +1,16 @@
 package com.tjlcast.server.data;
 
-import javax.persistence.Entity;
 import java.util.UUID;
 
 /**
  * Created by hasee on 2018/4/16.
  */
-@Entity
 public class Tenant {
-    private UUID tenantId;
-    private String name;
+    private UUID tenantId;          // Tenant唯一Id
+    private String tenantName;      // Tenant的姓名
 
-    public Tenant(){
-
+    public Tenant(UUID tenantId, String tenantName) {
+        this.tenantId = tenantId;
+        this.tenantName = tenantName;
     }
-
-    public UUID getTenantId()
-    {
-        return tenantId;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-
 }

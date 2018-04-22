@@ -2,6 +2,7 @@ package com.tjlcast.server.data;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -11,14 +12,12 @@ import java.util.UUID;
 public class Rule {
     private UUID id;
     private UUID tenantId;
-    private String name;
-    private String jsCode;
+    private String rulerName;
+    private List<UUID> filters;
 
-    public Rule(UUID id, UUID tenantId, String name, String jsCode){
+    public Rule(UUID id, UUID tenantId, String rulerName, String jsCode){
         this.id=id;
         this.tenantId=tenantId;
-        this.name=name;
-        this.jsCode=jsCode;
-
+        this.rulerName=rulerName;
     }
 }

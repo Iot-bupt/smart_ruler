@@ -10,9 +10,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
  *
  */
 
-//@ComponentScan({"com.tjlcast.transport.netty"})
-//@ComponentScan({"com.tjlcast.transport.akka"})
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class SRApplication {
     public static void main(String[] args) {
         SpringApplication.run(SRApplication.class, args);

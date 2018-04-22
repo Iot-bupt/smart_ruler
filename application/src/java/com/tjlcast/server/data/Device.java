@@ -8,12 +8,12 @@ import java.util.UUID;
  */
 @Data
 public class Device {
-    private UUID id ; // system唯一id
-    private UUID tenantId;
-    private String manufacture;//厂商
-    private String deviceType;//设备
-    private String model;//型号
-    private String parentDeviceId;//父设备id
+    private UUID id ;               // system唯一id (must)
+    private UUID tenantId;          // tenant唯一id (must)
+    private String manufacture;     // 厂商
+    private String deviceType;      // 设备
+    private String model;           // 型号
+    private String parentDeviceId;  // 父设备id
 
     public Device(UUID id, UUID tenantId, String manufacture, String deviceType, String model, String parentDeviceId) {
         this.id = id ;

@@ -1,8 +1,6 @@
 package com.tjlcast.server.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import com.tjlcast.server.data.Device;
 
@@ -13,6 +11,12 @@ import java.util.UUID;
  */
 @Mapper
 public interface DeviceMapper {
-    @Select("select * from device where id = #{id}")
+    @Select("select * from t_device where id = #{id}")
     Device findDeviceById(@Param("id") UUID id );
+
+    @Insert("INSERT INTO t_device(id, tenantId, manufacture, deviceType, model, parentDeviceId) VALUES(#{id}, #{password}, #{tenantId}, #{manufacture}, #{deviceType}, #{model}, #{parentDeviceId})")
+    int insertByDevice(Device device);
+
+    @Delete("DELETE FROM t_device WHERE id = #{id}")
+    void delete(UUID id);
 }
