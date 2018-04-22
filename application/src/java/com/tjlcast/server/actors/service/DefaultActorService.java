@@ -59,11 +59,6 @@ public class DefaultActorService implements ActorService {
         log.info("initializing Actor appActor.") ;
         appActor = system.actorOf(Props.create(new AppActor.ActorCreator(actorContext)).withDispatcher(APP_DISPATCHER_NAME), "appActor") ;
         actorContext.setAppActor(appActor);
-
-        // prepare for sessionManagerActor actors.
-//        log.info("initializing Actor sessionManagerActor.") ;
-//        sessionManagerActor = system.actorOf(Props.create(new SessionManagerActor.ActorCreator(actorContext)).withDispatcher(CORE_DISPATCHER_NAME), "sessionManagerActor") ;
-//        actorContext.setSessionManagerActor(sessionManagerActor);
     }
 
     @PreDestroy

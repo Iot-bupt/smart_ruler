@@ -24,8 +24,6 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
     private final Map<UUID, UUID> attributeSubscriptions;
     private final Map<UUID, UUID> rpcSubscriptions;
 
-   //private DeviceShadow deviceShadow;
-
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId) {
         super(systemContext, logger);
         this.ruleId = ruleId;
@@ -110,43 +108,4 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 //            //TODO send to service midware
 //        }
     }
-
-    /**
-    public void processDeviceShadowMsg(DeviceShadowMsg msg){
-        //TODO  deiceactor中处理数据http请求
-        JsonObject payLoad = msg.getPayLoad();
-        String methodName = null ;
-        if(methodName==null){
-            // to www.baidu.com
-            String response = "bad response" ;
-            try {
-                // first try
-                response = OkHttpUtil.getStringFromServer("http://www.baidu.com");
-            } catch (IOException e) {
-                // second try
-                try {
-                    response = OkHttpUtil.getStringFromServer("http://www.baidu.com");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-            msg.setResult(response);
-        }else if(methodName.equals("get")){
-            msg.setResult(deviceShadow.getPayload().toString());
-        }else if(methodName.equals("updateAttribute")){
-            JsonObject attribute = payLoad.get("attribute").getAsJsonObject();
-            String attributeName = attribute.get("attributeName").getAsString();
-            String attributeValue = attribute.get("attributeValue").getAsString();
-//            KvEntry entry = new StringDataEntry(attributeName,attributeValue);
-//            AttributeKvEntry attr = new BaseAttributeKvEntry(entry,System.currentTimeMillis());
-//            List<AttributeKvEntry> ls = new ArrayList<AttributeKvEntry>();
-//            ls.add(attr);
-//            systemContext.getAttributesService().save(msg.getDeviceId(),"SERVER_SCOPE",ls);
-            deviceShadow.updateAttribute(attribute.get("attributeName").getAsString(),attribute);
-            msg.setResult(deviceShadow.getPayload().toString());
-        }else{
-            msg.setResult("Unrecognized methodName");
-        }
-    }
-     **/
 }

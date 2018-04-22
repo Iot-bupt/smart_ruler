@@ -12,7 +12,7 @@ import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
-import com.tjlcast.server.services.RulerService;
+import com.tjlcast.server.services.RuleService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 
 public class TenantActor extends ContextAwareActor {
-    private RulerService ruleService;
+    private RuleService ruleService;
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 

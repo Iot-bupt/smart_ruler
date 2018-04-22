@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public abstract class TenantService {
+public class TenantService {
 
     // add
 

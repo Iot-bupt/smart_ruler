@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class RulerService {
+public class RuleService {
 
     private RuleMapper ruleMapper;
 

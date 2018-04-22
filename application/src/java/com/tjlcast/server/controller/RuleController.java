@@ -9,26 +9,27 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/api/tenant")
+@RequestMapping("/api/rule")
 @Slf4j
-public class TenantController extends BaseContoller {
+public class RuleController extends BaseContoller {
 
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String addTenant(@RequestBody String jsonStr) {
+    public String addRule(@RequestBody String jsonStr) {
         // todo
-        // 1. decode jsonStr to be a Tenant obj
-        // 2. add a tenant.
+        // 1. decode the jsonStr to be a jsonObj.
+        // 2. add the jsonStr to db.
         return "OK" ;
     }
 
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String deleteTenant(@RequestParam String idStr) {
+    public String removeRule(@RequestParam String id) {
         // todo
-        // 2. remove a tenant.
-        return "Ok" ;
+        // 1. remove the rule in db.
+        return "OK" ;
     }
+
 }
