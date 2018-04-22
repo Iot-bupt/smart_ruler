@@ -48,11 +48,6 @@ public class TenantActor extends ContextAwareActor {
                 getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());
             }
         }
-//        if (message instanceof ToDeviceActorNotificationMsg) {
-//            onToDeviceActorMsg((ToDeviceActorNotificationMsg) message);
-//        } else if(message instanceof DeviceRecognitionMsg){
-//            getOrCreateDeviceActor(((DeviceRecognitionMsg) message).getDeviceId()).tell(message,ActorRef.noSender());
-//        }
     }
 
     private ActorRef getOrCreateRuleActor(final UUID ruleId) {
@@ -78,8 +73,4 @@ public class TenantActor extends ContextAwareActor {
             return new TenantActor(context, tenantId) ;
         }
     }
-
-//    private void onToDeviceActorMsg(ToDeviceActorNotificationMsg msg) {
-//        getOrCreateDeviceActor(msg.getDeviceId()).tell(msg, ActorRef.noSender());
-//    }
 }
