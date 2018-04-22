@@ -1,20 +1,25 @@
 package com.tjlcast.server.data_source;
 
+import com.tjlcast.server.message.DeviceRecognitionMsg;
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.Arrays;
-import java.util.Properties;
 import java.util.Collection;
+import java.util.Properties;
 
 /**
  * Created by tangjialiang on 2018/4/13.
  */
 
 public class KafkaSource {
+
+    private DeviceRecognitionMsg msg;
 
     public static void main(String[] args){
         Properties props = new Properties();
@@ -35,8 +40,12 @@ public class KafkaSource {
         });
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records)
+            for (ConsumerRecord<String, String> record : records) {
                 System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+                JSONObject jsonMsg = JSON.parseObject(record.value());
+                DeviceRecognitionMsg msg=JSONObject.toJavaObject(jsonMsg,DeviceRecognitionMsg.class);
+
+            }
         }
     }
 }

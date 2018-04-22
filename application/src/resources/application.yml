@@ -9,10 +9,20 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.108.227.151/ #jdbc:mysql://localhost:3306/dbgirl_test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
-    username: mysql
-    password: mysql
+    url: jdbc:mysql://10.108.218.108/smart_ruler #jdbc:mysql://localhost:3306/dbgirl_test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    username: root
+    password: 123
 
+  #redis:
+    #host: 10.108.218.64
+    #post:
+    #password:
+    #database:
+    #pool:
+      #max-idle: 8
+      #min-idle: 0
+      #max-active: 8
+      #max-wait: -1
 
   jpa:
     hibernate:

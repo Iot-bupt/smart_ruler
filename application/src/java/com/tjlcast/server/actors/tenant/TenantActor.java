@@ -45,7 +45,7 @@ public class TenantActor extends ContextAwareActor {
             List<Rule> rules=ruleService.findRuleByTenantId(tenantId);
             for (Rule rule : rules)
             {
-                getOrCreateRuleActor(rule.getId(),rule.getJsCode()).tell(message,ActorRef.noSender());
+                getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());
             }
         }
 //        if (message instanceof ToDeviceActorNotificationMsg) {
@@ -55,10 +55,10 @@ public class TenantActor extends ContextAwareActor {
 //        }
     }
 
-    private ActorRef getOrCreateRuleActor(final UUID ruleId, final String jsCode) {
+    private ActorRef getOrCreateRuleActor(final UUID ruleId) {
         return ruleActors.computeIfAbsent(
                 ruleId,
-                k -> context().actorOf(Props.create(new RuleActor.ActorCreator(systemContext, tenantId, jsCode, ruleId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
+                k -> context().actorOf(Props.create(new RuleActor.ActorCreator(systemContext, tenantId, ruleId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
                         ruleId.toString())
         ) ;
     }

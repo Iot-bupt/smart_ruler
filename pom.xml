@@ -40,6 +40,7 @@
         <mysql.version>5.0.4</mysql.version>
         <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
         <mysql-connector>5.1.39</mysql-connector>
+        <fastjson.version>1.2.47</fastjson.version>
     </properties>
 
     <dependencyManagement>
@@ -216,6 +217,11 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
