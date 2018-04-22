@@ -13,5 +13,4 @@ public class ActorAwareController {
 
     @Autowired
     protected ActorService actorService ;
-
 }
