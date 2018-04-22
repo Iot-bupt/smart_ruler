@@ -76,12 +76,12 @@ public class DefaultActorService implements ActorService {
         }
     }
 
-//    @Override
-//    public void onMsg(DeviceRecognitionMsg msg) {
+    //@Override
+//    public void process(DeviceRecognitionMsg msg) {
 //        log.trace("Processing broadcast rpc msg: {}", msg);
 //        appActor.tell(msg, ActorRef.noSender());
 //    }
-//
+
 //    @Override
 //    public void process(SessionAwareMsg msg) {
 //        log.debug("Processing session aware msg: {}", msg);
