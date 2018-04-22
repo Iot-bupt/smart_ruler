@@ -1,5 +1,6 @@
 package com.tjlcast.server.services;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Device;
 import com.tjlcast.server.mapper.DeviceMapper;
@@ -13,6 +14,7 @@ import java.util.UUID;
 /**
  * Created by hasee on 2018/4/17.
  */
+
 @Slf4j
 @Service
 public class DeviceService {
@@ -24,33 +26,41 @@ public class DeviceService {
     }
 
     public boolean addDevice(JsonObject jsonObj) {
-        // todo
-        return false ;
+        Device device = new Gson().fromJson(jsonObj, Device.class) ;
+        return addDevice(device) ;
     }
 
     public boolean addDevice(Device device) {
-        // todo
-        return false ;
+        try {
+            int i = deviceMapper.addDevice(device);
+            return i==1 ? true : false ;
+        } catch (Exception e) {
+            return false ;
+        }
     }
 
     public Device getADevice(UUID id) {
-        // todo
+        deviceMapper.findDeviceById(id) ;
         return null ;
     }
 
-    public Device getDevice(UUID id) {
-        // todo
-        return null ;
+    public List<Device> getAllDevice(UUID id) {
+        try {
+            List<Device> allDeivce = deviceMapper.getAllDeivce();
+            return allDeivce ;
+        } catch (Exception e) {
+            return null ;
+        }
     }
 
-    public List<Device> allDevice() {
-        // todo
-        return null ;
-    }
 
     public boolean removeAllDevice() {
-        // todo
-        return false ;
+        try {
+            deviceMapper.removeAllDevice();
+            return true ;
+        } catch (Exception e) {
+            return false ;
+        }
     }
 
 }

@@ -21,7 +21,7 @@ public class TenantService {
     private TenantMapper tenantMapper ;
 
     // add
-    public boolean addTenan(Tenant tenant) {
+    public boolean addTenant(Tenant tenant) {
         // todo
         return false ;
     }

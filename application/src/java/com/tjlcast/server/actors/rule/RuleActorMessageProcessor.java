@@ -4,7 +4,10 @@ package com.tjlcast.server.actors.rule;
 import akka.event.LoggingAdapter;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.shared.AbstractContextAwareMsgProcessor;
+import com.tjlcast.server.data.Filter;
+import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
+import com.tjlcast.server.nashorn.NashornTest;
 import okhttp3.*;
 import scala.concurrent.duration.Duration;
 
@@ -23,6 +26,8 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
     private final Map<UUID, UUID> sessions;
     private final Map<UUID, UUID> attributeSubscriptions;
     private final Map<UUID, UUID> rpcSubscriptions;
+    private RuleActor belongActor ;
+
 
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId) {
         super(systemContext, logger);
@@ -30,6 +35,17 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         this.sessions = new HashMap<>();
         this.attributeSubscriptions = new HashMap<>();
         this.rpcSubscriptions = new HashMap<>();
+
+        initAttributes();
+    }
+
+    public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId, RuleActor belongActor) {
+        super(systemContext, logger);
+        this.ruleId = ruleId;
+        this.sessions = new HashMap<>();
+        this.attributeSubscriptions = new HashMap<>();
+        this.rpcSubscriptions = new HashMap<>();
+        this.belongActor = belongActor ;
 
         initAttributes();
     }
@@ -107,5 +123,9 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 //            deviceShadow.addProperty("deviceId",device.getId().toString());
 //            //TODO send to service midware
 //        }
+    }
+
+    public void process(FromMsgMiddlerDeviceMsg msg) {
+        // todo
     }
 }

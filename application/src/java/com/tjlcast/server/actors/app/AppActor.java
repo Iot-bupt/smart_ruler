@@ -15,10 +15,12 @@ import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.actors.tenant.TenantActor;
 import com.tjlcast.server.data.Device;
+import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
 import com.tjlcast.server.services.DeviceService;
 import scala.concurrent.duration.Duration;
 
+import javax.persistence.criteria.From;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -44,29 +46,17 @@ public class AppActor extends ContextAwareActor {
 
     @Override
     public void onReceive(Object message) throws Throwable {
-        if(message instanceof DeviceRecognitionMsg)
-        {
+        if(message instanceof DeviceRecognitionMsg) {
+            // not sure.
             UUID deviceId =((DeviceRecognitionMsg) message).getDeviceId();
             Device device=deviceService.findDeviceById(deviceId);
             UUID tenantId=device.getTenantId();
             getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender());
+        } else if (message instanceof FromMsgMiddlerDeviceMsg) {
+            FromMsgMiddlerDeviceMsg mmessage = (FromMsgMiddlerDeviceMsg) message;
+            UUID tenantId = mmessage.getTenantId();
+            getOrCreateTenantActor(tenantId) ;
         }
-        /**判断为设备验证类型，根据设备获取租户ID，查询租户Actor**/
-//        logger.info("appActor receive a msg") ;
-//
-//        if (message == ActorService.Msg.get) {
-//            try {
-//                String url = "http://www.baidu.com";
-//                String stringFromServer = OkHttpUtil.getStringFromServer(url);
-//                logger.info(stringFromServer);
-//            } catch (Exception e) {
-//                logger.error(e.toString()) ;
-//            }
-//        } else if (message instanceof ToDeviceActorNotificationMsg) {
-//            onToDeviceActorMsg((ToDeviceActorNotificationMsg) message);
-//        } else if (message instanceof DeviceRecognitionMsg) {
-//            getOrCreateTenantActor(((DeviceRecognitionMsg) message).getTenantId()).tell(message,ActorRef.noSender());
-//        }//TODO get tenant and tenantActor
     }
 
     @Override
@@ -115,8 +105,4 @@ public class AppActor extends ContextAwareActor {
                     }
                 }
             }) ;
-
-//    private void onToDeviceActorMsg(ToDeviceActorNotificationMsg msg) {
-//        getOrCreateTenantActor(msg.getTenantId()).tell(msg, ActorRef.noSender());
-//    }
 }

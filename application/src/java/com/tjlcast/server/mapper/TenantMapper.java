@@ -1,6 +1,7 @@
 package com.tjlcast.server.mapper;
 
 import com.tjlcast.server.data.Tenant;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

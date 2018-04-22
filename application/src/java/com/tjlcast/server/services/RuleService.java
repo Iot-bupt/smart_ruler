@@ -1,5 +1,6 @@
 package com.tjlcast.server.services;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.mapper.RuleMapper;
@@ -26,39 +27,34 @@ public class RuleService {
 
     // add
     public boolean addRule(Rule rule) {
-        // todo
-        return false ;
-    }
-
-    public boolean addRule(String ruleStr) {
-        // todo
-        return false ;
+        ruleMapper.addARule(rule) ;
+        return true ;
     }
 
     public boolean addRule(JsonObject ruleJson) {
-        // todo
-        return false ;
+        Rule rule = new Gson().fromJson(ruleJson, Rule.class);
+        return addRule(rule) ;
     }
 
     // remove
     public boolean removeAllRule() {
-        // todo
-        return false ;
+        ruleMapper.removeAllRule();
+        return true ;
     }
 
     public boolean removeARule(UUID id) {
-        // todo
-        return false ;
+        ruleMapper.removeRule(id);
+        return true ;
     }
 
     // get
     public List<Rule> getAllRule() {
-        // todo
-        return null ;
+        List<Rule> allRule = ruleMapper.getAllRule();
+        return allRule ;
     }
 
-    public Rule getARule() {
-        // todo
-        return null ;
+    public List<Rule> getARule(UUID id) {
+        List<Rule> ruleById = ruleMapper.findRuleById(id);
+        return ruleById ;
     }
 }

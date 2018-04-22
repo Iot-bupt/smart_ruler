@@ -1,5 +1,6 @@
 package com.tjlcast.server.services;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.mapper.FilterMapper;
@@ -12,6 +13,7 @@ import java.util.UUID;
 /**
  * Created by hasee on 2018/4/22.
  */
+
 @Slf4j
 @Service
 public class FilterService {
@@ -24,37 +26,40 @@ public class FilterService {
     }
 
     public boolean addFilter(JsonObject filterJson) {
-        // todo
-        return false ;
-    }
-
-    public boolean addFilter(String filterStr) {
-        // todo
-        return false ;
+        Filter filter = new Gson().fromJson(filterJson, Filter.class);
+        return addFilter(filter) ;
     }
 
     public boolean addFilter(Filter filter) {
-        // todo
-        return false ;
+        int i = filterMapper.AddAFilter(filter);
+        return i==1 ? true : false ;
     }
 
     public boolean removeAll() {
-        // todo
-        return false ;
+        try {
+            filterMapper.removeAllFilter();
+            return true ;
+        } catch (Exception e) {
+            return false ;
+        }
     }
 
     public boolean removeAFilter(UUID id) {
-        // todo
-        return false ;
+        try {
+            filterMapper.removeFilter(id);
+            return true ;
+        } catch (Exception e) {
+            return false ;
+        }
     }
 
     public List<Filter> getAllFilter() {
-        // todo
-        return null ;
+        List<Filter> allFilter = getAllFilter();
+        return allFilter ;
     }
 
     public Filter getAFilter(UUID id) {
-        // todo
-        return null ;
+        Filter aFilter = filterMapper.getAFilter(id);
+        return aFilter ;
     }
 }
