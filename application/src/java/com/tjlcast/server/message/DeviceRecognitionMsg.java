@@ -18,6 +18,14 @@ public class DeviceRecognitionMsg implements Serializable{
     private final String ts;
     private final Double value;
 
+    public DeviceRecognitionMsg(String deviceId, String deviceName, String key, String ts, String value) {
+        this.deviceId = UUID.fromString(deviceId);
+        this.deviceName = deviceName;
+        this.key = key;
+        this.ts = ts;
+        this.value = Double.parseDouble(value);
+    }
+
     public DeviceRecognitionMsg(UUID deviceId, String deviceName, String key, String ts, Double value) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;

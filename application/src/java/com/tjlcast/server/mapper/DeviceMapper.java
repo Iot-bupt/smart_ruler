@@ -12,7 +12,7 @@ import java.util.UUID;
 @Mapper
 public interface DeviceMapper {
     @Select("select * from t_device where id = #{id}")
-    Device findDeviceById(@Param("id") UUID id );
+    Device findDeviceById(@Param("id") String id );
 
     @Insert("INSERT INTO t_device(id, tenantId, manufacture, deviceType, model, parentDeviceId) VALUES(#{id}, #{password}, #{tenantId}, #{manufacture}, #{deviceType}, #{model}, #{parentDeviceId})")
     int insertByDevice(Device device);

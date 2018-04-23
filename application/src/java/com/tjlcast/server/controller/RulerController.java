@@ -1,6 +1,9 @@
 package com.tjlcast.server.controller;
 
+import akka.actor.ActorRef;
+import com.alibaba.fastjson.JSONObject;
 import com.tjlcast.server.actors.ActorSystemContext;
+import com.tjlcast.server.message.DeviceRecognitionMsg;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,8 +25,10 @@ public class RulerController extends ActorAwareController {
     @ResponseBody
     public String ruleProcess(@RequestBody String msg) throws Exception{
         try{
-            //ActorRef appActor=systemContext.getAppActor();
-            //appActor.tell(msg,ActorRef.noSender());
+            JSONObject jsonObject=JSONObject.parseObject(msg);
+            DeviceRecognitionMsg message=(DeviceRecognitionMsg)JSONObject.toJavaObject(jsonObject,DeviceRecognitionMsg.class);
+            ActorRef appActor=systemContext.getAppActor();
+            appActor.tell(message,ActorRef.noSender());
             return msg;
         }
         catch(Exception e){

@@ -23,4 +23,13 @@ public class Device {
         this.model = model ;
         this.parentDeviceId = parentDeviceId ;
     }
+
+    public Device(String id, String tenantId, String manufacture, String deviceType, String model, String parentDeviceId) {
+        this.id = UUID.fromString(id) ;
+        this.tenantId = UUID.fromString(tenantId) ;
+        this.manufacture = manufacture ;
+        this.deviceType = deviceType ;
+        this.model = model ;
+        this.parentDeviceId = parentDeviceId ;
+    }
 }
