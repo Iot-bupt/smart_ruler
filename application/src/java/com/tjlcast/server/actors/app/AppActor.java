@@ -20,7 +20,6 @@ import com.tjlcast.server.message.DeviceRecognitionMsg;
 import com.tjlcast.server.services.DeviceService;
 import scala.concurrent.duration.Duration;
 
-import javax.persistence.criteria.From;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -55,7 +54,7 @@ public class AppActor extends ContextAwareActor {
         } else if (message instanceof FromMsgMiddlerDeviceMsg) {
             FromMsgMiddlerDeviceMsg mmessage = (FromMsgMiddlerDeviceMsg) message;
             UUID tenantId = mmessage.getTenantId();
-            getOrCreateTenantActor(tenantId) ;
+            getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender()) ;
         }
     }
 

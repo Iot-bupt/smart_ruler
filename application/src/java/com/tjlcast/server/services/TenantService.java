@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Tenant;
 import com.tjlcast.server.mapper.TenantMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Mapper
 public interface DeviceMapper {
     @Select("select * from t_device where id = #{id}")
-    Device findDeviceById(@Param("id") String id );
+    Device findDeviceById(@Param("id") UUID id );
 
     @Select("select * from t_device")
     List<Device> getAllDeivce() ;

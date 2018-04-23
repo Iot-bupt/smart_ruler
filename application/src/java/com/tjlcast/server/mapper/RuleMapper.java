@@ -1,6 +1,5 @@
 package com.tjlcast.server.mapper;
 
-import com.tjlcast.server.data.Device;
 import com.tjlcast.server.data.Rule;
 import org.apache.ibatis.annotations.*;
 
@@ -10,12 +9,13 @@ import java.util.UUID;
 /**
  * Created by hasee on 2018/4/17.
  */
+
 @Mapper
 public interface RuleMapper {
     @Select("select * from t_rule where id=#{Id}")
     List<Rule> findRuleById(@Param("Id")UUID id) ;
 
-    @Select("select * from t_rule where tenantid=#{tenantId}")
+    @Select("select * from t_rule where tenantId=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")UUID tenantId);
 
     @Select("select * from t_rule")

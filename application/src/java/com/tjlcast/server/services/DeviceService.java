@@ -21,7 +21,7 @@ public class DeviceService {
     private DeviceMapper deviceMapper;
 
     public Device findDeviceById(UUID deviceId){
-        return deviceMapper.findDeviceById(deviceId.toString());
+        return deviceMapper.findDeviceById(deviceId);
     }
 
     public boolean addDevice(JsonObject jsonObj) {
