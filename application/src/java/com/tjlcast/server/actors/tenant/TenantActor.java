@@ -14,7 +14,6 @@ import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
 import com.tjlcast.server.services.RuleService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,7 @@ import java.util.UUID;
  */
 
 public class TenantActor extends ContextAwareActor {
-    @Autowired
+   //@Autowired
     private RuleService ruleService;
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;

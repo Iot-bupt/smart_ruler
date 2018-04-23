@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.mapper.RuleMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class RuleService {
-    @Autowired
+    //@Autowired
     private RuleMapper ruleMapper;
 
     public List<Rule> findRuleByTenantId(UUID tenantId)
