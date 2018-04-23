@@ -15,9 +15,15 @@ public class Rule {
     private String rulerName;       // 该rule的信息
     private List<UUID> filters;     // 该rule配置的filter
 
-    public Rule(UUID id, UUID tenantId, String rulerName, String jsCode){
+    public Rule(UUID id, UUID tenantId, String rulerName){
         this.id=id;
         this.tenantId=tenantId;
+        this.rulerName=rulerName;
+    }
+
+    public Rule(String id, String tenantId, String rulerName){
+        this.id=UUID.fromString(id);
+        this.tenantId=UUID.fromString(tenantId);
         this.rulerName=rulerName;
     }
 }

@@ -74,6 +74,6 @@ public class DefaultActorService implements ActorService {
 
     @Override
     public void process(FromMsgMiddlerDeviceMsg msg) {
-        appActor.tell(msg, null);
+        appActor.tell(msg, ActorRef.noSender());
     }
 }

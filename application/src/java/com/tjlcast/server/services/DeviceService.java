@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Device;
 import com.tjlcast.server.mapper.DeviceMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class DeviceService {
-
+    @Autowired
     private DeviceMapper deviceMapper;
 
     public Device findDeviceById(UUID deviceId){

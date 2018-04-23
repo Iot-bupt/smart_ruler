@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.mapper.FilterMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class FilterService {
-
+    @Autowired
     private FilterMapper filterMapper;
 
     public List<Filter> findFilterByRuleId(UUID ruleId)

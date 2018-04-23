@@ -11,8 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 
 @SpringBootApplication
-@ComponentScan(basePackages="com.tjlcast.server.*")
-@MapperScan("com.tjlcast.server.*")
 public class SRApplication {
     public static void main(String[] args) {
         SpringApplication.run(SRApplication.class, args);

@@ -32,8 +32,6 @@ import java.util.UUID;
 
 public class AppActor extends ContextAwareActor {
 
-    private DeviceService deviceService;
-
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
     private final Map<UUID, ActorRef> tenantActors ;
@@ -48,13 +46,14 @@ public class AppActor extends ContextAwareActor {
         if(message instanceof DeviceRecognitionMsg) {
             // not sure.
             UUID deviceId =((DeviceRecognitionMsg) message).getDeviceId();
-            Device device=deviceService.findDeviceById(deviceId);
+            Device device=systemContext.getDeviceService().findDeviceById(deviceId);
             UUID tenantId=device.getTenantId();
             getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender());
         } else if (message instanceof FromMsgMiddlerDeviceMsg) {
             FromMsgMiddlerDeviceMsg mmessage = (FromMsgMiddlerDeviceMsg) message;
             UUID tenantId = mmessage.getTenantId();
-            getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender()) ;
+            ActorRef orCreateTenantActor = getOrCreateTenantActor(tenantId);
+            orCreateTenantActor.tell(message,ActorRef.noSender()) ;
         }
     }
 

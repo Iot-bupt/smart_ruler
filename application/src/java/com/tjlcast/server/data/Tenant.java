@@ -13,4 +13,9 @@ public class Tenant {
         this.tenantId = tenantId;
         this.tenantName = tenantName;
     }
+
+    public Tenant(String tenantId, String tenantName) {
+        this.tenantId = UUID.fromString(tenantName);
+        this.tenantName = tenantName;
+    }
 }

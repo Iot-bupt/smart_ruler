@@ -9,9 +9,7 @@ import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
 import com.tjlcast.server.nashorn.NashornTest;
-import com.tjlcast.server.services.FilterService;
 
-import javax.persistence.criteria.From;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +17,6 @@ import java.util.UUID;
  * Created by tangjialiang on 2017/12/8.
  */
 public class RuleActor extends ContextAwareActor {
-    private FilterService filterService;
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
@@ -34,7 +31,7 @@ public class RuleActor extends ContextAwareActor {
         this.tenantId = tenantId ;
         this.ruleId = ruleId ;
         this.processor = new RuleActorMessageProcessor(systemContext, logger, ruleId, this);
-        this.filters=filterService.findFilterByRuleId(ruleId);
+        this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
     }
 
     @Override

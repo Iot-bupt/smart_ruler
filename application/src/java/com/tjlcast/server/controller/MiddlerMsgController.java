@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by tangjialiang on 2018/4/22.
  */
+
 @RestController
 @RequestMapping("/api/test")
 @Slf4j

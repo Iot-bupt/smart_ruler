@@ -27,8 +27,6 @@ import java.util.UUID;
  */
 
 public class TenantActor extends ContextAwareActor {
-    @Autowired
-    private RuleService ruleService;
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
@@ -38,9 +36,9 @@ public class TenantActor extends ContextAwareActor {
     public TenantActor(ActorSystemContext context, UUID tenantId) {
         super(context) ;
         this.tenantId = tenantId;
-        List<Rule> rules=ruleService.findRuleByTenantId(tenantId);
+        List<Rule> rules= systemContext.getRuleService().findRuleByTenantId(tenantId);
         ruleActors = new HashMap<UUID, ActorRef>() ;
-        for (Rule rule : rules)
+        for  (Rule rule : rules)
         {
             getOrCreateRuleActor(rule.getId());
         }
@@ -55,7 +53,7 @@ public class TenantActor extends ContextAwareActor {
     public void onReceive(Object message) throws Exception {
         if(message instanceof DeviceRecognitionMsg) {
             // not sure.
-            List<Rule> rules=ruleService.findRuleByTenantId(tenantId);
+            List<Rule> rules=systemContext.getRuleService().findRuleByTenantId(tenantId);
             for (Rule rule : rules)
             {
                 getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());

@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Created by tangjialiang on 2018/4/22.
+ * Created by tangjialiang on 2018/1/17.
  *
  *
  * @ApiOperation(value = "得到设备的accesstoken", notes = "根据deviceId得到设备的accesstoken")
@@ -34,7 +34,7 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Smart Ruler后台的RESTful APIs")
+                .title("Device Manager后台的RESTful APIs")
                 .description("<hr / ><hr / >ヽ(ˋДˊ)ノ Day Day UP ！！！ ヽ(ˋ▽ˊ)ノ<hr / ><hr /> ヽ(ˋДˊ)ノ Day Day Wonderful ！！！ ヽ(ˋ▽ˊ)ノ <hr / ><hr / >")
                 .contact("bupt_815_iot")
                 .version("1.0")

@@ -12,7 +12,6 @@ spring:
     url: jdbc:mysql://10.108.218.108/smart_ruler?characterEncoding=UTF-8   #jdbc:mysql://localhost:3306/dbgirl_test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
     username: root
     password: 123
-    name: smart_ruler
 
   jpa:
     properties:
@@ -30,6 +29,7 @@ mybatis:
     default-executor-type: reuse
     default-statement-timeout: 25000
   type-aliases-package: org.spring.springboot.domain
+  type-handlers-package: com.tjlcast.server.typeHandler
 
 
 
