@@ -18,9 +18,15 @@ public interface RuleMapper {
     @Select("select * from t_rule where tenantid=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")UUID tenantId);
 
+    @Select("select * from t_rule")
+    List<Rule> getAllRule();
+
     @Insert("INSERT INTO t_rule(id, tenantId, rulerName) VALUES(#{id}, #{tenantId}, #{rulerName})")
-    int AddARule(Rule rule);
+    int addARule(Rule rule);
 
     @Delete("DELETE FROM t_rule WHERE id = #{id}")
     void removeRule(UUID id);
+
+    @Delete("DELETE FROM t_rule")
+    void removeAllRule() ;
 }

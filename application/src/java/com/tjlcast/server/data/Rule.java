@@ -10,10 +10,10 @@ import java.util.UUID;
  */
 @Data
 public class Rule {
-    private UUID id;
-    private UUID tenantId;
-    private String rulerName;
-    private List<UUID> filters;
+    private UUID id;                // rule 的唯一Id
+    private UUID tenantId;          // 该tule的拥有者
+    private String rulerName;       // 该rule的信息
+    private List<UUID> filters;     // 该rule配置的filter
 
     public Rule(UUID id, UUID tenantId, String rulerName, String jsCode){
         this.id=id;

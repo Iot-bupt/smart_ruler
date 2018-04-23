@@ -6,10 +6,12 @@ import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.data.Filter;
+import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
 import com.tjlcast.server.nashorn.NashornTest;
 import com.tjlcast.server.services.FilterService;
 
+import javax.persistence.criteria.From;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,14 +26,14 @@ public class RuleActor extends ContextAwareActor {
     private final UUID tenantId ;
     private final UUID ruleId ;
     private final RuleActorMessageProcessor processor;
-    private final List<Filter> filters;
+    public final List<Filter> filters; // todo
 
 
     private RuleActor(ActorSystemContext context, UUID tenantId, UUID ruleId) {
         super(context) ;
         this.tenantId = tenantId ;
         this.ruleId = ruleId ;
-        this.processor = new RuleActorMessageProcessor(systemContext, logger, ruleId);
+        this.processor = new RuleActorMessageProcessor(systemContext, logger, ruleId, this);
         this.filters=filterService.findFilterByRuleId(ruleId);
     }
 
@@ -53,23 +55,9 @@ public class RuleActor extends ContextAwareActor {
             {
                 processor.process((DeviceRecognitionMsg) message);
             }
+        } else if (message instanceof FromMsgMiddlerDeviceMsg) {
+            processor.process((FromMsgMiddlerDeviceMsg)message);
         }
-//            processor.process((DeviceRecognitionMsg)message);
-//        } else if (message instanceof ToDeviceActorNotificationMsg) {
-//            if (msg instanceof DeviceAttributesEventNotificationMsg) {
-//                processor.processAttributesUpdate(context(), (DeviceAttributesEventNotificationMsg) msg);
-//            } else if (msg instanceof ToDeviceRpcRequestPluginMsg) {
-//                processor.processRpcRequest(context(), (ToDeviceRpcRequestPluginMsg) msg);
-//            } else if (msg instanceof DeviceCredentialsUpdateNotificationMsg){
-//                processor.processCredentialsUpdate();
-//            } else if (msg instanceof DeviceNameOrTypeUpdateMsg){
-//                processor.processNameOrTypeUpdate((DeviceNameOrTypeUpdateMsg) msg);
-//                //TODO modified by cc
-//            }
-//            if(message instanceof DeviceShadowMsg){
-//                processor.processDeviceShadowMsg((DeviceShadowMsg)message);
-//           }
-//        }//TODO filter and process
     }
 
     public static class ActorCreator extends ContextBasedCreator<RuleActor> {

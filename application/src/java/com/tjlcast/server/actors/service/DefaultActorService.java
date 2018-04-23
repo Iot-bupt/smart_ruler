@@ -6,6 +6,7 @@ import akka.actor.Props;
 import akka.actor.Terminated;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.app.AppActor;
+import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,11 +60,6 @@ public class DefaultActorService implements ActorService {
         log.info("initializing Actor appActor.") ;
         appActor = system.actorOf(Props.create(new AppActor.ActorCreator(actorContext)).withDispatcher(APP_DISPATCHER_NAME), "appActor") ;
         actorContext.setAppActor(appActor);
-
-        // prepare for sessionManagerActor actors.
-//        log.info("initializing Actor sessionManagerActor.") ;
-//        sessionManagerActor = system.actorOf(Props.create(new SessionManagerActor.ActorCreator(actorContext)).withDispatcher(CORE_DISPATCHER_NAME), "sessionManagerActor") ;
-//        actorContext.setSessionManagerActor(sessionManagerActor);
     }
 
     @PreDestroy
@@ -76,22 +72,8 @@ public class DefaultActorService implements ActorService {
         }
     }
 
-    //@Override
-//    public void process(DeviceRecognitionMsg msg) {
-//        log.trace("Processing broadcast rpc msg: {}", msg);
-//        appActor.tell(msg, ActorRef.noSender());
-//    }
-
-//    @Override
-//    public void process(SessionAwareMsg msg) {
-//        log.debug("Processing session aware msg: {}", msg);
-//        // todo
-//        // sessionManagerActor.tell(msg, ActorRef.noSender());
-//    }
-//
-//    @Override
-//    public void onMsg(ToDeviceActorNotificationMsg msg) {
-//        log.trace("Processing notification rpc msg: {}", msg);
-//        appActor.tell(msg, ActorRef.noSender());
-//    }
+    @Override
+    public void process(FromMsgMiddlerDeviceMsg msg) {
+        appActor.tell(msg, null);
+    }
 }

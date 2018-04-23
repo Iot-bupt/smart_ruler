@@ -3,10 +3,15 @@ package com.tjlcast.server.actors;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Scheduler;
+import com.tjlcast.server.services.DeviceService;
+import com.tjlcast.server.services.FilterService;
+import com.tjlcast.server.services.RuleService;
+import com.tjlcast.server.services.TenantService;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,12 +38,23 @@ public class ActorSystemContext {
     @Setter
     private ActorRef appActor ;
 
+    @Autowired
     @Getter
-    @Setter
-    private ActorRef sessionManagerActor ;
+    private DeviceService deviceService ;
+
+    @Autowired
+    @Getter
+    private FilterService filterService ;
+
+    @Autowired
+    @Getter
+    private TenantService tenantService ;
+
+    @Autowired
+    @Getter
+    private RuleService ruleService ;
 
     @Getter
-    @Setter
     private final Config config ;
 
     public ActorSystemContext() {

@@ -11,8 +11,9 @@ import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.data.Rule;
+import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
-import com.tjlcast.server.services.RulerService;
+import com.tjlcast.server.services.RuleService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.UUID;
  */
 
 public class TenantActor extends ContextAwareActor {
-    private RulerService ruleService;
+    private RuleService ruleService;
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
@@ -38,21 +39,26 @@ public class TenantActor extends ContextAwareActor {
         ruleActors = new HashMap<UUID, ActorRef>() ;
     }
 
+    public void initialTenantActor() {
+        // todo
+        // load the rule of this tenant.
+    }
+
     @Override
     public void onReceive(Object message) throws Exception {
-        if(message instanceof DeviceRecognitionMsg)
-        {
+        if(message instanceof DeviceRecognitionMsg) {
+            // not sure.
             List<Rule> rules=ruleService.findRuleByTenantId(tenantId);
             for (Rule rule : rules)
             {
                 getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());
             }
+        } else if (message instanceof FromMsgMiddlerDeviceMsg) {
+            for (Map.Entry<UUID, ActorRef> entry : ruleActors.entrySet()) {
+                ActorRef ruleActor = entry.getValue();
+                ruleActor.tell(message, ActorRef.noSender());
+            }
         }
-//        if (message instanceof ToDeviceActorNotificationMsg) {
-//            onToDeviceActorMsg((ToDeviceActorNotificationMsg) message);
-//        } else if(message instanceof DeviceRecognitionMsg){
-//            getOrCreateDeviceActor(((DeviceRecognitionMsg) message).getDeviceId()).tell(message,ActorRef.noSender());
-//        }
     }
 
     private ActorRef getOrCreateRuleActor(final UUID ruleId) {
@@ -78,8 +84,4 @@ public class TenantActor extends ContextAwareActor {
             return new TenantActor(context, tenantId) ;
         }
     }
-
-//    private void onToDeviceActorMsg(ToDeviceActorNotificationMsg msg) {
-//        getOrCreateDeviceActor(msg.getDeviceId()).tell(msg, ActorRef.noSender());
-//    }
 }

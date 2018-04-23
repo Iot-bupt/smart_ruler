@@ -1,5 +1,6 @@
 package com.tjlcast.server.actors.service;
 
+import com.tjlcast.server.data_source.DataSourceProcessor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +12,7 @@ import java.io.Serializable;
  * 每个service的Actor消息接口，用于定义该service的actor的消息
  */
 
-public interface ActorService
-//        extends SessionMsgProcessor, RpcMsgListener
+public interface ActorService extends DataSourceProcessor
 {
 
     public static enum Msg {
