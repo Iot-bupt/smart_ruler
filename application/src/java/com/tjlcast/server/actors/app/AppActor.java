@@ -49,7 +49,7 @@ public class AppActor extends ContextAwareActor {
             // not sure.
             UUID deviceId =((DeviceRecognitionMsg) message).getDeviceId();
             Device device=deviceService.findDeviceById(deviceId);
-            UUID tenantId=device.getTenantId();
+            UUID tenantId=device.getTenantIdUUID();
             getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender());
         } else if (message instanceof FromMsgMiddlerDeviceMsg) {
             FromMsgMiddlerDeviceMsg mmessage = (FromMsgMiddlerDeviceMsg) message;

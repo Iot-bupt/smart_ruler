@@ -1,11 +1,9 @@
 package com.tjlcast.server.mapper;
 
+import com.tjlcast.server.data.Device;
 import org.apache.ibatis.annotations.*;
 
-import com.tjlcast.server.data.Device;
-
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by hasee on 2018/4/17.
@@ -13,7 +11,7 @@ import java.util.UUID;
 @Mapper
 public interface DeviceMapper {
     @Select("select * from t_device where id = #{id}")
-    Device findDeviceById(@Param("id") UUID id );
+    Device findDeviceById(@Param("id") String id );
 
     @Select("select * from t_device")
     List<Device> getAllDeivce() ;
@@ -22,7 +20,7 @@ public interface DeviceMapper {
     int addDevice(Device device);
 
     @Delete("DELETE FROM t_device WHERE id = #{id}")
-    void removeADevice(UUID id);
+    void removeADevice(String id);
 
     @Delete("DELETE FROM t_device")
     void removeAllDevice() ;
