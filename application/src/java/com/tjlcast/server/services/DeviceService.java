@@ -22,7 +22,7 @@ public class DeviceService {
     private DeviceMapper deviceMapper;
 
     public Device findDeviceById(UUID deviceId){
-        return deviceMapper.findDeviceById(deviceId);
+        return deviceMapper.findDeviceById(deviceId.toString());
     }
 
     public boolean addDevice(JsonObject jsonObj) {
@@ -40,7 +40,7 @@ public class DeviceService {
     }
 
     public Device getADevice(UUID id) {
-        deviceMapper.findDeviceById(id) ;
+        deviceMapper.findDeviceById(id.toString()) ;
         return null ;
     }
 

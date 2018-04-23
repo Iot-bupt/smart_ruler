@@ -15,6 +15,22 @@ public class Device {
     private String model;           // 型号
     private String parentDeviceId;  // 父设备id
 
+    public void setId(String id) {
+        this.id = UUID.fromString(id) ;
+    }
+
+    public String getId() {
+        return id.toString();
+    }
+
+    public String getTenantId() {
+        return tenantId.toString();
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = UUID.fromString(tenantId) ;
+    }
+
     public Device(UUID id, UUID tenantId, String manufacture, String deviceType, String model, String parentDeviceId) {
         this.id = id ;
         this.tenantId = tenantId ;
@@ -31,5 +47,9 @@ public class Device {
         this.deviceType = deviceType ;
         this.model = model ;
         this.parentDeviceId = parentDeviceId ;
+    }
+
+    public UUID getTenantIdUUID() {
+        return this.tenantId;
     }
 }
