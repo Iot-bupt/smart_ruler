@@ -19,12 +19,12 @@ public class Device {
         this.id = UUID.fromString(id) ;
     }
 
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id ;
     }
 
-    public String getTenantId() {
-        return tenantId.toString();
+    public UUID getTenantId() {
+        return tenantId ;
     }
 
     public void setTenantId(String tenantId) {
