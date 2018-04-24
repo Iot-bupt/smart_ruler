@@ -17,6 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class TenantService {
+
     @Autowired
     private TenantMapper tenantMapper ;
 

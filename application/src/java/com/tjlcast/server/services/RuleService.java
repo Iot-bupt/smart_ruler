@@ -18,8 +18,9 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class RuleService {
+
     @Autowired
-    private RuleMapper ruleMapper;
+    RuleMapper ruleMapper;
 
     public List<Rule> findRuleByTenantId(UUID tenantId)
     {
