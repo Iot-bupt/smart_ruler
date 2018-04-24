@@ -3,10 +3,7 @@ package com.tjlcast.server.actors;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Scheduler;
-import com.tjlcast.server.services.DeviceService;
-import com.tjlcast.server.services.FilterService;
-import com.tjlcast.server.services.RuleService;
-import com.tjlcast.server.services.TenantService;
+import com.tjlcast.server.services.*;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import lombok.Getter;
@@ -53,6 +50,10 @@ public class ActorSystemContext {
     @Autowired
     @Getter
     private RuleService ruleService ;
+
+    @Autowired
+    @Getter
+    private Rule2FilterService rule2FilterService;
 
     @Getter
     private final Config config ;

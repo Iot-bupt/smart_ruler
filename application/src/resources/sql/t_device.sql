@@ -26,7 +26,7 @@ CREATE TABLE `t_device` (
   `id` varchar(36) NOT NULL,
   `tenantId` varchar(36) NOT NULL,
   `manufacture` varchar(20) NOT NULL,
-  `devoceType` varchar(20) NOT NULL,
+  `deviceType` varchar(20) NOT NULL,
   `model` varchar(20) NOT NULL,
   `parentDeviceId` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -37,7 +37,7 @@ CREATE TABLE `t_device` (
 -- Dumping data for table `t_device`
 --
 
-INSERT INTO t_device(id,tenantId,manufacture,devoceType)
+INSERT INTO t_device(id,tenantId,manufacture,deviceType,model,parentDeviceId) VALUES ("330fe542-4697-11e8-842f-0ed5f89f718b","28e25fd0-4699-11e8-842f-0ed5f89f718b","a","b","c",NULL);
 
 LOCK TABLES `t_device` WRITE;
 /*!40000 ALTER TABLE `t_device` DISABLE KEYS */;
