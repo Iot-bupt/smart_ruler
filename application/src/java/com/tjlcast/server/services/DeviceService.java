@@ -18,6 +18,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class DeviceService {
+
     @Autowired
     private DeviceMapper deviceMapper;
 
