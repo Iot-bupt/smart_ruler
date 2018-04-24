@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data.Rule;
+import com.tjlcast.server.data.Rule2Filter;
 import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.services.FilterService;
@@ -55,7 +56,8 @@ public class MiddlerMsgController extends BaseContoller {
         Filter filter = new Filter(UUID.randomUUID().toString(),"function filter(key,value){if(key=='x' && value>0){ return true;} else{return false;}}");
         filterService.addFilter(filter);
 
-        rule2FilterService.addARelation(rule.getId(),UUID.fromString(filter.getFiterId()));
+        Rule2Filter rule2Filter= new Rule2Filter(rule.getId(),UUID.fromString(filter.getId()));
+        rule2FilterService.addARelation(rule2Filter);
 
         dataSourceProcessor.process(fromMsgMiddlerDeviceMsg);
 

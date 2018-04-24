@@ -11,18 +11,18 @@ import java.util.UUID;
 public class Rule {
     private UUID id;                // rule 的唯一Id
     private UUID tenantId;          // 该tule的拥有者
-    private String rulerName;       // 该rule的信息
+    private String name;       // 该rule的信息
     //private List<UUID> filters;     // 该rule配置的filter
 
-    public Rule(UUID id, UUID tenantId, String rulerName){
+    public Rule(UUID id, UUID tenantId, String name){
         this.id=id;
         this.tenantId=tenantId;
-        this.rulerName=rulerName;
+        this.name=name;
     }
 
-    public Rule(String id, String tenantId, String rulerName){
+    public Rule(String id, String tenantId, String name){
         this.id=UUID.fromString(id);
         this.tenantId=UUID.fromString(tenantId);
-        this.rulerName=rulerName;
+        this.name=name;
     }
 }

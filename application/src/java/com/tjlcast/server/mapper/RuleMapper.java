@@ -20,7 +20,7 @@ public interface RuleMapper {
     @Select("select * from t_rule")
     List<Rule> getAllRule();
 
-    @Insert("INSERT INTO t_rule(id, tenantId, rulerName) VALUES(#{id}, #{tenantId}, #{rulerName})")
+    @Insert("INSERT INTO t_rule(id, tenantId, name) VALUES(#{id}, #{tenantId}, #{name})")
     int addARule(Rule rule);
 
     @Delete("DELETE FROM t_rule WHERE id = #{id}")
