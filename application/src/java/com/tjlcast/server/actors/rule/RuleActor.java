@@ -8,7 +8,6 @@ import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
-import com.tjlcast.server.nashorn.NashornTest;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,23 +37,10 @@ public class RuleActor extends ContextAwareActor {
     public void onReceive(Object message) throws Exception {
         if(message instanceof DeviceRecognitionMsg){
 
-            boolean tag = true;
-
-            for(Filter filter:filters) {
-                NashornTest noshorn = new NashornTest(filter.getJsCode(), ((DeviceRecognitionMsg) message).getKey(), ((DeviceRecognitionMsg) message).getValue());
-                if (!noshorn.invokeFunction()) {
-                    tag = false;
-                    break;
-                }
-            }
-
-            if(tag)
-            {
-                processor.process((DeviceRecognitionMsg) message);
-            }
         } else if (message instanceof FromMsgMiddlerDeviceMsg) {
             processor.process((FromMsgMiddlerDeviceMsg)message);
         }
+
     }
 
     public static class ActorCreator extends ContextBasedCreator<RuleActor> {

@@ -4,7 +4,6 @@ import com.tjlcast.server.data.Rule;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by hasee on 2018/4/17.
@@ -13,10 +12,10 @@ import java.util.UUID;
 @Mapper
 public interface RuleMapper {
     @Select("select * from t_rule where id=#{Id}")
-    List<Rule> findRuleById(@Param("Id")UUID id) ;
+    List<Rule> findRuleById(@Param("Id")String id) ;
 
     @Select("select * from t_rule where tenantId=#{tenantId}")
-    List<Rule> findRuleByTenantId(@Param("tenantId")UUID tenantId);
+    List<Rule> findRuleByTenantId(@Param("tenantId")String tenantId);
 
     @Select("select * from t_rule")
     List<Rule> getAllRule();
@@ -25,7 +24,7 @@ public interface RuleMapper {
     int addARule(Rule rule);
 
     @Delete("DELETE FROM t_rule WHERE id = #{id}")
-    void removeRule(UUID id);
+    void removeRule(String id);
 
     @Delete("DELETE FROM t_rule")
     void removeAllRule() ;

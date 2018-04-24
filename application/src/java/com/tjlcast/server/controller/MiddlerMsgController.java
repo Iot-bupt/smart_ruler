@@ -35,4 +35,13 @@ public class MiddlerMsgController extends BaseContoller {
 
         return "OK" ;
     }
+
+    @ApiOperation(value = "测试：模拟从kafka中拉取数据")
+    @RequestMapping(value = "/receive", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String receive(@RequestBody String jsonstr){
+
+        System.out.println(jsonstr);
+        return "success";
+    }
 }

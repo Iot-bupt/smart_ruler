@@ -6,14 +6,15 @@ import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.shared.AbstractContextAwareMsgProcessor;
 import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
+import com.tjlcast.server.data_source.Item;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
-import com.tjlcast.server.nashorn.NashornTest;
+import com.tjlcast.server.nashorn.Nashorn;
 import okhttp3.*;
 import scala.concurrent.duration.Duration;
 
+import javax.script.ScriptException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -22,19 +23,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor {
 
+    private Nashorn nashorn;
+
     private final UUID ruleId;
-    private final Map<UUID, UUID> sessions;
-    private final Map<UUID, UUID> attributeSubscriptions;
-    private final Map<UUID, UUID> rpcSubscriptions;
-    private RuleActor belongActor ;
+    private final List<Filter> filters;
 
 
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId) {
         super(systemContext, logger);
         this.ruleId = ruleId;
-        this.sessions = new HashMap<>();
-        this.attributeSubscriptions = new HashMap<>();
-        this.rpcSubscriptions = new HashMap<>();
+        this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
+        this.nashorn=new Nashorn();
 
         initAttributes();
     }
@@ -42,11 +41,8 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId, RuleActor belongActor) {
         super(systemContext, logger);
         this.ruleId = ruleId;
-        this.sessions = new HashMap<>();
-        this.attributeSubscriptions = new HashMap<>();
-        this.rpcSubscriptions = new HashMap<>();
-        this.belongActor = belongActor ;
-
+        this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
+        this.nashorn=new Nashorn();
         initAttributes();
     }
 
@@ -92,28 +88,6 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
     public void process(DeviceRecognitionMsg msg){
 
-        OkHttpClient client = new OkHttpClient();
-        FormBody.Builder formBody =new FormBody.Builder();
-        formBody.add("deviceId",msg.getDeviceId().toString());
-        formBody.add("deviceName",msg.getDeviceName());
-        formBody.add("ts",msg.getTs());
-        formBody.add("key",msg.getKey());
-        formBody.add("value",msg.getValue().toString());
-        Request request = new Request.Builder()
-                .url("") //Todo 输入URL
-                .post(formBody.build())
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
-                    //Todo something
-                }
-            }
-        });
 //        Device device = systemContext.getDeviceService().findDeviceById(deviceId);
 //        String manufacture = msg.getManufacture();
 //        String deviceType = msg.getDeviceType();
@@ -125,7 +99,54 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 //        }
     }
 
-    public void process(FromMsgMiddlerDeviceMsg msg) {
+    public void process(FromMsgMiddlerDeviceMsg msg) throws ScriptException, NoSuchMethodException {
         // todo
+        for(int i=0;i<msg.getItems().size();i++) {
+            Item item = msg.getItems().get(i);
+            if(nashornProcess(filters,item))
+            {
+                sendHTTPRequest(msg);
+            }
+        }
     }
+
+    public boolean nashornProcess(List<Filter> filters, Item item) throws ScriptException, NoSuchMethodException {
+        for(Filter filter:filters) {
+
+            if (!nashorn.invokeFunction(filter.getJsCode(), item.getKey(), Double.parseDouble(item.getValue()))) {
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    public String sendHTTPRequest(FromMsgMiddlerDeviceMsg msg)
+    {
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder formBody =new FormBody.Builder();
+        formBody.add("deviceId",msg.getDeviceId().toString());
+        formBody.add("tenantId",msg.getTenantId().toString());
+        formBody.add("data",msg.getItems().toString());
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/api/test/receive") //Todo 输入URL
+                .post(formBody.build())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println(e);
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    System.out.println("Success");
+                }
+            }
+        });
+        return "Success";
+    }
+
+
+
 }

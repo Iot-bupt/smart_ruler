@@ -23,7 +23,7 @@ public class RuleService {
 
     public List<Rule> findRuleByTenantId(UUID tenantId)
     {
-        return ruleMapper.findRuleByTenantId(tenantId);
+        return ruleMapper.findRuleByTenantId(tenantId.toString());
     }
 
     // add
@@ -44,7 +44,7 @@ public class RuleService {
     }
 
     public boolean removeARule(UUID id) {
-        ruleMapper.removeRule(id);
+        ruleMapper.removeRule(id.toString());
         return true ;
     }
 
@@ -55,7 +55,7 @@ public class RuleService {
     }
 
     public List<Rule> getARule(UUID id) {
-        List<Rule> ruleById = ruleMapper.findRuleById(id);
+        List<Rule> ruleById = ruleMapper.findRuleById(id.toString());
         return ruleById ;
     }
 }

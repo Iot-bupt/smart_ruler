@@ -37,6 +37,8 @@ CREATE TABLE `t_device` (
 -- Dumping data for table `t_device`
 --
 
+INSERT INTO t_device(id,tenantId,manufacture,devoceType)
+
 LOCK TABLES `t_device` WRITE;
 /*!40000 ALTER TABLE `t_device` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_device` ENABLE KEYS */;

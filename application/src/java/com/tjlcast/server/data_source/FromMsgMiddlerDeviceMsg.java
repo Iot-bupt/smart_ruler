@@ -7,9 +7,9 @@ import com.tjlcast.server.aware.TenantAwareMsg;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2018/4/22.
@@ -44,22 +44,7 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
         return this.deviceId ;
     }
 
-    @Data
-    private class Item {
-        private String key ;
-        private String value ;
-        private Date date ;
 
-        public Item(JsonObject jobj) {
-            this.key = jobj.get("key").getAsString() ;
-            this.value = jobj.get("value").getAsString() ;
-            try {
-                this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(jobj.get("ts").getAsString()) ;
-            } catch (ParseException e) {
-                this.date = null ;
-            }
-        }
-    }
 
 
     public static void main(String[] args) {
