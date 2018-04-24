@@ -33,6 +33,8 @@ CREATE TABLE `t_filter` (
 -- Dumping data for table `t_filter`
 --
 
+INSERT INTO t_filter(id,jsCode) VALUES ("3a8fc24a-4770-11e8-842f-0ed5f89f718b","function filter(key,value){if(key=='x' && value>0){ return true;} else{return false;}}");
+
 LOCK TABLES `t_filter` WRITE;
 /*!40000 ALTER TABLE `t_filter` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_filter` ENABLE KEYS */;

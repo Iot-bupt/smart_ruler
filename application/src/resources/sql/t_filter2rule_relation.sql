@@ -36,6 +36,9 @@ CREATE TABLE `t_filter2rule_relation` (
 -- Dumping data for table `t_filter2rule_relation`
 --
 
+INSERT INTO t_filter2rule_relation(ruleId, filterId, "KEY", "KEY") VALUES ("a37bf2ba-46c1-11e8-842f-0ed5f89f718b","3a8fc24a-4770-11e8-842f-0ed5f89f718b");
+
+
 LOCK TABLES `t_filter2rule_relation` WRITE;
 /*!40000 ALTER TABLE `t_filter2rule_relation` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_filter2rule_relation` ENABLE KEYS */;

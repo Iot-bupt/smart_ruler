@@ -34,6 +34,8 @@ CREATE TABLE `t_rule` (
 -- Dumping data for table `t_rule`
 --
 
+INSERT INTO t_rule (id,tenantId,name) VALUES ("a37bf2ba-46c1-11e8-842f-0ed5f89f718b","28e25fd0-4699-11e8-842f-0ed5f89f718b","RULE")
+
 LOCK TABLES `` WRITE;
 /*!40000 ALTER TABLE `t_rule` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_rule` ENABLE KEYS */;
