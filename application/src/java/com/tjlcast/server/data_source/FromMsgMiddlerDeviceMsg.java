@@ -44,9 +44,4 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
         return this.deviceId ;
     }
 
-
-
-
-    public static void main(String[] args) {
-    }
 }

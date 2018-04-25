@@ -17,7 +17,16 @@ spring:
     properties:
       hibernate:
         hbm2ddl:
-          auto:create-drop
+          auto: create-drop
+
+  kafka:
+    consumer:
+      bootstrap-servers: 10.108.218.64:9092
+      group-id: test
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 
 mybatis:

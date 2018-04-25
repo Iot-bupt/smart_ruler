@@ -1,13 +1,10 @@
 package com.tjlcast.server.data_source;
 
-import com.tjlcast.server.message.DeviceRecognitionMsg;
-import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,33 +16,43 @@ import java.util.Properties;
 
 public class KafkaSource {
 
-    private DeviceRecognitionMsg msg;
+    @Autowired
+    DataSourceProcessor dataSourceProcessor ;
 
-    public static void main(String[] args){
+    private static Consumer<String, String> consumer;
+
+    static {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.12.65:9092");
+        props.put("bootstrap.servers", "10.108.218.64:9092");
         props.put("group.id", "test");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
+        props.put("session.timeout.ms", "30000");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        final KafkaConsumer<String, String> consumer = new KafkaConsumer<String,String>(props);
-        consumer.subscribe(Arrays.asList("topic-test"),new ConsumerRebalanceListener() {
+        consumer = new KafkaConsumer<String, String>(props);
+        consumer.subscribe(Arrays.asList("Test_message"), new ConsumerRebalanceListener() {
             public void onPartitionsRevoked(Collection<TopicPartition> collection) {
             }
+
             public void onPartitionsAssigned(Collection<TopicPartition> collection) {
                 //将偏移设置到最开始
                 consumer.seekToBeginning(collection);
             }
         });
+    }
+
+    public  void grtMsgFromKafka(){
+
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
                 System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-                JSONObject jsonMsg = JSON.parseObject(record.value());
-                FromMsgMiddlerDeviceMsg msg=JSONObject.toJavaObject(jsonMsg,FromMsgMiddlerDeviceMsg.class);
-
+                JsonObject jsonObj = (JsonObject)new JsonParser().parse(record.value());
+                FromMsgMiddlerDeviceMsg fromMsgMiddlerDeviceMsg = new FromMsgMiddlerDeviceMsg(jsonObj);
+                dataSourceProcessor.process(fromMsgMiddlerDeviceMsg);
             }
         }
+
     }
 }
