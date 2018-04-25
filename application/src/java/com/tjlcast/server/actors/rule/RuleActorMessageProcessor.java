@@ -101,24 +101,31 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
     public void process(FromMsgMiddlerDeviceMsg msg) throws ScriptException, NoSuchMethodException {
         // todo
-        for(int i=0;i<msg.getItems().size();i++) {
-            Item item = msg.getItems().get(i);
-            if(nashornProcess(filters,item))
-            {
-                sendHTTPRequest(msg);
-            }
+
+        if(nashornProcess(filters,msg))
+        {
+            sendHTTPRequest(msg);
         }
+
     }
 
-    public boolean nashornProcess(List<Filter> filters, Item item) throws ScriptException, NoSuchMethodException {
-        for(Filter filter:filters) {
+    public boolean nashornProcess(List<Filter> filters, FromMsgMiddlerDeviceMsg msg) throws ScriptException, NoSuchMethodException {
 
-            if (!nashorn.invokeFunction(filter.getJsCode(), item.getKey(), Double.parseDouble(item.getValue()))) {
-                    return false;
+        boolean result = true;
+
+        for(Filter filter:filters) {
+            boolean tag = false;
+
+            for(Item item:msg.getItems())
+            {
+                tag = tag || nashorn.invokeFunction(filter.getJsCode(), item.getKey(), Double.parseDouble(item.getValue()));
             }
+            result=result && tag;
+            if(!result)
+                break;
         }
 
-        return true;
+        return result;
     }
 
     public String sendHTTPRequest(FromMsgMiddlerDeviceMsg msg)

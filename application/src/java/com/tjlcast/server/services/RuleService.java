@@ -59,8 +59,4 @@ public class RuleService {
         return allRule ;
     }
 
-    public List<Rule> getARule(UUID id) {
-        List<Rule> ruleById = ruleMapper.findRuleById(id.toString());
-        return ruleById ;
-    }
 }
