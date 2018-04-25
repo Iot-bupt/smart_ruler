@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface RuleMapper {
     @Select("select * from t_rule where id=#{Id}")
-    List<Rule> findRuleById(@Param("Id")String id) ;
+    Rule findRuleById(@Param("Id")String id) ;
 
     @Select("select * from t_rule where tenantId=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")String tenantId);

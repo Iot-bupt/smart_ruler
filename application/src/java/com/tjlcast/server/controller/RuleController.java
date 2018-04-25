@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2018/4/13.
@@ -20,6 +21,7 @@ public class RuleController extends BaseContoller {
     @Autowired
     RuleService ruleService ;
 
+    //Post
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -31,6 +33,25 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/{rulrId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String activateRule(@PathVariable("ruleId") String ruleId) {
+        // todo
+        // 1. update state to activate
+        return "Activate" ;
+    }
+
+    @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/{rulrId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String suspendRule(@PathVariable("ruleId") String ruleId) {
+        // todo
+        // 1. activate state to suspend
+        return "Suspend" ;
+    }
+
+    //Delete
+    @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeRule(@RequestParam String id) {
@@ -39,12 +60,31 @@ public class RuleController extends BaseContoller {
         return "OK" ;
     }
 
+    //GET
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/find/all", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/rules", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public List<Rule> findAllRule() {
+    public List<Rule> getRules() {
         List<Rule> allRule = ruleService.getAllRule();
         return allRule ;
+    }
+
+    @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/tenantRule/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public List<Rule> getTenantRules(@PathVariable("tenantId") String tenantId)
+    {
+        List<Rule> allTenantRule = ruleService.findRuleByTenantId(UUID.fromString(tenantId));
+        return  allTenantRule;
+    }
+
+    @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/rule/{ruleId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Rule getARule(@PathVariable("ruleId") String ruleId)
+    {
+        Rule aRule = ruleService.findRuleById(UUID.fromString(ruleId));
+        return aRule;
     }
 
 }

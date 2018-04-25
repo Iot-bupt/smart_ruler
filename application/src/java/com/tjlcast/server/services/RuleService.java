@@ -27,6 +27,10 @@ public class RuleService {
         return ruleMapper.findRuleByTenantId(tenantId.toString());
     }
 
+    public Rule findRuleById(UUID ruleId)
+    {
+        return ruleMapper.findRuleById(ruleId.toString());
+    }
     // add
     public boolean addRule(Rule rule) {
         ruleMapper.addARule(rule) ;
