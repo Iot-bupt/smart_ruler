@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: SmartNoodles
+    name: smart_ruler
   profiles:
     active: prod
 

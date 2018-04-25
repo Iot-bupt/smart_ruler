@@ -70,11 +70,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--<dependency>
-            <groupId>com.tjlcast</groupId>
-            <artifactId>common</artifactId>
-        </dependency>-->
-
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>mockwebserver</artifactId>
