@@ -43,7 +43,7 @@ public class KafkaSource {
             for (ConsumerRecord<String, String> record : records) {
                 System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
                 JSONObject jsonMsg = JSON.parseObject(record.value());
-                DeviceRecognitionMsg msg=JSONObject.toJavaObject(jsonMsg,DeviceRecognitionMsg.class);
+                FromMsgMiddlerDeviceMsg msg=JSONObject.toJavaObject(jsonMsg,FromMsgMiddlerDeviceMsg.class);
 
             }
         }
