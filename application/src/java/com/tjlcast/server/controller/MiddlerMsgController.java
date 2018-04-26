@@ -13,6 +13,7 @@ import com.tjlcast.server.services.RuleService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
@@ -37,6 +38,9 @@ public class MiddlerMsgController extends BaseContoller {
 
     @Autowired
     DataSourceProcessor dataSourceProcessor ;
+
+    @Autowired
+    KafkaTemplate kafkaTemplate;
 
     @ApiOperation(value = "测试：模拟从kafka中拉取数据")
     @RequestMapping(value = "/deviceMsg", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -63,7 +67,7 @@ public class MiddlerMsgController extends BaseContoller {
         return "OK" ;
     }
 
-    @ApiOperation(value = "测试：模拟从kafka中拉取数据")
+    @ApiOperation(value = "测试：okhttp请求接受成功")
     @RequestMapping(value = "/receive", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String receive(@RequestBody String jsonstr){
@@ -71,4 +75,16 @@ public class MiddlerMsgController extends BaseContoller {
         System.out.println(jsonstr);
         return "success";
     }
+
+    @ApiOperation(value = "测试：okhttp请求接受成功")
+    @RequestMapping(value = "/send", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public void queryAllItem() throws InterruptedException {
+        while(true) {
+            Thread.sleep(500);
+            kafkaTemplate.send("TM", "", "{\n" + "\t\"deviceId\": \"1\",\n" + "\t\"tenantId\": \"1\",\n" + "\t\"data\": [{\n" + "\t\t\"key\": \"x\",\n" + "\t\t\"ts\": \"1524708830000\",\n" + "\t\t\"value\": \"1.00\"\n" + "\t}]\n" + "}");
+        }
+
+    }
+
 }
