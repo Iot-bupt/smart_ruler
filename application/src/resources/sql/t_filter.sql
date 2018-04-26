@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `t_filter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_filter` (
-  `id` varchar(36) NOT NULL,
+  `id` int NOT NULL,
   `jsCode` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

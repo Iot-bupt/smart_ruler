@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `t_filter2rule_relation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_filter2rule_relation` (
-  `ruleId` varchar(36) NOT NULL,
-  `filterId` varchar(36) NOT NULL,
+  `ruleId` int NOT NULL,
+  `filterId` int NOT NULL,
   KEY `ruleId` (`ruleId`),
   KEY `filterId` (`filterId`),
   CONSTRAINT `relation_ibfk_1` FOREIGN KEY (`ruleId`) REFERENCES `t_rule` (`id`),

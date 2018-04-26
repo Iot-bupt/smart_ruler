@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `t_rule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_rule` (
-  `id` varchar(36) NOT NULL,
-  `tenantId` varchar(36) NOT NULL,
+  `id` int NOT NULL,
+  `tenantId` int NOT NULL,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
