@@ -15,7 +15,7 @@
     </modules>
 
 
-    <name>SmartNoodles</name>
+    <name>smart_ruler</name>
     <url>http://maven.apache.org</url>
 
     <properties>

@@ -2,11 +2,15 @@ package com.tjlcast.server.data_source;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaListeners {
+
+    private static final Logger log = LoggerFactory.getLogger(KafkaListeners.class) ;
 
     @KafkaListener(topics =  {"TM"})
     public void receive(String message){
@@ -14,7 +18,5 @@ public class KafkaListeners {
 
         JsonObject jsonObj = (JsonObject)new JsonParser().parse(message);
         FromMsgMiddlerDeviceMsg fromMsgMiddlerDeviceMsg = new FromMsgMiddlerDeviceMsg(jsonObj);
-
-
     }
 }

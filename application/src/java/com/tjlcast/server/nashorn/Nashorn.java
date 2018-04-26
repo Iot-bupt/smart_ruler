@@ -15,15 +15,20 @@ public class Nashorn {
 
     //public Nashorn(String js, String key, Double value)
     //{
-       // this.js=js;
-       // this.key=key;
-       // this.value=value;
-   // }
+    // this.js=js;
+    // this.key=key;
+    // this.value=value;
+    // }
+    private final String ENGINE_NAME = "nashorn" ;
 
-    public Nashorn(){}
+    private final ScriptEngine engine ;
+
+    public Nashorn(){
+        this.engine = new ScriptEngineManager().getEngineByName(ENGINE_NAME) ;
+    }
 
     public boolean invokeFunction(String js, String key, Double value) throws ScriptException, NoSuchMethodException {
-        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+//        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         engine.eval(js);
 
         Invocable invocable = (Invocable) engine;
