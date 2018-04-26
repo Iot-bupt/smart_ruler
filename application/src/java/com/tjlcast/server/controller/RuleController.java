@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2018/4/13.
@@ -74,7 +73,7 @@ public class RuleController extends BaseContoller {
     @ResponseBody
     public List<Rule> getTenantRules(@PathVariable("tenantId") String tenantId)
     {
-        List<Rule> allTenantRule = ruleService.findRuleByTenantId(UUID.fromString(tenantId));
+        List<Rule> allTenantRule = ruleService.findRuleByTenantId(Integer.valueOf(tenantId));
         return  allTenantRule;
     }
 
@@ -83,7 +82,7 @@ public class RuleController extends BaseContoller {
     @ResponseBody
     public Rule getARule(@PathVariable("ruleId") String ruleId)
     {
-        Rule aRule = ruleService.findRuleById(UUID.fromString(ruleId));
+        Rule aRule = ruleService.findRuleById(Integer.valueOf(ruleId));
         return aRule;
     }
 

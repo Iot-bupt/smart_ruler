@@ -43,7 +43,7 @@ public class TenantService {
         return null ;
     }
 
-    public Tenant getATenant(UUID id) {
+    public Tenant getATenant(Integer id) {
         // todo
         return null ;
     }
@@ -54,7 +54,7 @@ public class TenantService {
         return false ;
     }
 
-    public boolean removeATenant(UUID id) {
+    public boolean removeATenant(Integer id) {
         // todo
         return false ;
     }

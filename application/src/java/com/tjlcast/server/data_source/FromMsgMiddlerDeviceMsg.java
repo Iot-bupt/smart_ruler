@@ -9,7 +9,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2018/4/22.
@@ -18,14 +17,14 @@ import java.util.UUID;
 public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, Serializable {
 
     private final JsonObject jsonObj ;
-    private final UUID deviceId ;
-    private final UUID tenantId ;
+    private final Integer deviceId ;
+    private final Integer tenantId ;
     private final List<Item> items = new LinkedList<>();
 
     public FromMsgMiddlerDeviceMsg(JsonObject jsonObj) {
         this.jsonObj = jsonObj ;
-        this.deviceId = UUID.fromString(jsonObj.get("deviceId").getAsString()) ;
-        this.tenantId = UUID.fromString(jsonObj.get("tenantId").getAsString()) ;
+        this.deviceId = Integer.valueOf(jsonObj.get("deviceId").getAsString()) ;
+        this.tenantId = Integer.valueOf(jsonObj.get("tenantId").getAsString()) ;
 
         jsonObj.getAsJsonArray("data").forEach(x -> items.add(new Item((JsonObject) x)));
     }
@@ -35,12 +34,12 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
     }
 
     @Override
-    public UUID getTenantId() {
+    public Integer getTenantId() {
         return this.tenantId ;
     }
 
     @Override
-    public UUID getDeviceId() {
+    public Integer getDeviceId() {
         return this.deviceId ;
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface DeviceMapper {
     @Select("select * from t_device where id = #{id}")
-    Device findDeviceById(@Param("id") String id );
+    Device findDeviceById(@Param("id") Integer id );
 
     @Select("select * from t_device")
     List<Device> getAllDeivce() ;
@@ -20,7 +20,7 @@ public interface DeviceMapper {
     int addDevice(Device device);
 
     @Delete("DELETE FROM t_device WHERE id = #{id}")
-    void removeADevice(String id);
+    void removeADevice(Integer id);
 
     @Delete("DELETE FROM t_device")
     void removeAllDevice() ;

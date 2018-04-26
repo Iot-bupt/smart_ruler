@@ -22,8 +22,8 @@ public class DeviceService {
     @Autowired
     private DeviceMapper deviceMapper;
 
-    public Device findDeviceById(UUID deviceId){
-        return deviceMapper.findDeviceById(deviceId.toString());
+    public Device findDeviceById(Integer deviceId){
+        return deviceMapper.findDeviceById(deviceId);
     }
 
     public boolean addDevice(JsonObject jsonObj) {
@@ -40,12 +40,12 @@ public class DeviceService {
         }
     }
 
-    public Device getADevice(UUID id) {
-        deviceMapper.findDeviceById(id.toString()) ;
+    public Device getADevice(Integer id) {
+        deviceMapper.findDeviceById(id) ;
         return null ;
     }
 
-    public List<Device> getAllDevice(UUID id) {
+    public List<Device> getAllDevice(Integer id) {
         try {
             List<Device> allDeivce = deviceMapper.getAllDeivce();
             return allDeivce ;
