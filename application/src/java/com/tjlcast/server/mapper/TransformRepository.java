@@ -11,6 +11,6 @@ import java.util.UUID;
  */
 @Repository
 public interface TransformRepository extends JpaRepository<Transform, UUID> {
-    Transform findById(UUID id) ;
+    Transform findById(Integer id) ;
 
 }

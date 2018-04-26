@@ -22,7 +22,7 @@ public class FilterService {
     @Autowired
     private FilterMapper filterMapper;
 
-    public List<Filter> findFilterByRuleId(UUID ruleId)
+    public List<Filter> findFilterByRuleId(Integer ruleId)
     {
         return filterMapper.findFilterByRuleId(ruleId);
     }
@@ -46,7 +46,7 @@ public class FilterService {
         }
     }
 
-    public boolean removeAFilter(UUID id) {
+    public boolean removeAFilter(Integer id) {
         try {
             filterMapper.removeFilter(id);
             return true ;
@@ -60,7 +60,7 @@ public class FilterService {
         return allFilter ;
     }
 
-    public Filter getAFilter(UUID id) {
+    public Filter getAFilter(Integer id) {
         Filter aFilter = filterMapper.getAFilter(id);
         return aFilter ;
     }

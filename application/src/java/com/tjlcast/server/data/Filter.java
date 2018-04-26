@@ -7,10 +7,10 @@ import lombok.Data;
  */
 @Data
 public class Filter {
-    private String id;    // 过滤器 唯一Id (must)
+    private Integer id;    // 过滤器 唯一Id (must)
     private String jsCode ;     // jsCode
 
-    public Filter(String id, String jsCode) {
+    public Filter(Integer id, String jsCode) {
         this.id = id;
         this.jsCode = jsCode;
     }

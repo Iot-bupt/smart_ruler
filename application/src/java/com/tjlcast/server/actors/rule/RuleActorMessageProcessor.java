@@ -15,7 +15,6 @@ import scala.concurrent.duration.Duration;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,11 +24,11 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
     private Nashorn nashorn;
 
-    private final UUID ruleId;
+    private final Integer ruleId;
     private final List<Filter> filters;
 
 
-    public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId) {
+    public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, Integer ruleId) {
         super(systemContext, logger);
         this.ruleId = ruleId;
         this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
@@ -38,7 +37,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         initAttributes();
     }
 
-    public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, UUID ruleId, RuleActor belongActor) {
+    public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, Integer ruleId, RuleActor belongActor) {
         super(systemContext, logger);
         this.ruleId = ruleId;
         this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);

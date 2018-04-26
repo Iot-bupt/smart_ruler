@@ -22,14 +22,14 @@ public class RuleService {
     @Autowired
     RuleMapper ruleMapper;
 
-    public List<Rule> findRuleByTenantId(UUID tenantId)
+    public List<Rule> findRuleByTenantId(Integer tenantId)
     {
-        return ruleMapper.findRuleByTenantId(tenantId.toString());
+        return ruleMapper.findRuleByTenantId(tenantId);
     }
 
-    public Rule findRuleById(UUID ruleId)
+    public Rule findRuleById(Integer ruleId)
     {
-        return ruleMapper.findRuleById(ruleId.toString());
+        return ruleMapper.findRuleById(ruleId);
     }
     // add
     public boolean addRule(Rule rule) {
@@ -48,8 +48,8 @@ public class RuleService {
         return true ;
     }
 
-    public boolean removeARule(UUID id) {
-        ruleMapper.removeRule(id.toString());
+    public boolean removeARule(Integer id) {
+        ruleMapper.removeRule(id);
         return true ;
     }
 

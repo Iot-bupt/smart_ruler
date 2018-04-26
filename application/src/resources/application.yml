@@ -20,6 +20,13 @@ spring:
           auto: create-drop
 
   kafka:
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      bootstrap-servers: 10.108.218.64:9092
     consumer:
       bootstrap-servers: 10.108.218.64:9092
       group-id: smart_ruler

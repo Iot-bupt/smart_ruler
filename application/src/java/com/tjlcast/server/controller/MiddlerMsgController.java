@@ -13,10 +13,10 @@ import com.tjlcast.server.services.RuleService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2018/4/22.
@@ -39,6 +39,9 @@ public class MiddlerMsgController extends BaseContoller {
     @Autowired
     DataSourceProcessor dataSourceProcessor ;
 
+    @Autowired
+    KafkaTemplate kafkaTemplate;
+
     @ApiOperation(value = "测试：模拟从kafka中拉取数据")
     @RequestMapping(value = "/deviceMsg", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -49,14 +52,14 @@ public class MiddlerMsgController extends BaseContoller {
         JsonObject jsonObj = (JsonObject)new JsonParser().parse(jsonStr);
         FromMsgMiddlerDeviceMsg fromMsgMiddlerDeviceMsg = new FromMsgMiddlerDeviceMsg(jsonObj);
 
-        Random random = new Random(100);
-        Rule rule = new Rule(UUID.randomUUID(),fromMsgMiddlerDeviceMsg.getTenantId(),"Rule"+random.nextInt());
+        Random random = new Random();
+        Rule rule = new Rule((int)(Math.random()*100000),fromMsgMiddlerDeviceMsg.getTenantId(),"Rule"+random.nextInt());
         ruleService.addRule(rule);
 
-        Filter filter = new Filter(UUID.randomUUID().toString(),"function filter(key,value){if(key=='x' && value>0){ return true;} else{return false;}}");
+        Filter filter = new Filter((int)(Math.random()*100000),"function filter(key,value){if(key=='x' && value>0){ return true;} else{return false;}}");
         filterService.addFilter(filter);
 
-        Rule2Filter rule2Filter= new Rule2Filter(rule.getId(),UUID.fromString(filter.getId()));
+        Rule2Filter rule2Filter= new Rule2Filter(rule.getId(),filter.getId());
         rule2FilterService.addARelation(rule2Filter);
 
         dataSourceProcessor.process(fromMsgMiddlerDeviceMsg);
@@ -64,7 +67,7 @@ public class MiddlerMsgController extends BaseContoller {
         return "OK" ;
     }
 
-    @ApiOperation(value = "测试：模拟从kafka中拉取数据")
+    @ApiOperation(value = "测试：okhttp请求接受成功")
     @RequestMapping(value = "/receive", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String receive(@RequestBody String jsonstr){
@@ -72,4 +75,16 @@ public class MiddlerMsgController extends BaseContoller {
         System.out.println(jsonstr);
         return "success";
     }
+
+    @ApiOperation(value = "测试：okhttp请求接受成功")
+    @RequestMapping(value = "/send", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public void queryAllItem() throws InterruptedException {
+        while(true) {
+            Thread.sleep(500);
+            kafkaTemplate.send("TM", "", "{\n" + "\t\"deviceId\": \"1\",\n" + "\t\"tenantId\": \"1\",\n" + "\t\"data\": [{\n" + "\t\t\"key\": \"x\",\n" + "\t\t\"ts\": \"1524708830000\",\n" + "\t\t\"value\": \"1.00\"\n" + "\t}]\n" + "}");
+        }
+
+    }
+
 }

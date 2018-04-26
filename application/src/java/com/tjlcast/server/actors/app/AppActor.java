@@ -14,15 +14,12 @@ import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.actors.tenant.TenantActor;
-import com.tjlcast.server.data.Device;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
-import com.tjlcast.server.services.DeviceService;
 import scala.concurrent.duration.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2017/12/8.
@@ -34,7 +31,7 @@ public class AppActor extends ContextAwareActor {
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
-    private final Map<UUID, ActorRef> tenantActors ;
+    private final Map<Integer, ActorRef> tenantActors ;
 
     public AppActor(ActorSystemContext systemContext) {
         super(systemContext) ;
@@ -45,13 +42,13 @@ public class AppActor extends ContextAwareActor {
     public void onReceive(Object message) throws Throwable {
         if(message instanceof DeviceRecognitionMsg) {
             // not sure.
-            UUID deviceId =((DeviceRecognitionMsg) message).getDeviceId();
-            Device device=systemContext.getDeviceService().findDeviceById(deviceId);
-            UUID tenantId=device.getTenantId();
-            getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender());
+            //Integer deviceId =((DeviceRecognitionMsg) message).getDeviceId();
+            //Device device=systemContext.getDeviceService().findDeviceById(deviceId);
+            //Integer tenantId=device.getTenantId();
+            //getOrCreateTenantActor(tenantId).tell(message,ActorRef.noSender());
         } else if (message instanceof FromMsgMiddlerDeviceMsg) {
             FromMsgMiddlerDeviceMsg mmessage = (FromMsgMiddlerDeviceMsg) message;
-            UUID tenantId = mmessage.getTenantId();
+            Integer tenantId = mmessage.getTenantId();
             ActorRef orCreateTenantActor = getOrCreateTenantActor(tenantId);
             orCreateTenantActor.tell(message,ActorRef.noSender()) ;
         }
@@ -67,7 +64,7 @@ public class AppActor extends ContextAwareActor {
         super.preStart();
     }
 
-    private ActorRef getOrCreateTenantActor(final UUID tenantId) {
+    private ActorRef getOrCreateTenantActor(final Integer tenantId) {
         return tenantActors.computeIfAbsent(tenantId,
                 k -> context().actorOf(Props.create(new TenantActor.ActorCreator(systemContext, tenantId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
                         tenantId.toString()));

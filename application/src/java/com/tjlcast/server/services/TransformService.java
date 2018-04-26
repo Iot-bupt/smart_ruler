@@ -25,7 +25,7 @@ public class TransformService{
         return all ;
     }
 
-    public Transform getByTransformId(UUID id) {
+    public Transform getByTransformId(Integer id) {
         Transform byId = transformRepository.findById(id);
         return byId ;
     }

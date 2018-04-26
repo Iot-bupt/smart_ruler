@@ -10,7 +10,6 @@ import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2017/12/8.
@@ -19,13 +18,13 @@ public class RuleActor extends ContextAwareActor {
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
-    private final UUID tenantId ;
-    private final UUID ruleId ;
+    private final Integer tenantId ;
+    private final Integer ruleId ;
     private final RuleActorMessageProcessor processor;
     public final List<Filter> filters; // todo
 
 
-    private RuleActor(ActorSystemContext context, UUID tenantId, UUID ruleId) {
+    private RuleActor(ActorSystemContext context, Integer tenantId, Integer ruleId) {
         super(context) ;
         this.tenantId = tenantId ;
         this.ruleId = ruleId ;
@@ -46,10 +45,10 @@ public class RuleActor extends ContextAwareActor {
     public static class ActorCreator extends ContextBasedCreator<RuleActor> {
         private static final long serialVersionUID = 1L ;
 
-        private final UUID tenantId ;
-        private final UUID ruleId ;
+        private final Integer tenantId ;
+        private final Integer ruleId ;
 
-        public ActorCreator(ActorSystemContext context, UUID tenantId,UUID ruleId) {
+        public ActorCreator(ActorSystemContext context, Integer tenantId,Integer ruleId) {
             super(context) ;
             this.tenantId = tenantId ;
             this.ruleId = ruleId ;

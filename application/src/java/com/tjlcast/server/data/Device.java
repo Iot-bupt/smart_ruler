@@ -1,37 +1,35 @@
 package com.tjlcast.server.data;
 import lombok.Data;
 
-import java.util.UUID;
-
 /**
  * Created by hasee on 2018/4/16.
  */
 @Data
 public class Device {
-    private UUID id ;               // system唯一id (must)
-    private UUID tenantId;          // tenant唯一id (must)
+    private Integer id ;               // system唯一id (must)
+    private Integer tenantId;          // tenant唯一id (must)
     private String manufacture;     // 厂商
     private String deviceType;      // 设备
     private String model;           // 型号
     private String parentDeviceId;  // 父设备id
 
-    public void setId(String id) {
-        this.id = UUID.fromString(id) ;
+    public void setId(int id) {
+        this.id = id ;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id ;
     }
 
-    public UUID getTenantId() {
+    public Integer getTenantId() {
         return tenantId ;
     }
 
-    public void setTenantId(String tenantId) {
-        this.tenantId = UUID.fromString(tenantId) ;
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId ;
     }
 
-    public Device(UUID id, UUID tenantId, String manufacture, String deviceType, String model, String parentDeviceId) {
+    public Device(Integer id,Integer tenantId, String manufacture, String deviceType, String model, String parentDeviceId) {
         this.id = id ;
         this.tenantId = tenantId ;
         this.manufacture = manufacture ;
@@ -41,15 +39,15 @@ public class Device {
     }
 
     public Device(String id, String tenantId, String manufacture, String deviceType, String model, String parentDeviceId) {
-        this.id = UUID.fromString(id) ;
-        this.tenantId = UUID.fromString(tenantId) ;
+        this.id = Integer.valueOf(id) ;
+        this.tenantId =Integer.valueOf(tenantId) ;
         this.manufacture = manufacture ;
         this.deviceType = deviceType ;
         this.model = model ;
         this.parentDeviceId = parentDeviceId ;
     }
 
-    public UUID getTenantIdUUID() {
+    public Integer getTenantIdUUID() {
         return this.tenantId;
     }
 }

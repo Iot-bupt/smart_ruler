@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Data
 public class Transform {
     @Id
-    private Long id;
+    private Integer id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

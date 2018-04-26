@@ -13,13 +13,10 @@ import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
-import com.tjlcast.server.services.RuleService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by tangjialiang on 2017/12/8.
@@ -30,14 +27,14 @@ public class TenantActor extends ContextAwareActor {
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this) ;
 
-    private final UUID tenantId ;
-    private final Map<UUID, ActorRef> ruleActors ;
+    private final Integer tenantId ;
+    private final Map<Integer, ActorRef> ruleActors ;
 
-    public TenantActor(ActorSystemContext context, UUID tenantId) {
+    public TenantActor(ActorSystemContext context, Integer tenantId) {
         super(context) ;
         this.tenantId = tenantId;
         List<Rule> rules= systemContext.getRuleService().findRuleByTenantId(tenantId);
-        ruleActors = new HashMap<UUID, ActorRef>() ;
+        ruleActors = new HashMap<Integer, ActorRef>() ;
         for  (Rule rule : rules)
         {
             getOrCreateRuleActor(rule.getId());
@@ -53,20 +50,20 @@ public class TenantActor extends ContextAwareActor {
     public void onReceive(Object message) throws Exception {
         if(message instanceof DeviceRecognitionMsg) {
             // not sure.
-            List<Rule> rules=systemContext.getRuleService().findRuleByTenantId(tenantId);
-            for (Rule rule : rules)
-            {
-                getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());
-            }
+            //List<Rule> rules=systemContext.getRuleService().findRuleByTenantId(tenantId);
+           // for (Rule rule : rules)
+            //{
+            //    getOrCreateRuleActor(rule.getId()).tell(message,ActorRef.noSender());
+            //}
         } else if (message instanceof FromMsgMiddlerDeviceMsg) {
-            for (Map.Entry<UUID, ActorRef> entry : ruleActors.entrySet()) {
+            for (Map.Entry<Integer, ActorRef> entry : ruleActors.entrySet()) {
                 ActorRef ruleActor = entry.getValue();
                 ruleActor.tell(message, ActorRef.noSender());
             }
         }
     }
 
-    private ActorRef getOrCreateRuleActor(final UUID ruleId) {
+    private ActorRef getOrCreateRuleActor(final Integer ruleId) {
         return ruleActors.computeIfAbsent(
                 ruleId,
                 k -> context().actorOf(Props.create(new RuleActor.ActorCreator(systemContext, tenantId, ruleId)).withDispatcher(DefaultActorService.CORE_DISPATCHER_NAME),
@@ -77,9 +74,9 @@ public class TenantActor extends ContextAwareActor {
     public static class ActorCreator extends ContextBasedCreator<TenantActor> {
         private static final long serialVersionUID = 1L ;
 
-        private final UUID tenantId ;
+        private final Integer tenantId ;
 
-        public ActorCreator(ActorSystemContext context, UUID tenantId) {
+        public ActorCreator(ActorSystemContext context, Integer tenantId) {
             super(context);
             this.tenantId = tenantId ;
         }

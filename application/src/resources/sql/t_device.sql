@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `t_device`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_device` (
-  `id` varchar(36) NOT NULL,
-  `tenantId` varchar(36) NOT NULL,
+  `id` int NOT NULL,
+  `tenantId` int NOT NULL,
   `manufacture` varchar(20) NOT NULL,
   `deviceType` varchar(20) NOT NULL,
   `model` varchar(20) NOT NULL,
