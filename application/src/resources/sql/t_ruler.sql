@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `t_rule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_rule` (
-  `id` int NOT NULL,
-  `tenantId` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `tenantId` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `transformId` int NOT NULL,
+  `transformId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,20 +35,8 @@ CREATE TABLE `t_rule` (
 -- Dumping data for table `t_rule`
 --
 
-INSERT INTO t_rule (id,tenantId,name) VALUES ("a37bf2ba-46c1-11e8-842f-0ed5f89f718b","28e25fd0-4699-11e8-842f-0ed5f89f718b","RULE")
-
-LOCK TABLES `` WRITE;
+LOCK TABLES `t_rule` WRITE;
 /*!40000 ALTER TABLE `t_rule` DISABLE KEYS */;
+INSERT INTO `t_rule` VALUES (56875,1,'Rule-366408613',8901);
 /*!40000 ALTER TABLE `t_rule` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-04-22  3:50:39
