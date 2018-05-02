@@ -53,6 +53,10 @@ public class ActorSystemContext {
 
     @Autowired
     @Getter
+    private TransformService transformService;
+
+    @Autowired
+    @Getter
     private Rule2FilterService rule2FilterService;
 
     @Getter

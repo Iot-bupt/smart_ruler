@@ -53,14 +53,20 @@ public class MiddlerMsgController extends BaseContoller {
         FromMsgMiddlerDeviceMsg fromMsgMiddlerDeviceMsg = new FromMsgMiddlerDeviceMsg(jsonObj);
 
         Random random = new Random();
-        Rule rule = new Rule((int)(Math.random()*100000),fromMsgMiddlerDeviceMsg.getTenantId(),"Rule"+random.nextInt());
+        Rule rule = new Rule((int)(Math.random()*100000),fromMsgMiddlerDeviceMsg.getTenantId(),"Rule"+random.nextInt(),8901);
         ruleService.addRule(rule);
 
-        Filter filter = new Filter((int)(Math.random()*100000),"function filter(key,value){if(key=='x' && value>0){ return true;} else{return false;}}");
-        filterService.addFilter(filter);
+        Filter filter1 = new Filter((int)(Math.random()*100000),"function filter(key,value){if(key=='x' && value>0){ return true;} else{return false;}}");
+        filterService.addFilter(filter1);
 
-        Rule2Filter rule2Filter= new Rule2Filter(rule.getId(),filter.getId());
-        rule2FilterService.addARelation(rule2Filter);
+        Filter filter2 = new Filter((int)(Math.random()*100000),"function filter(key,value){if(key=='x' && value>1){ return true;} else{return false;}}");
+        filterService.addFilter(filter2);
+
+        Rule2Filter rule2Filter= new Rule2Filter(rule.getId(),filter1.getId());
+        rule2FilterService.addARelation(rule2Filter)
+        ;
+        Rule2Filter rule2Filter2= new Rule2Filter(rule.getId(),filter2.getId());
+        rule2FilterService.addARelation(rule2Filter2);
 
         dataSourceProcessor.process(fromMsgMiddlerDeviceMsg);
 
@@ -82,7 +88,7 @@ public class MiddlerMsgController extends BaseContoller {
     public void queryAllItem() throws InterruptedException {
         while(true) {
             Thread.sleep(500);
-            kafkaTemplate.send("TM", "", "{\n" + "\t\"deviceId\": \"1\",\n" + "\t\"tenantId\": \"1\",\n" + "\t\"data\": [{\n" + "\t\t\"key\": \"x\",\n" + "\t\t\"ts\": \"1524708830000\",\n" + "\t\t\"value\": \"1.00\"\n" + "\t}]\n" + "}");
+            kafkaTemplate.send("TM", "", "{\n" + "\t\"deviceId\": \"1\",\n" + "\t\"tenantId\": \"1\",\n" + "\t\"data\": [{\n" + "\t\t\"key\": \"x\",\n" + "\t\t\"ts\": \"1524708830000\",\n" + "\t\t\"value\": \"2.00\"\n" + "\t}]\n" + "}");
         }
 
     }

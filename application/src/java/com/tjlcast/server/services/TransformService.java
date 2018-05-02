@@ -1,7 +1,7 @@
 package com.tjlcast.server.services;
 
 import com.tjlcast.server.data.Transform;
-import com.tjlcast.server.mapper.TransformRepository;
+import com.tjlcast.server.mapper.TransformMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,35 +18,41 @@ import java.util.UUID;
 public class TransformService{
 
     @Autowired
-    private TransformRepository transformRepository;
+    private TransformMapper transformMapper;
 
     public List<Transform> getAllTransform() {
-        List<Transform> all = transformRepository.findAll();
+        List<Transform> all = transformMapper.findAll();
         return all ;
     }
 
     public Transform getByTransformId(Integer id) {
-        Transform byId = transformRepository.findById(id);
+        Transform byId = transformMapper.findById(id);
         return byId ;
     }
 
+    public Transform getByRuleId(Integer id)
+    {
+        Transform byRuleId = transformMapper.findByRuleId(id);
+        return  byRuleId;
+    }
+
     public boolean deleteAll() {
-        transformRepository.deleteAll();
+        transformMapper.deleteAll();
         return true ;
     }
 
-    public boolean deleteById(UUID id) {
-        transformRepository.delete(id);
+    public boolean deleteById(Integer id) {
+        transformMapper.deleteById(id);
         return true ;
     }
 
     public boolean addTransform(Transform tf) {
-        transformRepository.save(tf) ;
+        transformMapper.save(tf) ;
         return true ;
     }
 
-    public boolean addTransform(List<Transform> tfs) {
-        transformRepository.save((Iterable<? extends Transform>) tfs.iterator()) ;
-        return true ;
-    }
+    //public boolean addTransform(List<Transform> tfs) {
+    //    transformMapper.save((Iterable<? extends Transform>) tfs.iterator()) ;
+    //    return true ;
+    //}
 }

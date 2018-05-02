@@ -26,6 +26,7 @@ CREATE TABLE `t_rule` (
   `id` int NOT NULL,
   `tenantId` int NOT NULL,
   `name` varchar(20) NOT NULL,
+  `transformId` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

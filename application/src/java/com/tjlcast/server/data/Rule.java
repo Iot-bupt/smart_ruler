@@ -10,12 +10,14 @@ public class Rule {
     private Integer id;                // rule 的唯一Id
     private Integer tenantId;          // 该tule的拥有者
     private String name;       // 该rule的信息
+    private Integer transformId;
     //private List<UUID> filters;     // 该rule配置的filter
 
-    public Rule(Integer id, Integer tenantId, String name){
+    public Rule(Integer id, Integer tenantId, String name ,Integer transformId){
         this.id=id;
         this.tenantId=tenantId;
         this.name=name;
+        this.transformId=transformId;
     }
 
     public Rule(String id, String tenantId, String name){

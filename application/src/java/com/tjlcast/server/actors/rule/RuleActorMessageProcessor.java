@@ -5,6 +5,7 @@ import akka.event.LoggingAdapter;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.shared.AbstractContextAwareMsgProcessor;
 import com.tjlcast.server.data.Filter;
+import com.tjlcast.server.data.Transform;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.data_source.Item;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
@@ -26,6 +27,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
     private final Integer ruleId;
     private final List<Filter> filters;
+    private final Transform transform;
 
 
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, Integer ruleId) {
@@ -33,6 +35,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         this.ruleId = ruleId;
         this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
         this.nashorn=new Nashorn();
+        this.transform=systemContext.getTransformService().getByRuleId(ruleId);
 
         initAttributes();
     }
@@ -42,6 +45,8 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         this.ruleId = ruleId;
         this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
         this.nashorn=new Nashorn();
+        this.transform=systemContext.getTransformService().getByRuleId(ruleId);
+
         initAttributes();
     }
 
@@ -103,7 +108,8 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
         if(nashornProcess(filters,msg))
         {
-            sendHTTPRequest(msg);
+            if(transform.getMethod().equals("POST"))
+                sendHTTPPOSTRequest(msg);
         }
 
     }
@@ -127,16 +133,16 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         return result;
     }
 
-    public String sendHTTPRequest(FromMsgMiddlerDeviceMsg msg)
+    public String sendHTTPPOSTRequest(FromMsgMiddlerDeviceMsg msg)
     {
+
         OkHttpClient client = new OkHttpClient();
-        FormBody.Builder formBody =new FormBody.Builder();
-        formBody.add("deviceId",msg.getDeviceId().toString());
-        formBody.add("tenantId",msg.getTenantId().toString());
-        formBody.add("data",msg.getItems().toString());
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8")
+                , msg.getJsonObj().toString());
+
         Request request = new Request.Builder()
-                .url("http://localhost:8080/api/test/receive") //Todo 输入URL
-                .post(formBody.build())
+                .url(transform.getUrl()) //Todo 输入URL
+                .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
