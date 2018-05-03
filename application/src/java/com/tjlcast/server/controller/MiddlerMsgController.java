@@ -2,9 +2,6 @@ package com.tjlcast.server.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tjlcast.server.data.Filter;
-import com.tjlcast.server.data.Rule;
-import com.tjlcast.server.data.Rule2Filter;
 import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.services.FilterService;
@@ -15,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Random;
 
 /**
  * Created by tangjialiang on 2018/4/22.
@@ -51,7 +46,7 @@ public class MiddlerMsgController extends BaseContoller {
         // str 2 obj
         JsonObject jsonObj = (JsonObject)new JsonParser().parse(jsonStr);
         FromMsgMiddlerDeviceMsg fromMsgMiddlerDeviceMsg = new FromMsgMiddlerDeviceMsg(jsonObj);
-
+        /**
         Random random = new Random();
         Rule rule = new Rule((int)(Math.random()*100000),fromMsgMiddlerDeviceMsg.getTenantId(),"Rule"+random.nextInt(),8901);
         ruleService.addRule(rule);
@@ -67,7 +62,7 @@ public class MiddlerMsgController extends BaseContoller {
         ;
         Rule2Filter rule2Filter2= new Rule2Filter(rule.getId(),filter2.getId());
         rule2FilterService.addARelation(rule2Filter2);
-
+**/
         dataSourceProcessor.process(fromMsgMiddlerDeviceMsg);
 
         return "OK" ;
@@ -82,7 +77,7 @@ public class MiddlerMsgController extends BaseContoller {
         return "success";
     }
 
-    @ApiOperation(value = "测试：okhttp请求接受成功")
+    @ApiOperation(value = "测试：间隔0.5z一条数据持续发送")
     @RequestMapping(value = "/send", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public void queryAllItem() throws InterruptedException {

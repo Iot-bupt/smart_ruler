@@ -37,7 +37,9 @@ public class TenantActor extends ContextAwareActor {
         ruleActors = new HashMap<Integer, ActorRef>() ;
         for  (Rule rule : rules)
         {
-            getOrCreateRuleActor(rule.getId());
+            if(rule.getState().equals("ACTIVE")) {
+                getOrCreateRuleActor(rule.getId());
+            }
         }
     }
 

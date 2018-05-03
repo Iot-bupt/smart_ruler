@@ -9,14 +9,18 @@ import lombok.Data;
 public class Rule {
     private Integer id;                // rule 的唯一Id
     private Integer tenantId;          // 该tule的拥有者
+    private String addition_info;
     private String name;       // 该rule的信息
+    private String state;
     private Integer transformId;
     //private List<UUID> filters;     // 该rule配置的filter
 
-    public Rule(Integer id, Integer tenantId, String name ,Integer transformId){
+    public Rule(Integer id, Integer tenantId, String addition_info, String name, String state, Integer transformId){
         this.id=id;
         this.tenantId=tenantId;
+        this.addition_info=addition_info;
         this.name=name;
+        this.state=state;
         this.transformId=transformId;
     }
 

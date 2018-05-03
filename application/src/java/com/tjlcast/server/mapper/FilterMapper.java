@@ -16,7 +16,7 @@ public interface FilterMapper {
     @Select("select * from t_filter where id=#{id}")
     Filter getAFilter(@Param("id") Integer id) ;
 
-    @Insert("INSERT INTO t_filter(id, jsCode) VALUES(#{id}, #{jsCode})")
+    @Insert("INSERT INTO t_filter(id, type, name, jsCode) VALUES(#{id}, #{type}, #{name}, #{jsCode})")
     int AddAFilter(Filter filter);
 
     @Delete("DELETE FROM t_filter WHERE id=#{id}")
