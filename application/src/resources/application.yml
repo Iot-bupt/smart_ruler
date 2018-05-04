@@ -48,5 +48,9 @@ mybatis:
   type-handlers-package: com.tjlcast.server.typeHandler
 
 
+zookeeper:
+  address: 10.108.218.108:2181
+
+
 
 
