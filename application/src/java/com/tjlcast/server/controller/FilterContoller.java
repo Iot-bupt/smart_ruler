@@ -33,4 +33,14 @@ public class FilterContoller extends BaseContoller {
         // 2. remove the filter in db.
         return "ok" ;
     }
+
+    @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/filters", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getFilter() {
+        // todo
+        // 1. get the idStr
+        // 2. remove the filter in db.
+        return "ok" ;
+    }
 }

@@ -59,4 +59,14 @@ public class RuleService {
         return allRule ;
     }
 
+    public boolean setRuleActive(Integer id) {
+        ruleMapper.setRuleActive(id);
+        return true;
+    }
+
+    public boolean setRuleSuspend(Integer id) {
+        ruleMapper.setRuleSuspend(id);
+        return true;
+    }
+
 }
