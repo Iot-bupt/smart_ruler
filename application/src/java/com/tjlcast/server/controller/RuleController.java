@@ -51,7 +51,7 @@ public class RuleController extends BaseContoller {
 
     //Delete
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeRule(@RequestParam String id) {
         // todo

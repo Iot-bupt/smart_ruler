@@ -28,4 +28,10 @@ public interface RuleMapper {
 
     @Delete("DELETE FROM t_rule")
     void removeAllRule() ;
+
+    @Update("UPDATE t_rule SET state = 'ACTIVE' WHERE id = #{id}")
+    void setRuleActive(Integer id);
+
+    @Update("UPDATE t_rule SET state = 'SUSPEND' WHERE id = #{id}")
+    void setRuleSuspend(Integer id);
 }
