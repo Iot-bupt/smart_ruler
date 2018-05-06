@@ -46,9 +46,9 @@ public class FilterService {
         }
     }
 
-    public boolean removeAFilter(Integer id) {
+    public boolean removeAFilter(Integer filterId) {
         try {
-            filterMapper.removeFilter(id);
+            filterMapper.removeFilter(filterId);
             return true ;
         } catch (Exception e) {
             return false ;
@@ -60,8 +60,8 @@ public class FilterService {
         return allFilter ;
     }
 
-    public Filter getAFilter(Integer id) {
-        Filter aFilter = filterMapper.getAFilter(id);
+    public Filter getAFilter(Integer filterId) {
+        Filter aFilter = filterMapper.getAFilter(filterId);
         return aFilter ;
     }
 }

@@ -8,14 +8,14 @@ import lombok.Data;
 
 @Data
 public class Transform {
-    private Integer id;
+    private Integer transformId;
     private String name;
     private String url ;
     private String method ;
 
-    public Transform(Integer id,String name, String url, String method)
+    public Transform(Integer transformId,String name, String url, String method)
     {
-        this.id=id;
+        this.transformId=transformId;
         this.name=name;
         this.url=url;
         this.method=method;

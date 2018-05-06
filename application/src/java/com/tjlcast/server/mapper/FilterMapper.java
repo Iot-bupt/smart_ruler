@@ -10,18 +10,18 @@ import java.util.List;
  */
 @Mapper
 public interface FilterMapper {
-    @Select("select t_filter.* from t_filter2rule_relation, t_filter where t_filter2rule_relation.ruleId=#{ruleId} and t_filter.id=t_filter2rule_relation.filterId")
+    @Select("select filter.* from rule2Filter_Relation, filter where rule2Filter_Relation.ruleId=#{ruleId} and filter.filterId=rule2Filter_Relation.filterId")
     List<Filter> findFilterByRuleId(@Param("ruleId") Integer ruleId);
 
-    @Select("select * from t_filter where id=#{id}")
-    Filter getAFilter(@Param("id") Integer id) ;
+    @Select("select * from filter where filterId=#{filterId}")
+    Filter getAFilter(@Param("filterId") Integer filterId) ;
 
-    @Insert("INSERT INTO t_filter(id, type, name, jsCode) VALUES(#{id}, #{type}, #{name}, #{jsCode})")
+    @Insert("INSERT INTO filter(filterId, type, name, jsCode) VALUES(#{filterId}, #{type}, #{name}, #{jsCode})")
     int AddAFilter(Filter filter);
 
-    @Delete("DELETE FROM t_filter WHERE id=#{id}")
-    void removeFilter(@Param("id")Integer id) ;
+    @Delete("DELETE FROM filter WHERE filterId=#{filterId}")
+    void removeFilter(@Param("filterId")Integer filterId) ;
 
-    @Delete("DELETE FROM t_filter")
+    @Delete("DELETE FROM filter")
     void removeAllFilter() ;
 }

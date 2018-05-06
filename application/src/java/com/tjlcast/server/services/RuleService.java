@@ -48,8 +48,8 @@ public class RuleService {
         return true ;
     }
 
-    public boolean removeARule(Integer id) {
-        ruleMapper.removeRule(id);
+    public boolean removeARule(Integer ruleId) {
+        ruleMapper.removeRule(ruleId);
         return true ;
     }
 
@@ -59,13 +59,13 @@ public class RuleService {
         return allRule ;
     }
 
-    public boolean setRuleActive(Integer id) {
-        ruleMapper.setRuleActive(id);
+    public boolean setRuleActive(Integer ruleId) {
+        ruleMapper.setRuleActive(ruleId);
         return true;
     }
 
-    public boolean setRuleSuspend(Integer id) {
-        ruleMapper.setRuleSuspend(id);
+    public boolean setRuleSuspend(Integer ruleId) {
+        ruleMapper.setRuleSuspend(ruleId);
         return true;
     }
 

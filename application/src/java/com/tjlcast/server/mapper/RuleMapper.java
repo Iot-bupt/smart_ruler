@@ -11,27 +11,27 @@ import java.util.List;
 
 @Mapper
 public interface RuleMapper {
-    @Select("select * from t_rule where id=#{Id}")
-    Rule findRuleById(@Param("Id")Integer id) ;
+    @Select("select * from rule where ruleId=#{ruleId}")
+    Rule findRuleById(@Param("ruleId")Integer ruleId) ;
 
-    @Select("select * from t_rule where tenantId=#{tenantId}")
+    @Select("select * from rule where tenantId=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")Integer tenantId);
 
-    @Select("select * from t_rule")
+    @Select("select * from rule")
     List<Rule> getAllRule();
 
-    @Insert("INSERT INTO t_rule(id, tenantId, addition_info, name, state, transformId) VALUES(#{id}, #{tenantId}, #{addition_info}, #{name}, #{state}, #{transformId})")
+    @Insert("INSERT INTO rule(ruleId, tenantId, addition_info, name, state, transformId) VALUES(#{ruleId}, #{tenantId}, #{addition_info}, #{name}, #{state}, #{transformId})")
     int addARule(Rule rule);
 
-    @Delete("DELETE FROM t_rule WHERE id = #{id}")
-    void removeRule(Integer id);
+    @Delete("DELETE FROM rule WHERE ruleId = #{ruleId}")
+    void removeRule(Integer ruleId);
 
-    @Delete("DELETE FROM t_rule")
+    @Delete("DELETE FROM rule")
     void removeAllRule() ;
 
-    @Update("UPDATE t_rule SET state = 'ACTIVE' WHERE id = #{id}")
-    void setRuleActive(Integer id);
+    @Update("UPDATE rule SET state = 'ACTIVE' WHERE ruleId = #{ruleId}")
+    void setRuleActive(Integer ruleId);
 
-    @Update("UPDATE t_rule SET state = 'SUSPEND' WHERE id = #{id}")
-    void setRuleSuspend(Integer id);
+    @Update("UPDATE rule SET state = 'SUSPEND' WHERE ruleId = #{ruleId}")
+    void setRuleSuspend(Integer ruleId);
 }

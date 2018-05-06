@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface Rule2FilterMapper {
-    @Insert("INSERT INTO t_filter2rule_relation (ruleId, filterId) VALUES(#{ruleId}, #{filterId})")
+    @Insert("INSERT INTO rule2Filter_Relation (ruleId, filterId) VALUES(#{ruleId}, #{filterId})")
     int addARelation(Rule2Filter rule2Filter);
 }

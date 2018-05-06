@@ -35,8 +35,7 @@ public class RuleController extends BaseContoller {
     @RequestMapping(value = "/{rulrId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activateRule(@PathVariable("ruleId") String ruleId) {
-        // todo
-        // 1. update state to activate
+        ruleService.setRuleActive(Integer.valueOf(ruleId));
         return "Activate" ;
     }
 
@@ -44,8 +43,7 @@ public class RuleController extends BaseContoller {
     @RequestMapping(value = "/{rulrId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String suspendRule(@PathVariable("ruleId") String ruleId) {
-        // todo
-        // 1. activate state to suspend
+        ruleService.setRuleSuspend(Integer.valueOf(ruleId));
         return "Suspend" ;
     }
 
