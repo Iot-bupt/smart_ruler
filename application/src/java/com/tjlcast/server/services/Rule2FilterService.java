@@ -19,4 +19,9 @@ public class Rule2FilterService {
         int i = rule2FilterMapper.addARelation(rule2Filter);
         return i;
     }
+
+    public void removeRelation(Integer ruleId){
+        removeRelation(ruleId);
+    }
+
 }

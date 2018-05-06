@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.data.Rule2Filter;
+import com.tjlcast.server.data.Transform;
 import com.tjlcast.server.data_source.RuleCreation;
 import com.tjlcast.server.services.FilterService;
 import com.tjlcast.server.services.Rule2FilterService;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -74,7 +76,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/{rulrId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/{ruleId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String suspendRule(@PathVariable("ruleId") String ruleId) {
         ruleService.setRuleSuspend(Integer.valueOf(ruleId));
@@ -83,11 +85,17 @@ public class RuleController extends BaseContoller {
 
     //Delete
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/remove/{ruleId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String removeRule(@RequestParam String id) {
-        // todo
-        // 1. remove the rule in db.
+    public String removeRule(@PathVariable("ruleId") String ruleId) {
+        List<Filter> filters=filterService.findFilterByRuleId(Integer.valueOf(ruleId));
+        rule2FilterService.removeRelation(Integer.valueOf(ruleId));
+
+        for(Filter filter:filters){
+            filterService.removeAFilter(filter.getFilterId());
+        }
+
+        ruleService.removeARule(Integer.valueOf(ruleId));
         return "OK" ;
     }
 
@@ -95,9 +103,16 @@ public class RuleController extends BaseContoller {
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/rules", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public List<Rule> getRules() {
+    public List<RuleCreation> getRules() {
+        List<RuleCreation> ruleCreations = new LinkedList<>();
         List<Rule> allRule = ruleService.getAllRule();
-        return allRule ;
+        for(Rule rule:allRule)
+        {
+            List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
+            Transform transform = transformService.getByRuleId(rule.getRuleId());
+            ruleCreations.add(new RuleCreation(rule,filters,transform));
+        }
+        return ruleCreations ;
     }
 
     @ApiOperation(value = "todo ***")
