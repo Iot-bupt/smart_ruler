@@ -15,8 +15,8 @@ public class Rule2FilterService {
     @Autowired
     private Rule2FilterMapper rule2FilterMapper;
 
-    public boolean addARelation(Rule2Filter rule2Filter) {
+    public int addARelation(Rule2Filter rule2Filter) {
         int i = rule2FilterMapper.addARelation(rule2Filter);
-        return i==1 ? true : false ;
+        return i;
     }
 }

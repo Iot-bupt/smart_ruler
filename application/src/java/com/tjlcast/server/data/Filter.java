@@ -1,5 +1,6 @@
 package com.tjlcast.server.data;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 /**
@@ -17,5 +18,12 @@ public class Filter {
         this.type = type;
         this.name = name;
         this.jsCode = jsCode;
+    }
+
+    public Filter(JsonObject jsonObject)
+    {
+        this.type=jsonObject.get("type").getAsString();
+        this.name=jsonObject.get("name").getAsString();
+        this.jsCode=jsonObject.get("jsCode").getAsString();
     }
 }

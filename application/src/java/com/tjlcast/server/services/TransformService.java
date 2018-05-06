@@ -46,9 +46,9 @@ public class TransformService{
         return true ;
     }
 
-    public boolean addTransform(Transform tf) {
-        transformMapper.save(tf) ;
-        return true ;
+    public int addTransform(Transform tf) {
+        int i =transformMapper.save(tf) ;
+        return i ;
     }
 
     //public boolean addTransform(List<Transform> tfs) {

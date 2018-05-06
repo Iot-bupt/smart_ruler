@@ -1,10 +1,7 @@
 package com.tjlcast.server.mapper;
 
 import com.tjlcast.server.data.Transform;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,20 +14,21 @@ public interface TransformMapper{
     @Select("select * from t_transform")
     List<Transform> findAll();
 
-    @Select("select * from t_transform where id = #{id}")
+    @Select("select * from transform where id = #{id}")
     Transform findById(Integer id) ;
 
-    @Select("select transform.id, transform.name, transform.url, transform.method from t_transform transform left join t_rule rule on transform.id = rule.transformId where rule.id = #{id}")
+    @Select("select transform.id, transform.name, transform.url, transform.method from transform transform left join t_rule rule on transform.id = rule.transformId where rule.id = #{id}")
     Transform findByRuleId(Integer id) ;
 
-    @Delete("delete from t_transform")
+    @Delete("delete from transform")
     void deleteAll();
 
-    @Delete("delete from t_transform where id = #{id}")
+    @Delete("delete from transform where id = #{id}")
     void deleteById(Integer id);
 
-    @Insert("insert into t_transform(id,name,url,method) VALUES (#{id}, #{name}, #{url}, #{transformId})")
-    boolean save(Transform transform);
+    @Insert("insert into transform(name,url,method) VALUES (#{name}, #{url}, #{transformId})")
+    @Options(useGeneratedKeys = true, keyProperty = "transformId", keyColumn = "transformId")
+    int save(Transform transform);
 
 
 }

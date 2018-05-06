@@ -27,14 +27,14 @@ public class FilterService {
         return filterMapper.findFilterByRuleId(ruleId);
     }
 
-    public boolean addFilter(JsonObject filterJson) {
+    public int addFilter(JsonObject filterJson) {
         Filter filter = new Gson().fromJson(filterJson, Filter.class);
         return addFilter(filter) ;
     }
 
-    public boolean addFilter(Filter filter) {
+    public int addFilter(Filter filter) {
         int i = filterMapper.AddAFilter(filter);
-        return i==1 ? true : false ;
+        return i;
     }
 
     public boolean removeAll() {

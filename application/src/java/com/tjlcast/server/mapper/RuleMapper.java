@@ -20,7 +20,8 @@ public interface RuleMapper {
     @Select("select * from rule")
     List<Rule> getAllRule();
 
-    @Insert("INSERT INTO rule(ruleId, tenantId, addition_info, name, state, transformId) VALUES(#{ruleId}, #{tenantId}, #{addition_info}, #{name}, #{state}, #{transformId})")
+    @Insert("INSERT INTO rule(tenantId, additional_info, name, state, transformId) VALUES(#{tenantId}, #{additional_info}, #{name}, #{state}, #{transformId})")
+    @Options(useGeneratedKeys = true, keyProperty = "ruleId", keyColumn = "ruleId")
     int addARule(Rule rule);
 
     @Delete("DELETE FROM rule WHERE ruleId = #{ruleId}")

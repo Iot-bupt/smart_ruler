@@ -1,7 +1,15 @@
 package com.tjlcast.server.controller;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data.Rule;
+import com.tjlcast.server.data.Rule2Filter;
+import com.tjlcast.server.data_source.RuleCreation;
+import com.tjlcast.server.services.FilterService;
+import com.tjlcast.server.services.Rule2FilterService;
 import com.tjlcast.server.services.RuleService;
+import com.tjlcast.server.services.TransformService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +28,40 @@ public class RuleController extends BaseContoller {
     @Autowired
     RuleService ruleService ;
 
+    @Autowired
+    FilterService filterService;
+
+    @Autowired
+    TransformService transformService;
+
+    @Autowired
+    Rule2FilterService rule2FilterService;
+
     //Post
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String addRule(@RequestBody String jsonStr) {
-        // todo
-        // 1. decode the jsonStr to be a jsonObj.
-        // 2. add the jsonStr to db.
+        JsonObject jsonObj = (JsonObject)new JsonParser().parse(jsonStr);
+        RuleCreation ruleCreation = new RuleCreation(jsonObj);
+
+        transformService.addTransform(ruleCreation.getTransform());
+        Integer transformId =ruleCreation.getTransform().getTransformId();
+        ruleCreation.getRule().setTransformId(transformId);
+
+        ruleService.addRule(ruleCreation.getRule());
+        Integer ruleId = ruleCreation.getRule().getRuleId();
+
+
+        for(Filter filter:ruleCreation.getFilters())
+        {
+            filterService.addFilter(filter);
+            Integer filterId =filter.getFilterId();
+
+            Rule2Filter rule2Filter=new Rule2Filter(ruleId,filterId);
+            rule2FilterService.addARelation(rule2Filter);
+
+        }
         return "OK" ;
     }
 

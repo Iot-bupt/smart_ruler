@@ -32,12 +32,12 @@ public class RuleService {
         return ruleMapper.findRuleById(ruleId);
     }
     // add
-    public boolean addRule(Rule rule) {
-        ruleMapper.addARule(rule) ;
-        return true ;
+    public int addRule(Rule rule) {
+        int i =ruleMapper.addARule(rule) ;
+        return i ;
     }
 
-    public boolean addRule(JsonObject ruleJson) {
+    public int addRule(JsonObject ruleJson) {
         Rule rule = new Gson().fromJson(ruleJson, Rule.class);
         return addRule(rule) ;
     }

@@ -1,5 +1,6 @@
 package com.tjlcast.server.data;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 /**
@@ -20,5 +21,11 @@ public class Transform {
         this.url=url;
         this.method=method;
 
+    }
+
+    public Transform(JsonObject jsonObject){
+        this.name=jsonObject.get("name").getAsString();
+        this.url=jsonObject.get("url").getAsString();
+        this.method=jsonObject.get("method").getAsString();
     }
 }

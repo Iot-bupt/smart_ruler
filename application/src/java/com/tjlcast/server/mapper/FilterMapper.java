@@ -16,7 +16,8 @@ public interface FilterMapper {
     @Select("select * from filter where filterId=#{filterId}")
     Filter getAFilter(@Param("filterId") Integer filterId) ;
 
-    @Insert("INSERT INTO filter(filterId, type, name, jsCode) VALUES(#{filterId}, #{type}, #{name}, #{jsCode})")
+    @Insert("INSERT INTO filter(type, name, jsCode) VALUES(#{type}, #{name}, #{jsCode})")
+    @Options(useGeneratedKeys = true, keyProperty = "filterId", keyColumn = "filterId")
     int AddAFilter(Filter filter);
 
     @Delete("DELETE FROM filter WHERE filterId=#{filterId}")
