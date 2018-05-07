@@ -11,13 +11,13 @@ import java.util.List;
 @Mapper
 public interface TransformMapper{
 
-    @Select("select * from t_transform")
+    @Select("select * from transform")
     List<Transform> findAll();
 
     @Select("select * from transform where transformId = #{transformId}")
     Transform findById(Integer transformId) ;
 
-    @Select("select transform.transformId, transform.name, transform.url, transform.method from transform transform left join rule rule on transform.transformId = rule.transformId where rule.ruleId = #{ruleId}")
+    @Select("select transform.transformId, transform.name, transform.url, transform.method, transform.requestBody from transform transform left join rule rule on transform.transformId = rule.transformId where rule.ruleId = #{ruleId}")
     Transform findByRuleId(Integer ruleId) ;
 
     @Delete("delete from transform")
@@ -26,7 +26,7 @@ public interface TransformMapper{
     @Delete("delete from transform where transformId = #{transformId}")
     void deleteById(Integer transformId);
 
-    @Insert("insert into transform(name,url,method) VALUES (#{name}, #{url}, #{method})")
+    @Insert("insert into transform(name, url, method, requestBody) VALUES (#{name}, #{url}, #{method}, #{requestBody})")
     @Options(useGeneratedKeys = true, keyProperty = "transformId", keyColumn = "transformId")
     int save(Transform transform);
 

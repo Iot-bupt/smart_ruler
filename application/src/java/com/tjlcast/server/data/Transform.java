@@ -13,19 +13,21 @@ public class Transform {
     private String name;
     private String url ;
     private String method ;
+    private String requestBody;
 
-    public Transform(Integer transformId,String name, String url, String method)
+    public Transform(Integer transformId,String name, String url, String method, String requestBody)
     {
         this.transformId=transformId;
         this.name=name;
         this.url=url;
         this.method=method;
-
+        this.requestBody=requestBody;
     }
 
     public Transform(JsonObject jsonObject){
         this.name=jsonObject.get("name").getAsString();
         this.url=jsonObject.get("url").getAsString();
         this.method=jsonObject.get("method").getAsString();
+        this.requestBody=jsonObject.getAsJsonObject("requestBody").toString();
     }
 }

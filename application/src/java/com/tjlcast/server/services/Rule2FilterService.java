@@ -21,7 +21,7 @@ public class Rule2FilterService {
     }
 
     public void removeRelation(Integer ruleId){
-        removeRelation(ruleId);
+        rule2FilterMapper.removeRelation(ruleId);
     }
 
 }

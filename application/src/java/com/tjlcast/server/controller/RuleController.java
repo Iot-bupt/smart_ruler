@@ -89,6 +89,7 @@ public class RuleController extends BaseContoller {
     @ResponseBody
     public String removeRule(@PathVariable("ruleId") String ruleId) {
         List<Filter> filters=filterService.findFilterByRuleId(Integer.valueOf(ruleId));
+        Transform transform=transformService.getByRuleId(Integer.valueOf(ruleId));
         rule2FilterService.removeRelation(Integer.valueOf(ruleId));
 
         for(Filter filter:filters){
@@ -96,6 +97,9 @@ public class RuleController extends BaseContoller {
         }
 
         ruleService.removeARule(Integer.valueOf(ruleId));
+
+
+        transformService.deleteById(transform.getTransformId());
         return "OK" ;
     }
 

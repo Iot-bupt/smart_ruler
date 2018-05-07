@@ -27,7 +27,7 @@ public class TransformController {
     }
 
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/remove/{transformId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String addATransform(@RequestBody String jsonStr){
         JsonObject jsonObj = (JsonObject)new JsonParser().parse(jsonStr);
@@ -35,6 +35,6 @@ public class TransformController {
 
         transformService.addTransform(transform);
 
-        return "Delete Success";
+        return "Add Success";
     }
 }
