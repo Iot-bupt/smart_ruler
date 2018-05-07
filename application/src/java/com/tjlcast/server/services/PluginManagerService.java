@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class PluginManagerService implements InitializingBean {
 
-    @Value("zookeeper.address")
+    @Value("${zookeeper.address}")
     String zkAddress ;
 
     PluginDiscovery pluginDiscovery ;
