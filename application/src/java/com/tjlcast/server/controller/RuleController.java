@@ -131,10 +131,15 @@ public class RuleController extends BaseContoller {
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/rule/{ruleId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public Rule getARule(@PathVariable("ruleId") String ruleId)
+    public RuleCreation getARule(@PathVariable("ruleId") String ruleId)
     {
-        Rule aRule = ruleService.findRuleById(Integer.valueOf(ruleId));
-        return aRule;
+
+        Rule rule = ruleService.findRuleById(Integer.valueOf(ruleId));
+
+        List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
+        Transform transform = transformService.getByRuleId(rule.getRuleId());
+        RuleCreation ruleCreation=new RuleCreation(rule,filters,transform);
+        return ruleCreation;
     }
 
 }
