@@ -123,7 +123,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
             for(Item item:msg.getItems())
             {
-                tag = tag || nashorn.invokeFunction(filter.getJsCode(), item.getKey(), Double.parseDouble(item.getValue()));
+                tag = tag || nashorn.invokeFunction(filter.getJsCode(), msg.getDeviceId(), item.getKey(), Double.parseDouble(item.getValue()));
             }
             result=result && tag;
             if(!result)

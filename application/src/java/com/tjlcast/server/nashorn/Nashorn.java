@@ -27,12 +27,12 @@ public class Nashorn {
         this.engine = new ScriptEngineManager().getEngineByName(ENGINE_NAME) ;
     }
 
-    public boolean invokeFunction(String js, String key, Double value) throws ScriptException, NoSuchMethodException {
+    public boolean invokeFunction(String js, String deviceId, String key, Double value) throws ScriptException, NoSuchMethodException {
 //        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         engine.eval(js);
 
         Invocable invocable = (Invocable) engine;
-        Boolean result=(Boolean) invocable.invokeFunction("filter", key, value);
+        Boolean result=(Boolean) invocable.invokeFunction("filter", deviceId, key, value);
         return result;
     }
 
