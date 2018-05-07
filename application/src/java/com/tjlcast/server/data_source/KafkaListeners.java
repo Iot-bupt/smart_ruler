@@ -16,7 +16,7 @@ public class KafkaListeners {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaListeners.class) ;
 
-    @KafkaListener(topics =  {"TM"})
+    @KafkaListener(topics =  {"deviceData"})
     public void receive(String message){
         System.out.println(message);
 

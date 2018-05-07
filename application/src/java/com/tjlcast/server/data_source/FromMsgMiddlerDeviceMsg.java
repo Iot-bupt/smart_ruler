@@ -17,14 +17,16 @@ import java.util.List;
 public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, Serializable {
 
     private final JsonObject jsonObj ;
-    private final Integer deviceId ;
+    private final String deviceId ;
     private final Integer tenantId ;
+    private final String deviceType;
     private final List<Item> items = new LinkedList<>();
 
     public FromMsgMiddlerDeviceMsg(JsonObject jsonObj) {
         this.jsonObj = jsonObj ;
-        this.deviceId = Integer.valueOf(jsonObj.get("deviceId").getAsString()) ;
+        this.deviceId = jsonObj.get("deviceId").getAsString() ;
         this.tenantId = Integer.valueOf(jsonObj.get("tenantId").getAsString()) ;
+        this.deviceType = jsonObj.get("deviceType").getAsString();
 
         jsonObj.getAsJsonArray("data").forEach(x -> items.add(new Item((JsonObject) x)));
     }
@@ -39,7 +41,7 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
     }
 
     @Override
-    public Integer getDeviceId() {
+    public String getDeviceId() {
         return this.deviceId ;
     }
 

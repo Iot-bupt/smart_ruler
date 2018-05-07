@@ -4,5 +4,5 @@ package com.tjlcast.server.aware;
  * Created by tangjialiang on 2017/12/18.
  */
 public interface DeviceAwareMsg {
-    Integer getDeviceId();
+    String getDeviceId();
 }
