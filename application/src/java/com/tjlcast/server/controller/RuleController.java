@@ -138,8 +138,25 @@ public class RuleController extends BaseContoller {
 
         List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
         Transform transform = transformService.getByRuleId(rule.getRuleId());
-        RuleCreation ruleCreation=new RuleCreation(rule,filters,transform);
+        RuleCreation ruleCreation=new RuleCreation(rule, filters, transform);
         return ruleCreation;
+    }
+
+    //禁止使用
+    @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/remove/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String removeALLRule(@PathVariable("pass") String pass){
+        if(pass.equals("K815"))
+        {
+            rule2FilterService.removeAllRelation();
+            filterService.removeAll();
+            transformService.deleteAll();
+            ruleService.removeAllRule();
+            return "DeleteSuccess";
+        }
+
+        return "DeleteFault";
     }
 
 }

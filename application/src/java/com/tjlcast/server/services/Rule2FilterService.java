@@ -24,4 +24,8 @@ public class Rule2FilterService {
         rule2FilterMapper.removeRelation(ruleId);
     }
 
+    public void removeAllRelation(){
+        rule2FilterMapper.removeAllRelation();
+    }
+
 }
