@@ -142,7 +142,7 @@ public class RuleController extends BaseContoller {
         return ruleCreation;
     }
 
-    //禁止使用
+    //小心使用！！！！！！！！！！！！！
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/remove/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
