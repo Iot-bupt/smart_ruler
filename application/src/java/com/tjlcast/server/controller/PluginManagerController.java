@@ -1,5 +1,6 @@
 package com.tjlcast.server.controller;
 
+import com.tjlcast.server.data.Plugin;
 import com.tjlcast.server.services.PluginManagerService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,8 @@ public class PluginManagerController {
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public List<String> getAllPlugins() {
-        List<String> pluginsInfo = pluginManagerService.getPluginsInfo();
+    public List<Plugin> getAllPlugins() {
+        List<Plugin> pluginsInfo = pluginManagerService.getPluginsInfo();
         return pluginsInfo ;
     }
 }

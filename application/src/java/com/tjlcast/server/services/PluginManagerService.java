@@ -1,5 +1,6 @@
 package com.tjlcast.server.services;
 
+import com.tjlcast.server.data.Plugin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class PluginManagerService implements InitializingBean {
     PluginDiscovery pluginDiscovery ;
 
 
-    public List<String> getPluginsInfo() {
+    public List<Plugin> getPluginsInfo() {
         return pluginDiscovery.discover() ;
     }
 
