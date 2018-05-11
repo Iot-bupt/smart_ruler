@@ -39,7 +39,7 @@ public class RuleController extends BaseContoller {
     @Autowired
     Rule2FilterService rule2FilterService;
 
-    //Post
+    //Post新增规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -67,6 +67,7 @@ public class RuleController extends BaseContoller {
         return "OK" ;
     }
 
+    //激活规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/{rulrId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -75,6 +76,7 @@ public class RuleController extends BaseContoller {
         return "Activate" ;
     }
 
+    //暂停规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/{ruleId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -83,7 +85,7 @@ public class RuleController extends BaseContoller {
         return "Suspend" ;
     }
 
-    //Delete
+    //Delete 删除规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/remove/{ruleId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -103,7 +105,7 @@ public class RuleController extends BaseContoller {
         return "OK" ;
     }
 
-    //GET
+    //GET 获取全部规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/rules", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -119,15 +121,7 @@ public class RuleController extends BaseContoller {
         return ruleCreations ;
     }
 
-    @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/tenantRule/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public List<Rule> getTenantRules(@PathVariable("tenantId") String tenantId)
-    {
-        List<Rule> allTenantRule = ruleService.findRuleByTenantId(Integer.valueOf(tenantId));
-        return  allTenantRule;
-    }
-
+    //按规则ID获取规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/rule/{ruleId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -142,6 +136,7 @@ public class RuleController extends BaseContoller {
         return ruleCreation;
     }
 
+    //按规则获取规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/ruleByTenant/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -158,6 +153,8 @@ public class RuleController extends BaseContoller {
         }
         return ruleCreations ;
     }
+
+
 
 
     //小心使用！！！！！！！！！！！！！
