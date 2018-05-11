@@ -20,6 +20,7 @@ public class PluginManagerController {
     @Autowired
     PluginManagerService pluginManagerService ;
 
+    //获取全部插件信息
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
