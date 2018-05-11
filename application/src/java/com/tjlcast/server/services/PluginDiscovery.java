@@ -24,14 +24,14 @@ public class PluginDiscovery {
 
     private String zkAddress;
 
-    private List<Plugin> plugin = new LinkedList<>();
-
     public PluginDiscovery(String zkAddress) {
         this.zkAddress = zkAddress;
     }
 
     public List<Plugin> discover() {
         // 创建 ZooKeeper 客户端
+        List<Plugin> plugin = new LinkedList<>();
+
         ZkClient zkClient = new ZkClient(zkAddress, Constant.ZK_SESSION_TIMEOUT, Constant.ZK_CONNECTION_TIMEOUT);
         Stat stat = new Stat();
         LOGGER.debug("connect zookeeper");
