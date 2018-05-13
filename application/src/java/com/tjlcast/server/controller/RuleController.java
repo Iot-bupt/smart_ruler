@@ -69,7 +69,7 @@ public class RuleController extends BaseContoller {
 
     //激活规则
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/{rulrId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/{ruleId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activateRule(@PathVariable("ruleId") String ruleId) {
         ruleService.setRuleActive(Integer.valueOf(ruleId));
@@ -159,7 +159,7 @@ public class RuleController extends BaseContoller {
 
     //小心使用！！！！！！！！！！！！！
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/remove/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/removeAll/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeALLRule(@PathVariable("pass") String pass){
         if(pass.equals("K815"))
