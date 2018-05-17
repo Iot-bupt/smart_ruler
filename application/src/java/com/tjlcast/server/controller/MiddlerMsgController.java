@@ -83,7 +83,7 @@ public class MiddlerMsgController extends BaseContoller {
     public void queryAllItem() throws InterruptedException {
         while(true) {
             Thread.sleep(500);
-            kafkaTemplate.send("TM", "", "{\n" + "\t\"deviceId\": \"1\",\n" + "\t\"tenantId\": \"1\",\n" + "\t\"data\": [{\n" + "\t\t\"key\": \"x\",\n" + "\t\t\"ts\": \"1524708830000\",\n" + "\t\t\"value\": \"2.00\"\n" + "\t}]\n" + "}");
+            kafkaTemplate.send("deviceData", "", "{\n" + "\t\"deviceId\": \"1\",\n" + "\t\"tenantId\": \"1\",\n" + "\t\"data\": [{\n" + "\t\t\"key\": \"x\",\n" + "\t\t\"ts\": \"1524708830000\",\n" + "\t\t\"value\": \"2.00\"\n" + "\t}]\n" + "}");
         }
 
     }
