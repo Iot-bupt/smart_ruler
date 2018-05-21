@@ -2,6 +2,7 @@ package com.tjlcast.server.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tjlcast.server.data.GenerateData.Generator2Stdout;
 import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.services.FilterService;
@@ -13,6 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
+import java.util.Set;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by tangjialiang on 2018/4/22.
  */
@@ -20,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/test")
 @Slf4j
-public class MiddlerMsgController extends BaseContoller {
+public class TestMiddlerMsgController extends BaseContoller {
 
     @Autowired
     Rule2FilterService rule2FilterService;
@@ -36,6 +43,18 @@ public class MiddlerMsgController extends BaseContoller {
 
     @Autowired
     KafkaTemplate kafkaTemplate;
+
+    // 线程池
+    private ThreadPoolExecutor threadsPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+
+    // 运行任务
+    private ConcurrentHashMap<Integer, SoftReference<Future<?>>> tasks = new ConcurrentHashMap<>() ;
+
+    // 任务编号生成器
+    private AtomicInteger taskNo = new AtomicInteger(0);
+
+    // soft queue ???
+    private ReferenceQueue refQueue = new ReferenceQueue() ;
 
     @ApiOperation(value = "测试：模拟从kafka中拉取数据")
     @RequestMapping(value = "/deviceMsg", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -77,6 +96,12 @@ public class MiddlerMsgController extends BaseContoller {
         return "success";
     }
 
+    /**
+     * Don't do this.
+     *
+     * @deprecated
+     * @throws InterruptedException
+     */
     @ApiOperation(value = "测试：间隔0.5z一条数据持续发送")
     @RequestMapping(value = "/send", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -88,4 +113,30 @@ public class MiddlerMsgController extends BaseContoller {
 
     }
 
+    @ApiOperation(value = "测试：....")
+    @RequestMapping(value = "/randSend", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public void addSendTask() {
+        SoftReference<Future<?>> future = new SoftReference<Future<?>>(threadsPool.submit(new Generator2Stdout(10)), refQueue) ;
+        int no = taskNo.getAndIncrement();
+        tasks.put(no, future) ;
+    }
+
+    @ApiOperation(value = "测试：....")
+    @RequestMapping(value = "/remove/{taskNo}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public void removeSendTask(@PathVariable int taskNo) {
+        tasks.computeIfPresent(taskNo, (k, v) -> {
+            Future<?> future = v.get();
+            if (future!=null) future.cancel(true) ;
+            return null ;
+        }) ;
+    }
+
+    @ApiOperation(value = "测试：....")
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Set<?> removeSendTask() throws InterruptedException {
+        return tasks.keySet() ;
+    }
 }

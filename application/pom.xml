@@ -201,6 +201,12 @@
             <artifactId>disconf-client</artifactId>
             <version>2.6.36</version>
         </dependency>
+
+        <!-- rxjava -->
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+        </dependency>
     </dependencies>
 
 

@@ -41,6 +41,7 @@
         <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
         <mysql-connector>5.1.39</mysql-connector>
         <fastjson.version>1.2.47</fastjson.version>
+        <io.reactivex.version>1.0.2</io.reactivex.version>
     </properties>
 
     <dependencyManagement>
@@ -262,6 +263,7 @@
                 <version>4.0</version>
             </dependency>
 
+            <!-- disconf -->
             <dependency>
                 <groupId>com.baidu.disconf</groupId>
                 <artifactId>disconf-core</artifactId>
@@ -271,6 +273,13 @@
                 <groupId>com.baidu.disconf</groupId>
                 <artifactId>disconf-client</artifactId>
                 <version>2.6.36</version>
+            </dependency>
+
+            <!-- rxjava -->
+            <dependency>
+                <groupId>io.reactivex</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>${io.reactivex.version}</version>
             </dependency>
 
         </dependencies>
