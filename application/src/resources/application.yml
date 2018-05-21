@@ -9,7 +9,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.112.233.200:3306/BUPT_IOT?characterEncoding=UTF-8   #jdbc:mysql://localhost:3306/dbgirl_test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    url: jdbc:mysql://39.104.165.155:3306/BUPT_IOT?characterEncoding=UTF-8   #jdbc:mysql://localhost:3306/dbgirl_test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
     username: root
     password: root
 
@@ -26,10 +26,10 @@ spring:
       buffer-memory: 33554432
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      bootstrap-servers: 10.112.233.200:9092
+      bootstrap-servers: 39.104.186.210:9092
     consumer:
-      bootstrap-servers: 10.112.233.200:9092
-      group-id: smart_ruler
+      bootstrap-servers: 39.104.186.210:9092
+      group-id: -1
       enable-auto-commit: true
       auto-commit-interval: 100
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -49,8 +49,4 @@ mybatis:
 
 
 zookeeper:
-  address: 10.108.218.108:2181
-
-
-
-
+  address: 39.104.186.210:2181

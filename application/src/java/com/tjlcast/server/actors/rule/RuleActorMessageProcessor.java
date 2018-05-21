@@ -137,8 +137,10 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
     {
 
         OkHttpClient client = new OkHttpClient();
-        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8")
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
                 , transform.getRequestBody());
+
+        System.out.println(requestBody);
 
         Request request = new Request.Builder()
                 .url(transform.getUrl()) //Todo 输入URL
