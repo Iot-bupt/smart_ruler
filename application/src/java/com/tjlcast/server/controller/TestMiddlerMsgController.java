@@ -136,7 +136,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     @ApiOperation(value = "测试：....")
     @RequestMapping(value = "/listAll", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public Set<?> removeSendTask() throws InterruptedException {
+    public Set<?> listTasks() throws InterruptedException {
         return tasks.keySet() ;
     }
 }
