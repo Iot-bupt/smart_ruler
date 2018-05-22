@@ -2,6 +2,7 @@ package com.tjlcast.server.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tjlcast.server.data.GenerateData.DefaultGenerator;
 import com.tjlcast.server.data.GenerateData.Generator2Stdout;
 import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -48,7 +48,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     private ThreadPoolExecutor threadsPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
     // 运行任务
-    private ConcurrentHashMap<Integer, SoftReference<Future<?>>> tasks = new ConcurrentHashMap<>() ;
+    private ConcurrentHashMap<Integer, SoftReference<DefaultGenerator>> tasks = new ConcurrentHashMap<>() ;
 
     // 任务编号生成器
     private AtomicInteger taskNo = new AtomicInteger(0);
@@ -117,9 +117,11 @@ public class TestMiddlerMsgController extends BaseContoller {
     @RequestMapping(value = "/randSend", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public void addSendTask() {
-        SoftReference<Future<?>> future = new SoftReference<Future<?>>(threadsPool.submit(new Generator2Stdout(10))) ;
+        Generator2Stdout generator2Stdout = new Generator2Stdout(10);
+        threadsPool.submit(generator2Stdout) ;
+        SoftReference<DefaultGenerator> task = new SoftReference<DefaultGenerator>(generator2Stdout) ;
         int no = taskNo.getAndIncrement();
-        tasks.put(no, future) ;
+        tasks.put(no, task) ;
     }
 
     @ApiOperation(value = "测试：....")
@@ -127,8 +129,8 @@ public class TestMiddlerMsgController extends BaseContoller {
     @ResponseBody
     public void removeSendTask(@PathVariable int taskNo) {
         tasks.computeIfPresent(taskNo, (k, v) -> {
-            Future<?> future = v.get();
-            if (future!=null) future.cancel(true) ;
+            DefaultGenerator defaultGenerator = v.get();
+            if (defaultGenerator!=null) defaultGenerator.subscribe.unsubscribe(); ;
             return null ;
         }) ;
     }

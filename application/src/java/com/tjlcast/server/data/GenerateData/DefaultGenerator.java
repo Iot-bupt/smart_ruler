@@ -4,6 +4,7 @@ import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.data_source.Item;
 import org.apache.commons.lang3.RandomUtils;
 import rx.Observable;
+import rx.Subscription;
 import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class DefaultGenerator implements Runnable {
     private final int interTime ;
+    public Subscription subscribe;
 
     public DefaultGenerator(int interTime) {
         this.interTime = interTime ;
@@ -25,17 +27,18 @@ public abstract class DefaultGenerator implements Runnable {
                 .map(this::generateRandDeviceIdMsg)
                 .map(this::occasionallyKV)
                 .subscribeOn(Schedulers.trampoline())
-                .observeOn(Schedulers.io());
+                .observeOn(Schedulers.trampoline());
     }
 
     protected abstract void work(FromMsgMiddlerDeviceMsg msg) ;
 
     private void consume() {
-        observe()
+        Subscription subscribe = observe()
                 .subscribe(
                         this::work,
                         e -> System.out.println("Error emitting event " + e)
                 );
+        this.subscribe = subscribe ;
     }
 
     @Override

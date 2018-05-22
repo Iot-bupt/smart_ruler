@@ -16,4 +16,18 @@ public class Generator2Stdout extends DefaultGenerator {
         System.out.println(Thread.currentThread().getName()) ;
         System.out.println(msg) ;
     }
+
+    public static void main(String[] args) throws InterruptedException {
+        Generator2Stdout generator2Stdout = new Generator2Stdout(10);
+        Thread thread = new Thread(generator2Stdout);
+        thread.start();
+
+        Thread.sleep(5000);
+        generator2Stdout.subscribe.unsubscribe();
+
+        for (int i = 0; i < 10; i++) {
+            Thread.sleep(1000);
+            System.out.println(Thread.currentThread().getName()) ;
+        }
+    }
 }
