@@ -5,9 +5,7 @@ import com.google.gson.JsonParser;
 import com.tjlcast.server.aware.DeviceAwareMsg;
 import com.tjlcast.server.aware.TenantAwareMsg;
 import lombok.Data;
-import springfox.documentation.spring.web.json.Json;
 
-import javax.persistence.criteria.From;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
     private final String deviceId ;     // required
     private final Integer tenantId ;    // required
     private final String deviceType;    // optional
-    private final List<Item> items = new LinkedList<>();    // required
+    private final List<Item> data = new LinkedList<>();    // required
 
     public FromMsgMiddlerDeviceMsg(JsonObject jsonObj) {
         this.jsonObj = jsonObj ;
@@ -30,7 +28,7 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
         this.tenantId = Integer.valueOf(jsonObj.get("tenantId").getAsString()) ;
         this.deviceType = jsonObj.get("deviceType").getAsString();
 
-        jsonObj.getAsJsonArray("data").forEach(x -> items.add(new Item((JsonObject) x)));
+        jsonObj.getAsJsonArray("data").forEach(x -> data.add(new Item((JsonObject) x)));
     }
 
     public FromMsgMiddlerDeviceMsg(String str) {
@@ -87,7 +85,7 @@ public class FromMsgMiddlerDeviceMsg implements TenantAwareMsg, DeviceAwareMsg, 
         this.tenantId = builder.tenantId ;
         this.deviceType = builder.deviceType ;
 
-        if (builder.items.size()!=0) this.items.addAll(builder.items) ;
+        if (builder.items.size()!=0) this.data.addAll(builder.items) ;
     }
 
 }

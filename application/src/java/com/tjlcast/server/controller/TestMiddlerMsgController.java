@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -117,7 +119,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     @RequestMapping(value = "/randSend", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public void addSendTask() {
-        SoftReference<Future<?>> future = new SoftReference<Future<?>>(threadsPool.submit(new Generator2Stdout(10))) ;
+        SoftReference<Future<?>> future = new SoftReference<Future<?>>(threadsPool.submit(new Generator2Stdout(10, kafkaTemplate))) ;
         int no = taskNo.getAndIncrement();
         tasks.put(no, future) ;
     }

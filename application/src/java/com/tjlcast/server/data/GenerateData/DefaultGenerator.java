@@ -3,6 +3,7 @@ package com.tjlcast.server.data.GenerateData;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.data_source.Item;
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.kafka.core.KafkaTemplate;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -12,10 +13,13 @@ import java.util.concurrent.TimeUnit;
  * Created by tangjialiang on 2018/5/22.
  */
 public abstract class DefaultGenerator implements Runnable {
+    protected KafkaTemplate kafkaTemplate;
+
     private final int interTime ;
 
-    public DefaultGenerator(int interTime) {
+    public DefaultGenerator(int interTime,KafkaTemplate kafkaTemplate) {
         this.interTime = interTime ;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     private Observable<FromMsgMiddlerDeviceMsg> observe() {
@@ -55,7 +59,7 @@ public abstract class DefaultGenerator implements Runnable {
         String key = "x" ;
         String value = String.valueOf(RandomUtils.nextInt(0, 101) ) ;
 
-        msg.getItems().add(new Item(key, value, ts)) ;
+        msg.getData().add(new Item(key, value, ts)) ;
         return msg ;
     }
 }
