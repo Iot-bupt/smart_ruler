@@ -54,7 +54,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     private AtomicInteger taskNo = new AtomicInteger(0);
 
     // soft queue ???
-    private ReferenceQueue refQueue = new ReferenceQueue() ;
+    // private ReferenceQueue refQueue = new ReferenceQueue() ;
 
     @ApiOperation(value = "测试：模拟从kafka中拉取数据")
     @RequestMapping(value = "/deviceMsg", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -117,7 +117,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     @RequestMapping(value = "/randSend", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public void addSendTask() {
-        SoftReference<Future<?>> future = new SoftReference<Future<?>>(threadsPool.submit(new Generator2Stdout(10)), refQueue) ;
+        SoftReference<Future<?>> future = new SoftReference<Future<?>>(threadsPool.submit(new Generator2Stdout(10))) ;
         int no = taskNo.getAndIncrement();
         tasks.put(no, future) ;
     }
