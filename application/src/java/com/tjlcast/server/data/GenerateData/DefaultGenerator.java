@@ -16,7 +16,7 @@ public abstract class DefaultGenerator implements Runnable {
     private final int interTime ;
     public Subscription subscribe;
 
-    public DefaultGenerator(int interTime) {
+    DefaultGenerator(int interTime) {
         this.interTime = interTime ;
     }
 

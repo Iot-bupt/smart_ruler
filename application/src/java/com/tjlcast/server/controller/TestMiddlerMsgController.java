@@ -122,7 +122,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     public void addSendTask() {
         Generator2Stdout generator2Stdout = new Generator2Stdout(10);
         threadsPool.submit(generator2Stdout) ;
-        SoftReference<DefaultGenerator> task = new SoftReference<DefaultGenerator>(generator2Stdout) ;
+        SoftReference<DefaultGenerator> task = new SoftReference<>(generator2Stdout) ;
         int no = taskNo.getAndIncrement();
         tasks.put(no, task) ;
     }

@@ -9,7 +9,7 @@ import org.springframework.kafka.core.KafkaTemplate;
  */
 public class Generator2Kafka extends DefaultGenerator {
 
-    protected KafkaTemplate kafkaTemplate;
+    private KafkaTemplate kafkaTemplate;
 
     public Generator2Kafka(int interTime, KafkaTemplate kafkaTemplate) {
         super(interTime);
