@@ -7,12 +7,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 /**
  * Created by tangjialiang on 2018/5/22.
  */
+public class Generator2Kafka extends DefaultGenerator {
 
-public class Generator2Stdout_li extends DefaultGenerator_li {
+    protected KafkaTemplate kafkaTemplate;
 
-
-    public Generator2Stdout_li(int interTime, KafkaTemplate kafkaTemplate) {
-        super(interTime, kafkaTemplate);
+    public Generator2Kafka(int interTime, KafkaTemplate kafkaTemplate) {
+        super(interTime);
+        this.kafkaTemplate = kafkaTemplate ;
     }
 
     @Override
@@ -27,19 +28,5 @@ public class Generator2Stdout_li extends DefaultGenerator_li {
         String jsonStr = ObjectStr.replaceAll("\"jsonObj\":\\{\\},","");
         System.out.println(jsonStr);
         kafkaTemplate.send("deviceData","",jsonStr);
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Generator2Stdout_li generator2Stdout = new Generator2Stdout_li(10);
-        Thread thread = new Thread(generator2Stdout);
-        thread.start();
-
-        Thread.sleep(5000);
-        generator2Stdout.subscribe.unsubscribe();
-
-        for (int i = 0; i < 10; i++) {
-            Thread.sleep(1000);
-            System.out.println(Thread.currentThread().getName()) ;
-        }
     }
 }

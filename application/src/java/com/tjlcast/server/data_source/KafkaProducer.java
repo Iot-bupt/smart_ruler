@@ -1,21 +1,22 @@
-package com.tjlcast.server.data.GenerateData;
+package com.tjlcast.server.data_source;
 
-import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Created by tangjialiang on 2018/5/22.
+ */
+
 @Component
-public class KafkaProducer_li {
+public class KafkaProducer {
 
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
     public String kafkaProduce(FromMsgMiddlerDeviceMsg msg){
-
         kafkaTemplate.send("deviceData","",msg);
         return "success";
     }
-
-
 }

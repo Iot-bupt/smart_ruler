@@ -20,7 +20,7 @@ public abstract class DefaultGenerator implements Runnable {
         this.interTime = interTime ;
     }
 
-    private Observable<FromMsgMiddlerDeviceMsg> observe() {
+    protected Observable<FromMsgMiddlerDeviceMsg> observe() {
         return Observable
                 .interval(interTime, TimeUnit.MILLISECONDS)
                 .delay(x -> Observable.timer(RandomUtils.nextInt(0, 10), TimeUnit.MICROSECONDS))
@@ -58,7 +58,7 @@ public abstract class DefaultGenerator implements Runnable {
         String key = "x" ;
         String value = String.valueOf(RandomUtils.nextInt(0, 101) ) ;
 
-        msg.getItems().add(new Item(key, value, ts)) ;
+        msg.getData().add(new Item(key, value, ts)) ;
         return msg ;
     }
 }
