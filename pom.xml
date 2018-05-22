@@ -46,6 +46,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- akka -->
             <dependency>
                 <groupId>com.typesafe.akka</groupId>
                 <artifactId>akka-actor_${scala.version}</artifactId>
@@ -56,6 +57,8 @@
                 <artifactId>akka-slf4j_${scala.version}</artifactId>
                 <version>${akka.version}</version>
             </dependency>
+
+            <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
@@ -119,6 +122,8 @@
                 <version>${spring-test-dbunit.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <!-- sl4j and log4j -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -144,6 +149,8 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
             </dependency>
+
+            <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -175,17 +182,17 @@
                 <version>${gson.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>io.netty</groupId>-->
+                <!--<artifactId>netty-all</artifactId>-->
+                <!--<version>${netty.version}</version>-->
+            <!--</dependency>-->
 
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-handler</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>io.netty</groupId>-->
+                <!--<artifactId>netty-handler</artifactId>-->
+                <!--<version>${netty.version}</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>mysql</groupId>
