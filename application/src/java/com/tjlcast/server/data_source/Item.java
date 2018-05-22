@@ -9,11 +9,11 @@ import lombok.Data;
 public class Item {
     private String key;
     private String value;
-    private String date;
+    private String ts;
 
     public Item(JsonObject jobj) {
         this.key = jobj.get("key").getAsString();
         this.value = jobj.get("value").getAsString();
-        this.date =jobj.get("ts").getAsString();
+        this.ts =jobj.get("ts").getAsString();
     }
 }

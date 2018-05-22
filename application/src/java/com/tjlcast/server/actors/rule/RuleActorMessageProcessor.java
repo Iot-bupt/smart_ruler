@@ -121,7 +121,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         for(Filter filter:filters) {
             boolean tag = false;
 
-            for(Item item:msg.getItems())
+            for(Item item:msg.getData())
             {
                 tag = tag || nashorn.invokeFunction(filter.getJsCode(), msg.getDeviceId(), item.getKey(), Double.parseDouble(item.getValue()));
             }
