@@ -3,6 +3,7 @@ package com.tjlcast.server.controller;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tjlcast.server.data.GenerateData.DefaultGenerator;
+import com.tjlcast.server.data.GenerateData.Generator2Kafka;
 import com.tjlcast.server.data.GenerateData.Generator2Stdout;
 import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.ref.SoftReference;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -120,6 +123,17 @@ public class TestMiddlerMsgController extends BaseContoller {
         Generator2Stdout generator2Stdout = new Generator2Stdout(10);
         threadsPool.submit(generator2Stdout) ;
         SoftReference<DefaultGenerator> task = new SoftReference<DefaultGenerator>(generator2Stdout) ;
+        int no = taskNo.getAndIncrement();
+        tasks.put(no, task) ;
+    }
+
+    @ApiOperation(value = "测试：....")
+    @RequestMapping(value = "/sendKafka", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public void addKafkaTask() {
+        Generator2Kafka generator2Kafka = new Generator2Kafka(100, kafkaTemplate);
+        threadsPool.submit(generator2Kafka) ;
+        SoftReference<DefaultGenerator> task = new SoftReference<DefaultGenerator>(generator2Kafka) ;
         int no = taskNo.getAndIncrement();
         tasks.put(no, task) ;
     }
