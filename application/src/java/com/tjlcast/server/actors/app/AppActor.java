@@ -14,6 +14,7 @@ import com.tjlcast.server.actors.service.ContextAwareActor;
 import com.tjlcast.server.actors.service.ContextBasedCreator;
 import com.tjlcast.server.actors.service.DefaultActorService;
 import com.tjlcast.server.actors.tenant.TenantActor;
+import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import com.tjlcast.server.message.DeviceRecognitionMsg;
 import scala.concurrent.duration.Duration;
@@ -51,6 +52,11 @@ public class AppActor extends ContextAwareActor {
             Integer tenantId = mmessage.getTenantId();
             ActorRef orCreateTenantActor = getOrCreateTenantActor(tenantId);
             orCreateTenantActor.tell(message,ActorRef.noSender()) ;
+        } else if (message instanceof Rule){
+            Rule rule =(Rule)message;
+            getContext().stop(tenantActors.get(rule.getTenantId()));
+            Integer tenantId = rule.getTenantId();
+            this.tenantActors.remove(tenantId);
         }
     }
 

@@ -6,6 +6,7 @@ import com.tjlcast.server.data.Filter;
 import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.data.Rule2Filter;
 import com.tjlcast.server.data.Transform;
+import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.RuleCreation;
 import com.tjlcast.server.services.FilterService;
 import com.tjlcast.server.services.Rule2FilterService;
@@ -39,6 +40,9 @@ public class RuleController extends BaseContoller {
     @Autowired
     Rule2FilterService rule2FilterService;
 
+    @Autowired
+    DataSourceProcessor dataSourceProcessor ;
+
     //Post新增规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -64,6 +68,8 @@ public class RuleController extends BaseContoller {
             rule2FilterService.addARelation(rule2Filter);
 
         }
+
+        ifRuleDeleteOrChange(ruleCreation.getRule());
         return "OK" ;
     }
 
@@ -72,7 +78,11 @@ public class RuleController extends BaseContoller {
     @RequestMapping(value = "/{ruleId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activateRule(@PathVariable("ruleId") String ruleId) {
+        Rule rule = ruleService.findRuleById(Integer.valueOf(ruleId));
+
         ruleService.setRuleActive(Integer.valueOf(ruleId));
+
+        ifRuleDeleteOrChange(rule);
         return "Activate" ;
     }
 
@@ -81,7 +91,11 @@ public class RuleController extends BaseContoller {
     @RequestMapping(value = "/{ruleId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String suspendRule(@PathVariable("ruleId") String ruleId) {
+        Rule rule = ruleService.findRuleById(Integer.valueOf(ruleId));
+
         ruleService.setRuleSuspend(Integer.valueOf(ruleId));
+
+        ifRuleDeleteOrChange(rule);
         return "Suspend" ;
     }
 
@@ -90,8 +104,10 @@ public class RuleController extends BaseContoller {
     @RequestMapping(value = "/remove/{ruleId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeRule(@PathVariable("ruleId") String ruleId) {
+        Rule rule = ruleService.findRuleById(Integer.valueOf(ruleId));
         List<Filter> filters=filterService.findFilterByRuleId(Integer.valueOf(ruleId));
         Transform transform=transformService.getByRuleId(Integer.valueOf(ruleId));
+
         rule2FilterService.removeRelation(Integer.valueOf(ruleId));
 
         for(Filter filter:filters){
@@ -100,8 +116,10 @@ public class RuleController extends BaseContoller {
 
         ruleService.removeARule(Integer.valueOf(ruleId));
 
-
         transformService.deleteById(transform.getTransformId());
+
+        ifRuleDeleteOrChange(rule);
+
         return "OK" ;
     }
 
@@ -172,6 +190,10 @@ public class RuleController extends BaseContoller {
         }
 
         return "DeleteFault";
+    }
+
+    public void ifRuleDeleteOrChange(Rule rule){
+        dataSourceProcessor.process(rule);
     }
 
 }

@@ -6,6 +6,7 @@ import akka.actor.Props;
 import akka.actor.Terminated;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.app.AppActor;
+import com.tjlcast.server.data.Rule;
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,10 @@ public class DefaultActorService implements ActorService {
     @Override
     public void process(FromMsgMiddlerDeviceMsg msg) {
         appActor.tell(msg, ActorRef.noSender());
+    }
+
+    @Override
+    public void process(Rule rule){
+        appActor.tell(rule,ActorRef.noSender());
     }
 }

@@ -48,8 +48,8 @@ public abstract class DefaultGenerator implements Runnable {
 
     private FromMsgMiddlerDeviceMsg generateRandDeviceIdMsg(long time) {
         int devicesNum = 10;    // 10 个设备
-        int tenantId = 1;       // tenantId 为1
-        return new FromMsgMiddlerDeviceMsg.Builder(tenantId, RandomUtils.nextInt(0, devicesNum)+"")
+        int tenantId = 2;       // tenantId 为1
+        return new FromMsgMiddlerDeviceMsg.Builder(tenantId, "5")
                 .build();
     }
 
