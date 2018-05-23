@@ -54,9 +54,11 @@ public class AppActor extends ContextAwareActor {
             orCreateTenantActor.tell(message,ActorRef.noSender()) ;
         } else if (message instanceof Rule){
             Rule rule =(Rule)message;
-            getContext().stop(tenantActors.get(rule.getTenantId()));
-            Integer tenantId = rule.getTenantId();
-            this.tenantActors.remove(tenantId);
+            if(tenantActors.containsKey(rule.getTenantId())) {
+                getContext().stop(tenantActors.get(rule.getTenantId()));
+                Integer tenantId = rule.getTenantId();
+                this.tenantActors.remove(tenantId);
+            }
         }
     }
 
