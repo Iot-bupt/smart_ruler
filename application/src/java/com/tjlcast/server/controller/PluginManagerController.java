@@ -30,8 +30,7 @@ public class PluginManagerController {
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public List<Plugin> getAllPlugins() {
-        List<Plugin> pluginsInfo = pluginManagerService.getPluginsInfo();
-        return pluginsInfo ;
+        return pluginManagerService.getPluginsInfo();
     }
 
 
@@ -39,70 +38,20 @@ public class PluginManagerController {
     @RequestMapping(value = "/state/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getPluginState(@PathVariable("url") String url,@PathVariable("port") String port) throws IOException {
-        String requestAddr = "/api/plugin/state";
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("http://"+url+":"+port+requestAddr)
-                .build();
-
-        Response response = client.newCall(request).execute();
-
-        if (response.isSuccessful()) {
-            return response.body().string();
-        } else {
-            throw new IOException("Unexpected code " + response);
-        }
+        return pluginManagerService.getPluginState(url, port);
     }
 
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/active/{url}/{port}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activate(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
-        String requestAddr = "/api/plugin/active";
-
-        OkHttpClient client = new OkHttpClient();
-
-        okhttp3.RequestBody body = okhttp3.RequestBody.create(MediaType.parse("application/json; charset=utf-8")
-                , "");
-
-        Request request = new Request.Builder()
-                .url("http://"+url+":"+port+requestAddr)
-                .post(body)
-                .build();
-
-        Response response = client.newCall(request).execute();
-
-        if (response.isSuccessful()) {
-            return response.body().string();
-        } else {
-            throw new IOException("Unexpected code " + response);
-        }
+        return pluginManagerService.activate(url, port) ;
     }
 
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/suspend/{url}/{port}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String suspend(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
-        String requestAddr = "/api/plugin/suspend";
-
-        OkHttpClient client = new OkHttpClient();
-
-        okhttp3.RequestBody body = okhttp3.RequestBody.create(MediaType.parse("application/json; charset=utf-8")
-                , "");
-
-        Request request = new Request.Builder()
-                .url("http://"+url+":"+port+requestAddr)
-                .post(body)
-                .build();
-
-        Response response = client.newCall(request).execute();
-
-        if (response.isSuccessful()) {
-            return response.body().string();
-        } else {
-            throw new IOException("Unexpected code " + response);
-        }
+        return pluginManagerService.suspend(url, port) ;
     }
 }
