@@ -182,18 +182,7 @@
                 <version>${gson.version}</version>
             </dependency>
 
-            <!--<dependency>-->
-                <!--<groupId>io.netty</groupId>-->
-                <!--<artifactId>netty-all</artifactId>-->
-                <!--<version>${netty.version}</version>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>io.netty</groupId>-->
-                <!--<artifactId>netty-handler</artifactId>-->
-                <!--<version>${netty.version}</version>-->
-            <!--</dependency>-->
-
+            <!-- mysql -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
