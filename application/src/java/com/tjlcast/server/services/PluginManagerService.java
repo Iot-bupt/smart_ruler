@@ -86,7 +86,7 @@ public class PluginManagerService implements InitializingBean {
         }
     }
 
-    public String suspend(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
+    public String suspend(String url, String port) throws IOException {
         String requestAddr = "/api/plugin/suspend";
 
         OkHttpClient client = new OkHttpClient();
