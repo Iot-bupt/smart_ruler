@@ -118,8 +118,15 @@ public class PluginManagerService implements InitializingBean {
         }
     }
 
-    public String details(String url, String port) throws IOException {
-        String requestAddr = "/api/plugin/details";
+    /**
+     * 得到Plugin的所有metrics信息
+     * @param url
+     * @param port
+     * @return
+     * @throws IOException
+     */
+    public String metrics(String url, String port) throws IOException {
+        String requestAddr = "/api/plugin/metrics";
 
         OkHttpClient client = new OkHttpClient() ;
         Request request = new Request.Builder()
@@ -135,4 +142,27 @@ public class PluginManagerService implements InitializingBean {
         }
     }
 
+    /**
+     * 得到Plugin的所有的url地址
+     * @param url
+     * @param port
+     * @return
+     * @throws IOException
+     */
+    public String getAllUrls(String url, String port) throws IOException {
+        String requestAddr = "/api/plugin/allUrls";
+
+        OkHttpClient client = new OkHttpClient() ;
+        Request request = new Request.Builder()
+                .url("http://" + url + ":" + port + requestAddr)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (response.isSuccessful()) {
+            return response.body().string();
+        } else {
+            throw new IOException("Unexpected code " + response);
+        }
+    }
 }

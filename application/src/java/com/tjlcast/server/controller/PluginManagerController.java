@@ -52,14 +52,20 @@ public class PluginManagerController {
         return pluginManagerService.suspend(url, port) ;
     }
 
-    @RequestMapping(value = "/details/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/metrics/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String pluginDetails(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
-        return pluginManagerService.details(url, port) ;
+    public String pluginMetrics(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
+        return pluginManagerService.metrics(url, port) ;
+    }
+
+    @RequestMapping(value = "/allUrls/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String pluginRPCUrls(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
+        return pluginManagerService.getAllUrls(url, port) ;
     }
 
     @SubscribeMapping("/details/{url}/{port}")
     public String pluginDetailsSocket(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
-        return pluginManagerService.details(url, port) ;
+        return pluginManagerService.metrics(url, port) ;
     }
 }

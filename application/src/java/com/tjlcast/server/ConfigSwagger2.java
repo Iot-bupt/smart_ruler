@@ -34,7 +34,7 @@ public class ConfigSwagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Device Manager后台的RESTful APIs")
+                .title("Smart Ruler APIs")
                 .description("<hr / ><hr / >ヽ(ˋДˊ)ノ Day Day UP ！！！ ヽ(ˋ▽ˊ)ノ<hr / ><hr /> ヽ(ˋДˊ)ノ Day Day Wonderful ！！！ ヽ(ˋ▽ˊ)ノ <hr / ><hr / >")
                 .contact("bupt_815_iot")
                 .version("1.0")
