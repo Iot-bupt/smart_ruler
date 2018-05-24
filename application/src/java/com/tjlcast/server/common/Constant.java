@@ -5,10 +5,13 @@ package com.tjlcast.server.common;
  */
 public interface Constant {
 
-    final int ZK_SESSION_TIMEOUT = 5000 ;
+    // ===== zookeeper =====
+    int ZK_SESSION_TIMEOUT      = 5000 ;
+    int ZK_CONNECTION_TIMEOUT   = 10000;
+    String ZK_REGISTRY_PATH     = "/registry" ;
 
-    int ZK_CONNECTION_TIMEOUT = 10000;
-
-    final String ZK_REGISTRY_PATH = "/registry" ;
-
+    // ===== websocket =====
+    String SOCKET_METRIC_ENDPOINT   = "/socket" ;
+    String SOCKET_METRIC_APP        = "/plugins/metrics" ;
+    String SOCKET_METRIC_RESPONSE   = "/plugins/metrics/response" ;
 }

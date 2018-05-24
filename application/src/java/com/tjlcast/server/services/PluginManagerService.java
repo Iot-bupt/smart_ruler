@@ -26,16 +26,6 @@ public class PluginManagerService implements InitializingBean {
 
     PluginDiscovery pluginDiscovery ;
 
-    /*@DisconfFileItem(name = "zookeeper.address", associateField = "zkAddress")
-    public String getZkAddress() {
-        return zkAddress;
-    }
-
-    public void setHost(String zkAddress) {
-        this.zkAddress = zkAddress;
-    }*/
-
-
     public List<Plugin> getPluginsInfo() {
         return pluginDiscovery.discover() ;
     }
@@ -45,6 +35,13 @@ public class PluginManagerService implements InitializingBean {
         pluginDiscovery = new PluginDiscovery(zkAddress) ;
     }
 
+    /**
+     * 得到Plugin的状态
+     * @param url
+     * @param port
+     * @return
+     * @throws IOException
+     */
     public String getPluginState(String url, String port) throws IOException {
         String requestAddr = "/api/plugin/state";
 
@@ -63,7 +60,13 @@ public class PluginManagerService implements InitializingBean {
         }
     }
 
-
+    /**
+     * 激活Plugin
+     * @param url
+     * @param port
+     * @return
+     * @throws IOException
+     */
     public String activate(String url, String port) throws IOException {
         String requestAddr = "/api/plugin/active";
 
@@ -86,6 +89,13 @@ public class PluginManagerService implements InitializingBean {
         }
     }
 
+    /**
+     * 暂停Plugin
+     * @param url
+     * @param port
+     * @return
+     * @throws IOException
+     */
     public String suspend(String url, String port) throws IOException {
         String requestAddr = "/api/plugin/suspend";
 
@@ -107,4 +117,22 @@ public class PluginManagerService implements InitializingBean {
             throw new IOException("Unexpected code " + response);
         }
     }
+
+    public String details(String url, String port) throws IOException {
+        String requestAddr = "/api/plugin/details";
+
+        OkHttpClient client = new OkHttpClient() ;
+        Request request = new Request.Builder()
+                .url("http://" + url + ":" + port + requestAddr)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (response.isSuccessful()) {
+            return response.body().string();
+        } else {
+            throw new IOException("Unexpected code " + response);
+        }
+    }
+
 }
