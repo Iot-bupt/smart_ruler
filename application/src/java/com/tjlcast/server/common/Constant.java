@@ -14,4 +14,8 @@ public interface Constant {
     String SOCKET_METRIC_ENDPOINT   = "/socket" ;
     String SOCKET_METRIC_APP        = "/plugins/metrics" ;
     String SOCKET_METRIC_RESPONSE   = "/plugins/metrics/response" ;
+    /**
+     * client send      /plugins/metrics/details/      inf: {host}/{port} // return
+     * client subscribe /plugins/metrics/response/{host}/{port} //
+     */
 }

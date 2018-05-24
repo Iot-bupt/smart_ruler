@@ -1,13 +1,16 @@
 package com.tjlcast.server.controller;
 
+import com.tjlcast.server.common.Constant;
 import com.tjlcast.server.data.Plugin;
 import com.tjlcast.server.services.PluginManagerService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,7 +25,9 @@ public class PluginManagerController {
     @Autowired
     PluginManagerService pluginManagerService ;
 
-    //获取全部插件信息
+    @Resource
+    private SimpMessagingTemplate simpMessagingTemplate ;
+
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -38,12 +43,14 @@ public class PluginManagerController {
         return pluginManagerService.getPluginState(url, port);
     }
 
+
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/active/{url}/{port}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activate(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.activate(url, port) ;
     }
+
 
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/suspend/{url}/{port}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
@@ -52,11 +59,13 @@ public class PluginManagerController {
         return pluginManagerService.suspend(url, port) ;
     }
 
+
     @RequestMapping(value = "/metrics/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String pluginMetrics(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.metrics(url, port) ;
     }
+
 
     @RequestMapping(value = "/allUrls/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -64,8 +73,10 @@ public class PluginManagerController {
         return pluginManagerService.getAllUrls(url, port) ;
     }
 
-    @SubscribeMapping("/details/{url}/{port}")
-    public String pluginDetailsSocket(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
-        return pluginManagerService.metrics(url, port) ;
+
+    @MessageMapping("/details")
+    public void pluginDetailsSocket(String url) throws IOException {
+        String metrics = pluginManagerService.metrics(url);
+        simpMessagingTemplate.convertAndSend(Constant.SOCKET_METRIC_RESPONSE+"/"+url.replace(":", "/"), metrics);
     }
 }
