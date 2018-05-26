@@ -1,11 +1,16 @@
 package com.tjlcast.server.data.GenerateData;
 
 import com.tjlcast.server.data_source.FromMsgMiddlerDeviceMsg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by tangjialiang on 2018/5/22.
  */
 public class Generator2Stdout extends DefaultGenerator {
+
+    // 系统日志
+    private static final Logger LOGGER = LoggerFactory.getLogger(Generator2Stdout.class) ;
 
     public Generator2Stdout(int interTime) {
         super(interTime);
