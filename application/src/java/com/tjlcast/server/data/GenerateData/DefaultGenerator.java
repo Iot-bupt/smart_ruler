@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class DefaultGenerator implements Runnable {
     private final int interTime ;
     public Subscription subscribe;
+    public Observable<FromMsgMiddlerDeviceMsg> observe;
 
     DefaultGenerator(int interTime) {
         this.interTime = interTime ;
@@ -32,13 +33,18 @@ public abstract class DefaultGenerator implements Runnable {
 
     protected abstract void work(FromMsgMiddlerDeviceMsg msg) ;
 
+    public final void cancel() {
+        this.observe.unsubscribeOn(Schedulers.trampoline()) ;
+        this.subscribe.unsubscribe();
+    }
+
     private void consume() {
-        Subscription subscribe = observe()
+        this.observe = observe();
+        this.subscribe = observe
                 .subscribe(
                         this::work,
                         e -> System.out.println("Error emitting event " + e)
                 );
-        this.subscribe = subscribe ;
     }
 
     @Override

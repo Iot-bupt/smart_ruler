@@ -172,9 +172,6 @@ public class RuleController extends BaseContoller {
         return ruleCreations ;
     }
 
-
-
-
     //小心使用！！！！！！！！！！！！！
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/removeAll/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
@@ -192,6 +189,10 @@ public class RuleController extends BaseContoller {
         return "DeleteFault";
     }
 
+    /**
+     * 规则相关：用于更新Akka
+     * @param rule
+     */
     public void ifRuleDeleteOrChange(Rule rule){
         dataSourceProcessor.process(rule);
     }

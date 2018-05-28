@@ -144,7 +144,7 @@ public class TestMiddlerMsgController extends BaseContoller {
     public void removeSendTask(@PathVariable int taskNo) {
         tasks.computeIfPresent(taskNo, (k, v) -> {
             DefaultGenerator defaultGenerator = v.get();
-            if (defaultGenerator!=null) defaultGenerator.subscribe.unsubscribe(); ;
+            if (defaultGenerator!=null) defaultGenerator.cancel() ;
             return null ;
         }) ;
     }
