@@ -37,7 +37,7 @@ public class PluginManagerController {
 
 
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/state/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/state/{url}/{port}", method = RequestMethod.GET)
     @ResponseBody
     public String getPluginState(@PathVariable("url") String url,@PathVariable("port") String port) throws IOException {
         return pluginManagerService.getPluginState(url, port);

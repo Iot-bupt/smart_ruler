@@ -26,9 +26,11 @@ spring:
       buffer-memory: 33554432
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      bootstrap-servers: 39.104.186.210:9092
+      bootstrap-servers: 172.30.26.7:9092,172.30.24.9:9092,172.30.26.10:9092  # k8s
+      #bootstrap-servers: 39.104.186.210:9092  # 阿里云
     consumer:
-      bootstrap-servers: 39.104.186.210:9092
+      bootstrap-servers: 172.30.26.7:9092,172.30.24.9:9092,172.30.26.10:9092  # k8s
+      #bootstrap-servers: 39.104.186.210:9092  # 阿里云
       group-id: -1
       enable-auto-commit: true
       auto-commit-interval: 100
@@ -49,4 +51,5 @@ mybatis:
 
 
 zookeeper:
-  address: 39.104.186.210:2181
+#  address: 39.104.186.210:2181 # 阿里云 zk地址
+  address: 172.30.26.7:2181,172.30.24.9:2181,172.30.26.10:2181

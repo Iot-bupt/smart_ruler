@@ -7,12 +7,10 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -46,7 +44,7 @@ public class PluginManagerService implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         pluginDiscovery = new PluginDiscovery(zkAddress) ;
 
-        // update plugin's metrics info to webscoket
+        // update plugin's metrics （http from plugins） info to webscoket
         Observable
                 .interval(3, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.computation())
