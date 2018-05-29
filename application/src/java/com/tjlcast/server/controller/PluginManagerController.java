@@ -45,7 +45,7 @@ public class PluginManagerController {
 
 
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/active/{url}/{port}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/active/{url}/{port}", method = RequestMethod.POST)
     @ResponseBody
     public String activate(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.activate(url, port) ;
@@ -53,7 +53,7 @@ public class PluginManagerController {
 
 
     @ApiOperation(value = "todo ***")
-    @RequestMapping(value = "/suspend/{url}/{port}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/suspend/{url}/{port}", method = RequestMethod.POST)
     @ResponseBody
     public String suspend(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.suspend(url, port) ;
@@ -73,7 +73,7 @@ public class PluginManagerController {
         return pluginManagerService.getAllUrls(url, port) ;
     }
 
-
+    // socket
     @MessageMapping("/details")
     public void pluginDetailsSocket(String url) throws IOException {
         String metrics = pluginManagerService.metrics(url);
