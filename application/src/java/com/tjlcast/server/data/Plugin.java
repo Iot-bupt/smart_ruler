@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Plugin {
     String name;
-    String url;
+    String url;         // host + port
     String describe;
 
     public Plugin(String name,String url,String describe) {

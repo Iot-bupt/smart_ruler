@@ -11,7 +11,7 @@ import lombok.Data;
 public class Transform {
     private Integer transformId;
     private String name;
-    private String url ;
+    private String url ;            // host + port + addr
     private String method ;
     private String requestBody;
 
