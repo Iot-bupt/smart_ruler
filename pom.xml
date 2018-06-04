@@ -13,6 +13,7 @@
         <module>application</module>
         <module>default_plugin</module>
         <module>mail_plugin</module>
+        <module>restful_plugin</module>
     </modules>
 
 
