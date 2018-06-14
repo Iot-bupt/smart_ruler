@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/plugin")
+@RequestMapping("/api/v1/smartruler/plugin")
 public class PluginManagerController {
 
     @Autowired

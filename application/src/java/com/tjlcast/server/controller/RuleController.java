@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/api/rule")
+@RequestMapping("/api/v1/smartruler")
 @Slf4j
 public class RuleController extends BaseContoller {
     @Autowired
