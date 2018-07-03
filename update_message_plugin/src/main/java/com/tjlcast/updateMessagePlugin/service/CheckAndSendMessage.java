@@ -15,13 +15,13 @@ public class CheckAndSendMessage {
     public String checkAndSendMessage(UpdateMessage message){
         switch (message.getMessageType()){
             case "fromModule":
-                simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule", message);
+                simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule/"+message.getTenantId(), message);
                 break;
             case "fromWeb":
-                simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromWeb", message);
+                simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromWeb/"+message.getTenantId(), message);
                 break;
             case "exception":
-                simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/exception", message);
+                simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/exception/"+message.getTenantId(), message);
                 break;
         }
         return "success";

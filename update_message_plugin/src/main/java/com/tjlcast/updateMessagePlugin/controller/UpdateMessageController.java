@@ -112,21 +112,27 @@ public class UpdateMessageController {
     }
 
     @MessageMapping("/fromModule")
-    public void getFromModuleMsgBySocket(){
+    public void getFromModuleMsgBySocket(String jsonStr){
+        JsonObject jsonObject = (JsonObject)new JsonParser().parse(jsonStr);
+        Integer tenantId = jsonObject.get("tenantId").getAsInt();
+
         List<UpdateMessage> updateMessages = updateMessageService.getFromModuleMessage();
        /* for(UpdateMessage updateMessage:updateMessages){
             simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule", updateMessage);
         }*/
-        simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule", updateMessages);
+        simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule/"+tenantId, updateMessages);
     }
 
     @MessageMapping("/fromWeb")
-    public void getFromWebMsgBySocket(){
+    public void getFromWebMsgBySocket(String jsonStr){
+        JsonObject jsonObject = (JsonObject)new JsonParser().parse(jsonStr);
+        Integer tenantId = jsonObject.get("tenantId").getAsInt();
+
         List<UpdateMessage> updateMessages = updateMessageService.getFromWebMessage();
        /* for(UpdateMessage updateMessage:updateMessages){
             simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule", updateMessage);
         }*/
-        simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromWeb", updateMessages);
+        simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromWeb/"+tenantId, updateMessages);
     }
 
 }
