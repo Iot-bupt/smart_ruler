@@ -172,6 +172,25 @@ public class RuleController extends BaseContoller {
         return ruleCreations ;
     }
 
+    @ApiOperation(value = "todo ***")
+    @RequestMapping(value = "/ruleByTenant/{tenantId}/{textSearch}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public List<RuleCreation> getRuleByTenantIdAndText(@PathVariable("tenantId") String tenantId, @PathVariable("textSearch") String textSearch)
+    {
+        List<RuleCreation> ruleCreations = new LinkedList<>();
+        List<Rule> rules = ruleService.findRuleByTenantIdAndText(Integer.valueOf(tenantId),textSearch);
+
+        for(Rule rule:rules)
+        {
+            List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
+            Transform transform = transformService.getByRuleId(rule.getRuleId());
+            ruleCreations.add(new RuleCreation(rule,filters,transform));
+        }
+        return ruleCreations ;
+    }
+
+
+
     //小心使用！！！！！！！！！！！！！
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/removeAll/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})

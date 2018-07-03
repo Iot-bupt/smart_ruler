@@ -31,6 +31,8 @@ public class RuleService {
     {
         return ruleMapper.findRuleById(ruleId);
     }
+
+    public List<Rule> findRuleByTenantIdAndText(Integer tenantId, String textSearch){return  ruleMapper.findRuleByTenantIdAndText(tenantId,textSearch);}
     // add
     public int addRule(Rule rule) {
         int i =ruleMapper.addARule(rule) ;

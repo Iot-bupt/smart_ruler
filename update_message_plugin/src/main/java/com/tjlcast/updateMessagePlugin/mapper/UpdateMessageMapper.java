@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface UpdateMessageMapper {
-    @Insert("INSERT INTO update_message (message, messageType, ts) VALUES (#{message}, #{messageType}, #{ts})")
+    @Insert("INSERT INTO update_message (message, messageType, ts, tenantId) VALUES (#{message}, #{messageType}, #{ts}, #{tenantId})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int addAMessage(UpdateMessage updateMessage);
 

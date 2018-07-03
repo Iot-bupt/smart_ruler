@@ -17,6 +17,9 @@ public interface RuleMapper {
     @Select("select * from rule where tenantId=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")Integer tenantId);
 
+    @Select("select * from rule where tenantId=#{tenantId} and name like '%#{textSearch}%'")
+    List<Rule> findRuleByTenantIdAndText(@Param("tenantId")Integer tenantId, @Param("textSearch")String textSearch);
+
     @Select("select * from rule")
     List<Rule> getAllRule();
 

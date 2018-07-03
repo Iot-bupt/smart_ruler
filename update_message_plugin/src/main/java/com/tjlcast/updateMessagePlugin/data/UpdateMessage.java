@@ -11,18 +11,21 @@ public class UpdateMessage {
     private String message;
     private String messageType;
     private BigInteger ts;
+    private Integer tenantId;
 
-    public UpdateMessage(Integer id, String message, String messageType, Long ts)
+    public UpdateMessage(Integer id, String message, String messageType, Long ts, Integer tenantId)
     {
         this.id = id;
         this.message = message;
         this.messageType = messageType;
         this.ts = BigInteger.valueOf(ts);
+        this.tenantId = tenantId;
     }
 
     public UpdateMessage(JsonObject jsonObject){
         this.message = jsonObject.get("message").getAsString();
         this.messageType = jsonObject.get("messageType").getAsString();
         this.ts = BigInteger.valueOf(jsonObject.get("ts").getAsLong());
+        this.tenantId = jsonObject.get("tenantId").getAsInt();
     }
 }

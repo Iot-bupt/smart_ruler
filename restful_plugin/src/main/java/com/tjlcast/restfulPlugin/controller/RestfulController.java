@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.concurrent.Future;
 
-@RequestMapping("/api/plugin")
-@Plugin(pluginInfo = "RestfulPlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "use for sending HTTP Request")
+@RequestMapping("/api/v1/restfulplugin")
+@Plugin(pluginInfo = "RestfulPlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "restfulplugin:8600|use for sending HTTP Request")
 public class RestfulController {
     private final String controllerName = RestfulController.class.getName() ;
 

@@ -22,8 +22,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/plugin")
-@Plugin(pluginInfo = "UpdateMessagePlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "use for updating message")
+@RequestMapping("/api/v1/updatemessageplugin")
+@Plugin(pluginInfo = "UpdateMessagePlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "updatemessageplugin:8500|use for updating message")
 public class UpdateMessageController {
 
     private final String controllerName = UpdateMessageController.class.getName() ;
