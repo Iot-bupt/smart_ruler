@@ -17,6 +17,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -49,6 +51,9 @@ public class UpdateMessageController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate ;
 
+    @Autowired
+    HttpServletRequest request;
+
     @ConfirmActive
     @RequestMapping(value = "/updateMessage/insert", method = RequestMethod.POST)
     public String insertMessage(@RequestBody String msg){
@@ -64,40 +69,42 @@ public class UpdateMessageController {
         return "success";
     }
 
-    @RequestMapping(value = "/updateMessage/{messageType}", method = RequestMethod.GET)
-    public List<UpdateMessage> getUpdateMessageByType(@PathVariable("messageType") String msgType){
-        List<UpdateMessage> updateMessages = updateMessageService.getUpdateMessageByType(msgType);
+    @RequestMapping(value = "/updateMessage/{messageType}/{tenantId}", method = RequestMethod.GET)
+    public List<UpdateMessage> getUpdateMessageByType(@PathVariable("messageType") String msgType,
+                                                      @PathVariable("tenantId") Integer tenantId){
+        List<UpdateMessage> updateMessages = updateMessageService.getUpdateMessageByType(msgType, tenantId);
         return updateMessages;
     }
 
-    @RequestMapping(value = "/updateMessage/fromWeb", method = RequestMethod.GET)
-    public List<UpdateMessage> getFromWebMessage(){
-        List<UpdateMessage> updateMessages = updateMessageService.getFromWebMessage();
+    @RequestMapping(value = "/updateMessage/{tenantId}/fromWeb", method = RequestMethod.GET)
+    public List<UpdateMessage> getFromWebMessage(@PathVariable("tenantId") Integer tenantId){
+        List<UpdateMessage> updateMessages = updateMessageService.getFromWebMessage(tenantId);
         return updateMessages;
     }
 
-    @RequestMapping(value = "/updateMessage/fromModule", method = RequestMethod.GET)
-    public List<UpdateMessage> getFromModuleMessage(){
-        List<UpdateMessage> updateMessages = updateMessageService.getFromModuleMessage();
+    @RequestMapping(value = "/updateMessage/{tenant}/fromModule", method = RequestMethod.GET)
+    public List<UpdateMessage> getFromModuleMessage(@PathVariable("tenantId") Integer tenantId){
+        List<UpdateMessage> updateMessages = updateMessageService.getFromModuleMessage(tenantId);
         return updateMessages;
     }
 
-    @RequestMapping(value = "/allUpdateMessage", method = RequestMethod.GET)
-    public List<UpdateMessage> getAllMessage(){
-        List<UpdateMessage> updateMessages = updateMessageService.getAllMessage();
+    @RequestMapping(value = "/allUpdateMessage/{tenantId}", method = RequestMethod.GET)
+    public List<UpdateMessage> getAllMessage(@PathVariable("tenantId") Integer tenantId){
+        List<UpdateMessage> updateMessages = updateMessageService.getAllMessage(tenantId);
         return updateMessages;
     }
 
-    @RequestMapping(value = "/updateMessage/{id}", method = RequestMethod.GET)
-    public UpdateMessage getMessageById(@PathVariable("id") Integer id){
-        UpdateMessage updateMessage = updateMessageService.getMessageById(id);
+    @RequestMapping(value = "/updateMessage/{tenantId}/{id}", method = RequestMethod.GET)
+    public UpdateMessage getMessageById(@PathVariable("tenantId") Integer tenantId, @PathVariable("id") Integer id){
+        UpdateMessage updateMessage = updateMessageService.getMessageById(tenantId, id);
         return updateMessage;
     }
 
-    @RequestMapping(value = "/updateMessage/{startTs}/{endTs}", method = RequestMethod.GET)
-    public List<UpdateMessage> getTsMessage(@PathVariable("startTs") BigInteger startTs,
-                                              @PathVariable("endTs") BigInteger endTs){
-        List<UpdateMessage> updateMessages = updateMessageService.getTsMessage(startTs, endTs);
+    @RequestMapping(value = "/updateMessage/{tenantId}/{startTs}/{endTs}", method = RequestMethod.GET)
+    public List<UpdateMessage> getTsMessage(@PathVariable("tenantId") Integer tenantId,
+                                            @PathVariable("startTs") BigInteger startTs,
+                                            @PathVariable("endTs") BigInteger endTs){
+        List<UpdateMessage> updateMessages = updateMessageService.getTsMessage(tenantId, startTs, endTs);
         return updateMessages;
     }
 
@@ -116,7 +123,7 @@ public class UpdateMessageController {
         JsonObject jsonObject = (JsonObject)new JsonParser().parse(jsonStr);
         Integer tenantId = jsonObject.get("tenantId").getAsInt();
 
-        List<UpdateMessage> updateMessages = updateMessageService.getFromModuleMessage();
+        List<UpdateMessage> updateMessages = updateMessageService.getFromModuleMessage(tenantId);
        /* for(UpdateMessage updateMessage:updateMessages){
             simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule", updateMessage);
         }*/
@@ -128,11 +135,12 @@ public class UpdateMessageController {
         JsonObject jsonObject = (JsonObject)new JsonParser().parse(jsonStr);
         Integer tenantId = jsonObject.get("tenantId").getAsInt();
 
-        List<UpdateMessage> updateMessages = updateMessageService.getFromWebMessage();
+        List<UpdateMessage> updateMessages = updateMessageService.getFromWebMessage(tenantId);
        /* for(UpdateMessage updateMessage:updateMessages){
             simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromModule", updateMessage);
         }*/
         simpMessagingTemplate.convertAndSend(Constant.SOCKET_UPDATEMESSAGE_RESPONSE+"/fromWeb/"+tenantId, updateMessages);
     }
+
 
 }

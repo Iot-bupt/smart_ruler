@@ -31,28 +31,28 @@ public class UpdateMessageService extends DefaultService{
     }
 
     //@Cacheable(value = "messageCache", key = "#messageType")
-    public List<UpdateMessage> getUpdateMessageByType(String messageType){
-        return this.updateMessageMapper.getMessageByType(messageType);
+    public List<UpdateMessage> getUpdateMessageByType(String messageType, Integer tenantId){
+        return this.updateMessageMapper.getMessageByType(messageType, tenantId);
     }
 
-    public List<UpdateMessage> getAllMessage(){
-        return this.updateMessageMapper.getAllMessage();
+    public List<UpdateMessage> getAllMessage(Integer tenantId){
+        return this.updateMessageMapper.getAllMessage(tenantId);
     }
 
-    public List<UpdateMessage> getFromWebMessage(){
-        return this.updateMessageMapper.getFromWebMessage();
+    public List<UpdateMessage> getFromWebMessage(Integer tenantId){
+        return this.updateMessageMapper.getFromWebMessage(tenantId);
     }
 
-    public List<UpdateMessage> getFromModuleMessage(){
-        return this.updateMessageMapper.getFromModuleMessage();
+    public List<UpdateMessage> getFromModuleMessage(Integer tenantId){
+        return this.updateMessageMapper.getFromModuleMessage(tenantId);
     }
 
-    public List<UpdateMessage> getTsMessage(BigInteger startTs, BigInteger endTs){
-        return this.updateMessageMapper.getTsMessage(startTs, endTs);
+    public List<UpdateMessage> getTsMessage(Integer tenantId, BigInteger startTs, BigInteger endTs){
+        return this.updateMessageMapper.getTsMessage(tenantId, startTs, endTs);
     }
 
-    public UpdateMessage getMessageById(int id){
-        return this.updateMessageMapper.getMessageById(id);
+    public UpdateMessage getMessageById(Integer tenantId, int id){
+        return this.updateMessageMapper.getMessageById(tenantId, id);
     }
 
     public void removeAllMessage(){
