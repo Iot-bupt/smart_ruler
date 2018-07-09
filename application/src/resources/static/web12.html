@@ -7,16 +7,16 @@
 
     // 开启socket连接
     function connect() {
-        var socket = new SockJS('/socket');
+        var socket = new SockJS('http://39.104.189.84:30080/api/v1/smartruler/socket');
         stompClient = Stomp.over(socket);
         stompClient.connect(
             {}
             , function () {
             alert("Connected!") ;
             alert("begin to send") ;
-            stompClient.send("/plugins/metrics/details", {}, "10.108.227.216:8300") ;
+            stompClient.send("/plugins/metrics/details", {}, "mailplugin:8300") ;
 
-            var res = stompClient.subscribe("/plugins/metrics/response/10.108.227.216/8300", function(frame){
+            var res = stompClient.subscribe("/plugins/metrics/response/mailplugin/8300", function(frame){
                 alert(frame) ;
             }) ;
             alert(res) ;

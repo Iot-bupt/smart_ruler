@@ -27,7 +27,7 @@ public class CheckStateAspect {
             return point.proceed();
         }
         else{
-            return new AsyncResult<String>("邮件插件暂停中");
+            return new AsyncResult<String>("插件暂停中");
         }
 
     }

@@ -2,16 +2,10 @@ package com.tjlcast.server.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tjlcast.server.data.Filter;
-import com.tjlcast.server.data.Rule;
-import com.tjlcast.server.data.Rule2Filter;
-import com.tjlcast.server.data.Transform;
+import com.tjlcast.server.data.*;
 import com.tjlcast.server.data_source.DataSourceProcessor;
 import com.tjlcast.server.data_source.RuleCreation;
-import com.tjlcast.server.services.FilterService;
-import com.tjlcast.server.services.Rule2FilterService;
-import com.tjlcast.server.services.RuleService;
-import com.tjlcast.server.services.TransformService;
+import com.tjlcast.server.services.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +35,9 @@ public class RuleController extends BaseContoller {
     Rule2FilterService rule2FilterService;
 
     @Autowired
+    Rule2TransformService rule2TransformService;
+
+    @Autowired
     DataSourceProcessor dataSourceProcessor ;
 
     //Post新增规则
@@ -50,10 +47,6 @@ public class RuleController extends BaseContoller {
     public String addRule(@RequestBody String jsonStr) {
         JsonObject jsonObj = (JsonObject)new JsonParser().parse(jsonStr);
         RuleCreation ruleCreation = new RuleCreation(jsonObj);
-
-        transformService.addTransform(ruleCreation.getTransform());
-        Integer transformId =ruleCreation.getTransform().getTransformId();
-        ruleCreation.getRule().setTransformId(transformId);
 
         ruleService.addRule(ruleCreation.getRule());
         Integer ruleId = ruleCreation.getRule().getRuleId();
@@ -66,6 +59,16 @@ public class RuleController extends BaseContoller {
 
             Rule2Filter rule2Filter=new Rule2Filter(ruleId,filterId);
             rule2FilterService.addARelation(rule2Filter);
+
+        }
+
+        for(Transform transform:ruleCreation.getTransforms())
+        {
+            transformService.addTransform(transform);
+            Integer transformId =transform.getTransformId();
+
+            Rule2Transform rule2Transform=new Rule2Transform(ruleId,transformId);
+            rule2TransformService.addARelation(rule2Transform);
 
         }
 
@@ -106,17 +109,20 @@ public class RuleController extends BaseContoller {
     public String removeRule(@PathVariable("ruleId") String ruleId) {
         Rule rule = ruleService.findRuleById(Integer.valueOf(ruleId));
         List<Filter> filters=filterService.findFilterByRuleId(Integer.valueOf(ruleId));
-        Transform transform=transformService.getByRuleId(Integer.valueOf(ruleId));
+        List<Transform> transforms=transformService.getByRuleId(Integer.valueOf(ruleId));
 
         rule2FilterService.removeRelation(Integer.valueOf(ruleId));
+        rule2TransformService.removeRelation(Integer.valueOf(ruleId));
 
         for(Filter filter:filters){
             filterService.removeAFilter(filter.getFilterId());
         }
 
-        ruleService.removeARule(Integer.valueOf(ruleId));
+        for(Transform transform:transforms){
+            transformService.deleteById(transform.getTransformId());
+        }
 
-        transformService.deleteById(transform.getTransformId());
+        ruleService.removeARule(Integer.valueOf(ruleId));
 
         ifRuleDeleteOrChange(rule);
 
@@ -133,7 +139,7 @@ public class RuleController extends BaseContoller {
         for(Rule rule:allRule)
         {
             List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
-            Transform transform = transformService.getByRuleId(rule.getRuleId());
+            List<Transform> transform = transformService.getByRuleId(rule.getRuleId());
             ruleCreations.add(new RuleCreation(rule,filters,transform));
         }
         return ruleCreations ;
@@ -149,12 +155,12 @@ public class RuleController extends BaseContoller {
         Rule rule = ruleService.findRuleById(Integer.valueOf(ruleId));
 
         List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
-        Transform transform = transformService.getByRuleId(rule.getRuleId());
-        RuleCreation ruleCreation=new RuleCreation(rule, filters, transform);
+        List<Transform> transforms = transformService.getByRuleId(rule.getRuleId());
+        RuleCreation ruleCreation=new RuleCreation(rule, filters, transforms);
         return ruleCreation;
     }
 
-    //按规则获取规则
+    //按租户获取规则
     @ApiOperation(value = "todo ***")
     @RequestMapping(value = "/ruleByTenant/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -166,8 +172,8 @@ public class RuleController extends BaseContoller {
         for(Rule rule:rules)
         {
             List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
-            Transform transform = transformService.getByRuleId(rule.getRuleId());
-            ruleCreations.add(new RuleCreation(rule,filters,transform));
+            List<Transform> transforms = transformService.getByRuleId(rule.getRuleId());
+            ruleCreations.add(new RuleCreation(rule,filters,transforms));
         }
         return ruleCreations ;
     }
@@ -183,8 +189,8 @@ public class RuleController extends BaseContoller {
         for(Rule rule:rules)
         {
             List<Filter> filters = filterService.findFilterByRuleId(rule.getRuleId());
-            Transform transform = transformService.getByRuleId(rule.getRuleId());
-            ruleCreations.add(new RuleCreation(rule,filters,transform));
+            List<Transform> transforms = transformService.getByRuleId(rule.getRuleId());
+            ruleCreations.add(new RuleCreation(rule,filters,transforms));
         }
         return ruleCreations ;
     }

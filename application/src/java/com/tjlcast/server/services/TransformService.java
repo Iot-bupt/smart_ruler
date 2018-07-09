@@ -30,9 +30,9 @@ public class TransformService{
         return byId ;
     }
 
-    public Transform getByRuleId(Integer id)
+    public List<Transform> getByRuleId(Integer id)
     {
-        Transform byRuleId = transformMapper.findByRuleId(id);
+        List<Transform> byRuleId = transformMapper.findByRuleId(id);
         return  byRuleId;
     }
 

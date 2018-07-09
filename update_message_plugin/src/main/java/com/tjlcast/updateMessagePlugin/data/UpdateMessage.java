@@ -25,7 +25,11 @@ public class UpdateMessage {
     public UpdateMessage(JsonObject jsonObject){
         this.message = jsonObject.get("message").getAsString();
         this.messageType = jsonObject.get("messageType").getAsString();
-        this.ts = BigInteger.valueOf(jsonObject.get("ts").getAsLong());
+        try {
+            this.ts = BigInteger.valueOf(jsonObject.get("ts").getAsLong());
+        }catch (Exception e){
+            this.ts = BigInteger.valueOf(System.currentTimeMillis());
+        }
         this.tenantId = jsonObject.get("tenantId").getAsInt();
     }
 }

@@ -17,8 +17,8 @@ public interface TransformMapper{
     @Select("select * from transform where transformId = #{transformId}")
     Transform findById(Integer transformId) ;
 
-    @Select("select transform.transformId, transform.name, transform.url, transform.method, transform.requestBody from transform transform left join rule rule on transform.transformId = rule.transformId where rule.ruleId = #{ruleId}")
-    Transform findByRuleId(Integer ruleId) ;
+    @Select("select transform.* from rule2TransForm_Relation, transform where rule2TransForm_Relation.ruleId=#{ruleId} and transform.transformId=rule2TransForm_Relation.transformId")
+    List<Transform> findByRuleId(Integer ruleId) ;
 
     @Delete("delete from transform")
     void deleteAll();

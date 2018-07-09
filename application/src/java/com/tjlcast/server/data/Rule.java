@@ -13,16 +13,14 @@ public class Rule {
     private String additional_info;
     private String name;       // 该rule的信息
     private String state;
-    private Integer transformId;
     //private List<UUID> filters;     // 该rule配置的filter
 
-    public Rule(Integer ruleId, Integer tenantId, String additional_info, String name, String state, Integer transformId){
+    public Rule(Integer ruleId, Integer tenantId, String additional_info, String name, String state){
         this.ruleId=ruleId;
         this.tenantId=tenantId;
         this.additional_info=additional_info;
         this.name=name;
         this.state=state;
-        this.transformId=transformId;
     }
 
     public Rule(JsonObject jsonObject){

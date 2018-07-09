@@ -18,7 +18,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -82,7 +81,7 @@ public class UpdateMessageController {
         return updateMessages;
     }
 
-    @RequestMapping(value = "/updateMessage/{tenant}/fromModule", method = RequestMethod.GET)
+    @RequestMapping(value = "/updateMessage/{tenantId}/fromModule", method = RequestMethod.GET)
     public List<UpdateMessage> getFromModuleMessage(@PathVariable("tenantId") Integer tenantId){
         List<UpdateMessage> updateMessages = updateMessageService.getFromModuleMessage(tenantId);
         return updateMessages;

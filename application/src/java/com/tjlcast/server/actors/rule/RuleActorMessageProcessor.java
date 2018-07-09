@@ -27,7 +27,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
     private final Integer ruleId;
     private final List<Filter> filters;
-    private final Transform transform;
+    private final List<Transform> transforms;
 
 
     public RuleActorMessageProcessor(ActorSystemContext systemContext, LoggingAdapter logger, Integer ruleId) {
@@ -35,7 +35,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         this.ruleId = ruleId;
         this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
         this.nashorn=new Nashorn();
-        this.transform=systemContext.getTransformService().getByRuleId(ruleId);
+        this.transforms=systemContext.getTransformService().getByRuleId(ruleId);
 
         initAttributes();
     }
@@ -45,7 +45,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         this.ruleId = ruleId;
         this.filters=systemContext.getFilterService().findFilterByRuleId(ruleId);
         this.nashorn=new Nashorn();
-        this.transform=systemContext.getTransformService().getByRuleId(ruleId);
+        this.transforms=systemContext.getTransformService().getByRuleId(ruleId);
 
         initAttributes();
     }
@@ -108,8 +108,11 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
         if(nashornProcess(filters,msg))
         {
-            if(transform.getMethod().equals("POST"))
-                sendHTTPPOSTRequest(msg);
+            for (Transform transform : transforms) {
+                if (transform.getMethod().equals("POST")){
+                    sendHTTPPOSTRequest(transform, msg);
+                }
+            }
         }
 
     }
@@ -133,7 +136,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         return result;
     }
 
-    public String sendHTTPPOSTRequest(FromMsgMiddlerDeviceMsg msg)
+    public String sendHTTPPOSTRequest(Transform transform, FromMsgMiddlerDeviceMsg msg)
     {
 
         OkHttpClient client = new OkHttpClient();

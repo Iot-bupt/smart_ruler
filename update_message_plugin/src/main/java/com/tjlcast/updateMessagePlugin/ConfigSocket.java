@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 public class ConfigSocket extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(Constant.SOCKET_UPDATEMESSAGE_ENDPOINT).withSockJS();
+        registry.addEndpoint(Constant.SOCKET_UPDATEMESSAGE_ENDPOINT).setAllowedOrigins("*").withSockJS();
     }
 
     @Override

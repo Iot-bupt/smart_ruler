@@ -11,7 +11,7 @@ public interface Constant {
     String ZK_REGISTRY_PATH     = "/registry" ;
 
     // ===== websocket =====
-    String SOCKET_METRIC_ENDPOINT   = "/socket" ;
+    String SOCKET_METRIC_ENDPOINT   = "/api/v1/smartruler/socket" ;
     String SOCKET_METRIC_APP        = "/plugins/metrics" ;
     String SOCKET_METRIC_RESPONSE   = "/plugins/metrics/response" ;
     /**

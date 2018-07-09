@@ -17,13 +17,13 @@ public interface RuleMapper {
     @Select("select * from rule where tenantId=#{tenantId}")
     List<Rule> findRuleByTenantId(@Param("tenantId")Integer tenantId);
 
-    @Select("select * from rule where tenantId=#{tenantId} and name like '%#{textSearch}%'")
+    @Select("select * from rule where tenantId=#{tenantId} and name like CONCAT('%',#{textSearch},'%')")
     List<Rule> findRuleByTenantIdAndText(@Param("tenantId")Integer tenantId, @Param("textSearch")String textSearch);
 
     @Select("select * from rule")
     List<Rule> getAllRule();
 
-    @Insert("INSERT INTO rule(tenantId, additional_info, name, state, transformId) VALUES(#{tenantId}, #{additional_info}, #{name}, #{state}, #{transformId})")
+    @Insert("INSERT INTO rule(tenantId, additional_info, name, state) VALUES(#{tenantId}, #{additional_info}, #{name}, #{state})")
     @Options(useGeneratedKeys = true, keyProperty = "ruleId", keyColumn = "ruleId")
     int addARule(Rule rule);
 

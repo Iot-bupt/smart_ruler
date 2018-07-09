@@ -13,20 +13,22 @@ import java.util.List;
 public class RuleCreation {
     private final Rule rule;
     private final List<Filter> filters = new LinkedList<>();
-    private final Transform transform;
+    private final List<Transform> transforms = new LinkedList<>();
 
     public RuleCreation(JsonObject jsonObject) {
         this.rule=new Rule(jsonObject.getAsJsonObject("rule"));
-        jsonObject.getAsJsonArray("filters").forEach(x -> filters.add(new Filter((JsonObject) x)));;
-        this.transform=new Transform(jsonObject.getAsJsonObject("transform"));
+        jsonObject.getAsJsonArray("filters").forEach(x -> filters.add(new Filter((JsonObject) x)));
+        jsonObject.getAsJsonArray("transforms").forEach(x -> transforms.add(new Transform((JsonObject) x)));
     }
 
-    public RuleCreation(Rule rule, List<Filter> filters, Transform transform){
+    public RuleCreation(Rule rule, List<Filter> filters, List<Transform> transforms){
         this.rule=rule;
         for(Filter filter:filters) {
             this.filters.add(filter);
         }
-        this.transform=transform;
+        for(Transform transform:transforms) {
+            this.transforms.add(transform);
+        }
     }
 
 }
