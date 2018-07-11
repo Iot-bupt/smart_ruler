@@ -34,12 +34,13 @@ public class MailService extends DefaultService {
         JavaMailSenderImpl sender =initJavaMailSender();
         try {
             sendTextWithHtml(sender, to, subject, text);
-            return "发送成功";
+            System.out.println("发送成功");
         }catch (Exception e){
-            return "发送失败";
+            System.out.println(e);
         }
         finally{
             context.stop();
+            return "";
         }
     }
 
@@ -83,7 +84,7 @@ public class MailService extends DefaultService {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
         javaMailSender.setJavaMailProperties(properties);
-        javaMailSender.setHost("smtp.163.com");
+        javaMailSender.setHost("220.181.12.16");
         javaMailSender.setUsername("liyou_test@163.com");   // 根据自己的情况,设置username
         javaMailSender.setPassword("liyounagi0929");        // 根据自己的情况, 设置password
         javaMailSender.setPort(465);

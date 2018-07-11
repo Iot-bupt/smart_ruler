@@ -25,6 +25,7 @@
             <list>
                 <!--<value>classpath*:actor-system.conf</value>-->
                 <value>classpath*:application.yml</value>
+                <value>classpath*:logback.xml</value>
                 <!--<value>classpath*:kafka.yaml</value>-->
            <!--     <value>classpath*:simple.properties</value>-->
             </list>
