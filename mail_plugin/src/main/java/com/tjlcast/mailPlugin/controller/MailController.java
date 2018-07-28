@@ -27,7 +27,7 @@ import java.util.concurrent.Future;
 @RequestMapping("/api/v1/mailplugin")
 @Plugin(pluginInfo = "MailPlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "mailplugin:8300|use for sending Email")
 public class MailController {
-    private final String controllerName = MailController.class.getName() ;
+    private final String controllerName = MailController.class.getSimpleName() ;
 
     private MetricRegistry metrics ;
     private Counter pendingJobs ;

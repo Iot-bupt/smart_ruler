@@ -27,7 +27,7 @@ import java.util.List;
 @Plugin(pluginInfo = "UpdateMessagePlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "updatemessageplugin:8500|use for updating message")
 public class UpdateMessageController {
 
-    private final String controllerName = UpdateMessageController.class.getName() ;
+    private final String controllerName = UpdateMessageController.class.getSimpleName() ;
 
     private MetricRegistry metrics ;
     private Counter pendingJobs ;

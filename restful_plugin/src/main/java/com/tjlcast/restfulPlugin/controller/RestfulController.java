@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 @RequestMapping("/api/v1/restfulplugin")
 @Plugin(pluginInfo = "RestfulPlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "restfulplugin:8600|use for sending HTTP Request")
 public class RestfulController {
-    private final String controllerName = RestfulController.class.getName() ;
+    private final String controllerName = RestfulController.class.getSimpleName() ;
 
     private MetricRegistry metrics ;
     private Counter pendingJobs ;
