@@ -54,3 +54,13 @@ zookeeper:
   address: zookeeper-service:2181 # 阿里云 zk地址
 #  address: 172.30.26.7:2181,172.30.24.9:2181,172.30.26.10:2181
 #  address: zookeeper
+
+account:
+  host: account
+  port: 8400
+  check_url: http://account:8400/api/v1/account/check_token
+  login_url: http://account:8400/api/v1/account/login
+  client_id: client_2
+  client_secret: 123456
+  internal_client_id: client_1
+  internal_client_secret: 123456
