@@ -15,6 +15,7 @@
         <module>mail_plugin</module>
         <module>restful_plugin</module>
         <module>update_message_plugin</module>
+        <module>wechat_plugin</module>
     </modules>
 
 
@@ -208,11 +209,11 @@
                 <artifactId>spring-kafka</artifactId>
                 <version>1.1.1.RELEASE</version>
             </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring-boot}</version>
-            </dependency>
+                <dependency>
+                    <groupId>org.mybatis.spring.boot</groupId>
+                    <artifactId>mybatis-spring-boot-starter</artifactId>
+                    <version>${mybatis-spring-boot}</version>
+                </dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
