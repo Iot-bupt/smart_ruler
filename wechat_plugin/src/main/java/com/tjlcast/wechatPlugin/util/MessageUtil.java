@@ -1,5 +1,6 @@
 package com.tjlcast.wechatPlugin.util;
 
+import com.tjlcast.basePlugin.service.DefaultService;
 import com.tjlcast.wechatPlugin.domain.*;
 import com.thoughtworks.xstream.XStream;
 import org.apache.http.ParseException;
@@ -7,13 +8,20 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class MessageUtil {
+@Service
+public class MessageUtil extends DefaultService{
+    @Override
+    public Object service(Object[] data) {
+        return null;
+    }
+
     /**
      *  返回消息类型 （text/image/news/link/location/event)
      */
@@ -146,7 +154,7 @@ public class MessageUtil {
      * @param number 设备编号
      * @param status 设备状态
      */
-    public static void pushTemplateNews(String touser,String name,String number,String status) {
+    public void pushTemplateNews(String touser,String name,String number,String status) {
         TreeMap<String,TreeMap<String,String>> params = new TreeMap<String,TreeMap<String,String>>();
         params.put("title",TemplateNews.item("您平台的设备出现异常状况！",TEXT_COLOR));
         params.put("name",TemplateNews.item(name,TEXT_COLOR));
@@ -175,7 +183,6 @@ public class MessageUtil {
             e.printStackTrace();
         }
     }
-
 }
 
 //    /*

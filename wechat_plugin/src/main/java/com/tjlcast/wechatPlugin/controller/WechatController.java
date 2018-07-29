@@ -1,17 +1,38 @@
 package com.tjlcast.wechatPlugin.controller;
 
+import com.codahale.metrics.Counter;
+import com.codahale.metrics.MetricRegistry;
+import com.tjlcast.basePlugin.aop.ConfirmActive;
+import com.tjlcast.basePlugin.common.ZKConstant;
+import com.tjlcast.basePlugin.pluginManager.Plugin;
 import com.tjlcast.wechatPlugin.domain.Device;
 import com.tjlcast.wechatPlugin.service.impl.CoreServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tjlcast.wechatPlugin.util.weixinUtil;
 import com.tjlcast.wechatPlugin.util.MessageUtil;
 
 @RestController
-        @RequestMapping("api/v1/wechatplugin/")
+@RequestMapping("api/v1/wechatplugin/")
+@Plugin(pluginInfo = "WechatPlugin", registerAddr = ZKConstant.ZK_ADDRESS, detailInfo = "wechatplugin:8900|use for sending Wechat message")
 public class WechatController {
+
+    private final String controllerName = WechatController.class.getSimpleName() ;
+
+    private MetricRegistry metrics ;
+    private Counter pendingJobs ;
+
+    @Autowired
+    public void setMetrics(MetricRegistry metrics) {
+        this.metrics = metrics ;
+        this.pendingJobs = this.metrics.counter(controllerName) ;
+    }
+
+    @Autowired
+    private MessageUtil messageUtil;
 
     private CoreServiceImpl wechatService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -66,6 +87,7 @@ public class WechatController {
      * 接收平台消息
      * @param deviceMsg
      */
+    @ConfirmActive
     @RequestMapping(value="send", method = RequestMethod.POST )
     public void wechatController(@RequestBody String deviceMsg){
 
@@ -74,8 +96,11 @@ public class WechatController {
 
         // 解析平台传过来的json数据,建立设备对象
          Device device = wechatService.processRequest(deviceMsg);
+
+        pendingJobs.inc();
+
         // 发送模板消息
-        MessageUtil.pushTemplateNews(device.getOpenid(), device.getDevice(), device.getNumber(), device.getWarningMsg());
+        messageUtil.pushTemplateNews(device.getOpenid(), device.getDevice(), device.getNumber(), device.getWarningMsg());
     }
 }
 
