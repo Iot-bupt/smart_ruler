@@ -60,7 +60,7 @@ public abstract class DefaultGenerator implements Runnable {
     }
 
     private FromMsgMiddlerDeviceMsg occasionallyKV(FromMsgMiddlerDeviceMsg msg) {
-        String ts = String.valueOf(System.currentTimeMillis()/1000L) ;
+        Long ts = System.currentTimeMillis()/1000L;
         String key = "x" ;
         String value = String.valueOf(RandomUtils.nextInt(0, 101) ) ;
 

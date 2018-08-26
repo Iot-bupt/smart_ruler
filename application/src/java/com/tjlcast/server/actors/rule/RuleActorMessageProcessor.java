@@ -126,11 +126,12 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
             for(Item item:msg.getData())
             {
-                tag = tag || nashorn.invokeFunction(filter.getJsCode(), msg.getDeviceId(), item.getKey(), Double.parseDouble(item.getValue()));
+                tag = tag || nashorn.invokeFunction(filter.getJsCode(), msg.getDeviceId(), msg.getName(), msg.getManufacture(), msg.getDeviceType(), msg.getModel(), item.getTs(), item.getKey(), Double.parseDouble(item.getValue()));
             }
             result=result && tag;
-            if(!result)
+            if(!result) {
                 break;
+            }
         }
 
         return result;
@@ -140,8 +141,17 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
     {
 
         OkHttpClient client = new OkHttpClient();
+        String checkRequestbody = transform.getRequestBody();
+        if(checkRequestbody.contains("{name}")){
+            checkRequestbody = checkRequestbody.replaceAll("\\{name\\}", msg.getName());
+        }
+
+        if(checkRequestbody.contains("{deviceId}")){
+            checkRequestbody = checkRequestbody.replaceAll("\\{deviceId\\}", msg.getDeviceId());
+        }
+
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
-                , transform.getRequestBody());
+                , checkRequestbody);
 
         System.out.println(requestBody);
 
