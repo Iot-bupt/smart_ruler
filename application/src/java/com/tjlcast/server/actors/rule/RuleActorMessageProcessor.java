@@ -150,6 +150,10 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
             checkRequestbody = checkRequestbody.replaceAll("\\{deviceId\\}", msg.getDeviceId());
         }
 
+        if(checkRequestbody.contains("{tenantId}")){
+            checkRequestbody = checkRequestbody.replaceAll("\\{tenantId\\}", msg.getTenantId().toString());
+        }
+
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
                 , checkRequestbody);
 

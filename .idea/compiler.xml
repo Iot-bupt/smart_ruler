@@ -10,6 +10,7 @@
         <module name="default_plugin" />
         <module name="mail_plugin" />
         <module name="restful_plugin" />
+        <module name="sms_plugin" />
         <module name="update_message_plugin" />
         <module name="wechat_plugin" />
       </profile>
@@ -21,6 +22,7 @@
       <module name="mail_plugin" target="1.8" />
       <module name="restful_plugin" target="1.8" />
       <module name="smart_ruler" target="1.8" />
+      <module name="sms_plugin" target="1.8" />
       <module name="update_message_plugin" target="1.8" />
       <module name="wechat_plugin" target="1.8" />
     </bytecodeTargetLevel>

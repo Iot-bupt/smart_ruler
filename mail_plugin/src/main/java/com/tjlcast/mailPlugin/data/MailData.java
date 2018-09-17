@@ -11,10 +11,10 @@ import java.util.List;
 
 @Data
 public class MailData implements Serializable{
-    private final JsonObject jsonObj ;
-    private final String subject ;
-    private final String text ;
-    private final List<String> to=new ArrayList<>();
+    private JsonObject jsonObj ;
+    private String subject ;
+    private String text ;
+    private List<String> to=new ArrayList<>();
 
     public MailData(JsonObject jsonObj) {
         this.jsonObj = jsonObj ;
