@@ -25,6 +25,11 @@ public class Transform {
     }
 
     public Transform(JsonObject jsonObject){
+        try {
+            this.transformId = jsonObject.get("transformId").getAsInt();
+        } catch(NullPointerException e){
+
+        }
         this.name=jsonObject.get("name").getAsString();
         this.url=jsonObject.get("url").getAsString();
         this.method=jsonObject.get("method").getAsString();

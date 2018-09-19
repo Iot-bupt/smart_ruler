@@ -27,4 +27,8 @@ public class Rule2TransformService {
     public void removeAllRelation(){
         rule2TransformMapper.removeAllRelation();
     }
+
+    public void removeRelationByTransform(Integer transformId){
+        rule2TransformMapper.removeRelationByTransform(transformId);
+    }
 }

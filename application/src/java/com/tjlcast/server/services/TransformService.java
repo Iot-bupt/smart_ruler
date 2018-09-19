@@ -51,6 +51,10 @@ public class TransformService{
         return i ;
     }
 
+    public Integer updataTransform (Transform transform){
+        return transformMapper.updataTransform(transform);
+    }
+
     //public boolean addTransform(List<Transform> tfs) {
     //    transformMapper.save((Iterable<? extends Transform>) tfs.iterator()) ;
     //    return true ;

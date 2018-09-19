@@ -28,4 +28,6 @@ public class Rule2FilterService {
         rule2FilterMapper.removeAllRelation();
     }
 
+    public void removeRelationByFilter(Integer filterId){ rule2FilterMapper.removeRelationByFilter(filterId);}
+
 }

@@ -204,7 +204,96 @@ public class RuleController extends BaseContoller {
         return ruleCreations ;
     }
 
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/updateRule", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateRule(@RequestBody String ruleStr){
+        JsonObject jsonObj = (JsonObject)new JsonParser().parse(ruleStr);
+        Rule rule = new Rule(jsonObj);
 
+        Integer i = ruleService.updateRule(rule);
+        return i==1?"ok":"error";
+    }
+
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/updateFilter", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateFilter(@RequestBody String filterStr){
+        JsonObject jsonObj = (JsonObject)new JsonParser().parse(filterStr);
+        Filter filter = new Filter(jsonObj);
+
+        Integer i = filterService.updateFilter(filter);
+        return i==1?"ok":"error";
+    }
+
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/updateTransform", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateTransform(@RequestBody String transformStr){
+        JsonObject jsonObj = (JsonObject)new JsonParser().parse(transformStr);
+        Transform transform = new Transform(jsonObj);
+
+        Integer i = transformService.updataTransform(transform);
+        return i==1?"ok":"error";
+    }
+
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/deleteFilter/{filterId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteFilter(@PathVariable("filterId") String filterId){
+        rule2FilterService.removeRelationByFilter(Integer.valueOf(filterId));
+        boolean b = filterService.removeAFilter(Integer.valueOf(filterId));
+        return b?"ok":"error";
+    }
+
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/deleteTransform/{transformId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteTransform(@PathVariable("transformId") String transformId){
+        rule2TransformService.removeRelationByTransform(Integer.valueOf(transformId));
+        boolean b = transformService.deleteById(Integer.valueOf(transformId));
+
+        return b?"ok":"error";
+    }
+
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/addFilter/{ruleId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Filter addFilter(@PathVariable("ruleId") String ruleId,@RequestBody String filterStr){
+        JsonObject jsonObj = (JsonObject)new JsonParser().parse(filterStr);
+        Filter filter = new Filter(jsonObj);
+
+        filterService.addFilter(filter);
+        Integer filterId =filter.getFilterId();
+
+        Rule2Filter rule2Filter=new Rule2Filter(Integer.valueOf(ruleId),filterId);
+        rule2FilterService.addARelation(rule2Filter);
+
+        return filter;
+    }
+
+    @ApiOperation(value = "todo ***")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/addTransform/{ruleId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Transform addTransform(@PathVariable("ruleId") String ruleId,@RequestBody String transformStr){
+        JsonObject jsonObj = (JsonObject)new JsonParser().parse(transformStr);
+        Transform transform = new Transform(jsonObj);
+
+        transformService.addTransform(transform);
+        Integer transformId =transform.getTransformId();
+
+        Rule2Transform rule2Transform=new Rule2Transform(Integer.valueOf(ruleId),transformId);
+        rule2TransformService.addARelation(rule2Transform);
+
+        return transform;
+    }
 
     //小心使用！！！！！！！！！！！！！
     @ApiOperation(value = "todo ***")

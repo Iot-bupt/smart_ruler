@@ -64,4 +64,8 @@ public class FilterService {
         Filter aFilter = filterMapper.getAFilter(filterId);
         return aFilter ;
     }
+
+    public Integer updateFilter(Filter filter){
+        return filterMapper.updateFilter(filter);
+    }
 }

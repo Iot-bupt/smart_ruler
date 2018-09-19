@@ -20,9 +20,14 @@ public interface FilterMapper {
     @Options(useGeneratedKeys = true, keyProperty = "filterId", keyColumn = "filterId")
     int AddAFilter(Filter filter);
 
+    @Update("UPDATE filter SET type = #{type}, name = #{name}, jsCode = #{jsCode} WHERE filterId = #{filterId}")
+    Integer updateFilter(Filter filter);
+
     @Delete("DELETE FROM filter WHERE filterId=#{filterId}")
     void removeFilter(@Param("filterId")Integer filterId) ;
 
     @Delete("DELETE FROM filter")
     void removeAllFilter() ;
+
+
 }

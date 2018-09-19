@@ -38,4 +38,7 @@ public interface RuleMapper {
 
     @Update("UPDATE rule SET state = 'SUSPEND' WHERE ruleId = #{ruleId}")
     void setRuleSuspend(Integer ruleId);
+
+    @Update("UPDATE rule SET name = #{name}, additional_info = #{additional_info} WHERE ruleId = #{ruleId}")
+    Integer updateRule(Rule rule);
 }

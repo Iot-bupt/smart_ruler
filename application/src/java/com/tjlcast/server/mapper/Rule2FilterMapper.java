@@ -13,6 +13,9 @@ public interface Rule2FilterMapper {
     @Delete("DELETE FROM rule2Filter_Relation where ruleId = #{ruleId}")
     void removeRelation(Integer ruleId);
 
+    @Delete("DELETE FROM rule2Filter_Relation where filterId = #{filterId}")
+    void removeRelationByFilter(Integer filterId);
+
     @Delete("DELETE FROM rule2Filter_Relation")
     void removeAllRelation();
 }

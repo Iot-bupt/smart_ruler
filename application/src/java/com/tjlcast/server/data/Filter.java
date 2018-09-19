@@ -22,6 +22,11 @@ public class Filter {
 
     public Filter(JsonObject jsonObject)
     {
+        try {
+            this.filterId = jsonObject.get("filterId").getAsInt();
+        } catch(NullPointerException e){
+
+        }
         this.type=jsonObject.get("type").getAsString();
         this.name=jsonObject.get("name").getAsString();
         this.jsCode=jsonObject.get("jsCode").getAsString();

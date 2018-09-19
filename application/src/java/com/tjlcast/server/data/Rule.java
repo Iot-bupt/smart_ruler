@@ -24,6 +24,11 @@ public class Rule {
     }
 
     public Rule(JsonObject jsonObject){
+        try {
+            this.ruleId = jsonObject.get("ruleId").getAsInt();
+        } catch(NullPointerException e){
+
+        }
         this.tenantId=Integer.valueOf(jsonObject.get("tenantId").getAsString());
         this.additional_info=jsonObject.get("additional_info").getAsString();
         this.name=jsonObject.get("name").getAsString();

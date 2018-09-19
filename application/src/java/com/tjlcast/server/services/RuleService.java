@@ -71,4 +71,8 @@ public class RuleService {
         return true;
     }
 
+    public Integer updateRule(Rule rule){
+        return ruleMapper.updateRule(rule);
+    }
+
 }

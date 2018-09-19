@@ -15,4 +15,7 @@ public interface Rule2TransformMapper {
 
     @Delete("DELETE FROM rule2TransForm_Relation")
     void removeAllRelation();
+
+    @Delete("DELETE FROM rule2TransForm_Relation where transformId = #{transformId}")
+    void removeRelationByTransform(Integer transformId);
 }

@@ -30,5 +30,8 @@ public interface TransformMapper{
     @Options(useGeneratedKeys = true, keyProperty = "transformId", keyColumn = "transformId")
     int save(Transform transform);
 
+    @Update("UPDATE transform SET name = #{name}, url = #{url}, method = #{method}, requestBody = #{requestBody} WHERE transformId = #{transformId}")
+    Integer updataTransform (Transform transform);
+
 
 }
