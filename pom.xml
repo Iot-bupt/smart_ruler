@@ -17,6 +17,7 @@
         <module>update_message_plugin</module>
         <module>wechat_plugin</module>
         <module>sms_plugin</module>
+        <module>sql_plugin</module>
     </modules>
 
 

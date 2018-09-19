@@ -21,7 +21,7 @@ mybatis:
     mutiple-result-sets-enabled: true
     default-executor-type: reuse
     default-statement-type: 25000
-  type-aliases-package:  com.bupt.wechatplugin.domain   # 指向实体包路径
+  type-aliases-package:  com.tjlcast.wechatplugin.domain   # 指向实体包路径
   mapperLocations:  # classpath路径下的maapper包,扫描 xml 文件
 
 
