@@ -43,7 +43,7 @@ public class RuleController extends BaseContoller {
 
     //Post新增规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'addRule')")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String addRule(@RequestBody String jsonStr) {
@@ -80,7 +80,7 @@ public class RuleController extends BaseContoller {
 
     //激活规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'activateRule')")
     @RequestMapping(value = "/{ruleId}/activate", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activateRule(@PathVariable("ruleId") String ruleId) {
@@ -94,7 +94,7 @@ public class RuleController extends BaseContoller {
 
     //暂停规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'suspendRule')")
     @RequestMapping(value = "/{ruleId}/suspend", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String suspendRule(@PathVariable("ruleId") String ruleId) {
@@ -108,7 +108,7 @@ public class RuleController extends BaseContoller {
 
     //Delete 删除规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'removeRule')")
     @RequestMapping(value = "/remove/{ruleId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeRule(@PathVariable("ruleId") String ruleId) {
@@ -136,7 +136,7 @@ public class RuleController extends BaseContoller {
 
     //GET 获取全部规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('SYS_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getRules')")
     @RequestMapping(value = "/rules", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public List<RuleCreation> getRules() {
@@ -153,7 +153,7 @@ public class RuleController extends BaseContoller {
 
     //按规则ID获取规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getARule')")
     @RequestMapping(value = "/rule/{ruleId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public RuleCreation getARule(@PathVariable("ruleId") String ruleId)
@@ -169,7 +169,7 @@ public class RuleController extends BaseContoller {
 
     //按租户获取规则
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getRuleByTenantId')")
     @RequestMapping(value = "/ruleByTenant/{tenantId}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public List<RuleCreation> getRuleByTenantId(@PathVariable("tenantId") String tenantId)
@@ -187,7 +187,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getRuleByTenantIdAndText')")
     @RequestMapping(value = "/ruleByTenant/{tenantId}/{textSearch}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public List<RuleCreation> getRuleByTenantIdAndText(@PathVariable("tenantId") String tenantId, @PathVariable("textSearch") String textSearch)
@@ -205,7 +205,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'updateRule')")
     @RequestMapping(value = "/updateRule", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String updateRule(@RequestBody String ruleStr){
@@ -217,7 +217,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'updateFilter')")
     @RequestMapping(value = "/updateFilter", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String updateFilter(@RequestBody String filterStr){
@@ -229,7 +229,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'updateTransform')")
     @RequestMapping(value = "/updateTransform", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String updateTransform(@RequestBody String transformStr){
@@ -241,7 +241,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'deleteFilter')")
     @RequestMapping(value = "/deleteFilter/{filterId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String deleteFilter(@PathVariable("filterId") String filterId){
@@ -251,7 +251,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'removeTransform')")
     @RequestMapping(value = "/deleteTransform/{transformId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String deleteTransform(@PathVariable("transformId") String transformId){
@@ -262,7 +262,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'addFilter')")
     @RequestMapping(value = "/addFilter/{ruleId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Filter addFilter(@PathVariable("ruleId") String ruleId,@RequestBody String filterStr){
@@ -279,7 +279,7 @@ public class RuleController extends BaseContoller {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'addATransform')")
     @RequestMapping(value = "/addTransform/{ruleId}", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Transform addTransform(@PathVariable("ruleId") String ruleId,@RequestBody String transformStr){
@@ -297,7 +297,7 @@ public class RuleController extends BaseContoller {
 
     //小心使用！！！！！！！！！！！！！
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('SYS_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'removeALLRule')")
     @RequestMapping(value = "/removeAll/{pass}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeALLRule(@PathVariable("pass") String pass){

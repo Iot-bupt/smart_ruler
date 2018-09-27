@@ -19,7 +19,7 @@ public class TransformController {
     TransformService transformService;
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('SYS_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'removeTransform')")
     @RequestMapping(value = "/remove/{transformId}", method = RequestMethod.DELETE, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String removeTransform(@PathVariable("transformId") String transformId){
@@ -29,7 +29,7 @@ public class TransformController {
     }
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('SYS_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'addATransform')")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String addATransform(@RequestBody String jsonStr){

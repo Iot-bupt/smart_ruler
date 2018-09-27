@@ -30,7 +30,7 @@ public class PluginManagerController {
     private SimpMessagingTemplate simpMessagingTemplate ;
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR isAuthenticated()")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getAllPlugins')")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public List<Plugin> getAllPlugins() {
@@ -39,7 +39,7 @@ public class PluginManagerController {
 
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR isAuthenticated()")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getPluginState')")
     @RequestMapping(value = "/state/{url}/{port}", method = RequestMethod.GET)
     @ResponseBody
     public String getPluginState(@PathVariable("url") String url,@PathVariable("port") String port) throws IOException {
@@ -48,30 +48,30 @@ public class PluginManagerController {
 
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('SYS_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'activatePlugin')")
     @RequestMapping(value = "/active/{url}/{port}", method = RequestMethod.POST)
     @ResponseBody
-    public String activate(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
+    public String activatePlugin(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.activate(url, port) ;
     }
 
 
     @ApiOperation(value = "todo ***")
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('SYS_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'suspendPlugin')")
     @RequestMapping(value = "/suspend/{url}/{port}", method = RequestMethod.POST)
     @ResponseBody
-    public String suspend(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
+    public String suspendPlugin(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.suspend(url, port) ;
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR isAuthenticated()")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'pluginMetrics')")
     @RequestMapping(value = "/metrics/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String pluginMetrics(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
         return pluginManagerService.metrics(url, port) ;
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR isAuthenticated()")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'pluginRPCUrls')")
     @RequestMapping(value = "/allUrls/{url}/{port}", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String pluginRPCUrls(@PathVariable("url") String url, @PathVariable("port") String port) throws IOException {
