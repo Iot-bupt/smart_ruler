@@ -12,6 +12,7 @@
         <module name="restful_plugin" />
         <module name="sms_plugin" />
         <module name="sql_plugin" />
+        <module name="sqlPlugin" />
         <module name="update_message_plugin" />
         <module name="wechat_plugin" />
       </profile>
@@ -25,6 +26,7 @@
       <module name="smart_ruler" target="1.8" />
       <module name="sms_plugin" target="1.8" />
       <module name="sql_plugin" target="1.8" />
+      <module name="sqlPlugin" target="1.8" />
       <module name="update_message_plugin" target="1.8" />
       <module name="wechat_plugin" target="1.8" />
     </bytecodeTargetLevel>

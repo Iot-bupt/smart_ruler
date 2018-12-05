@@ -2,6 +2,8 @@ package com.tjlcast.server.actors.rule;
 
 
 import akka.event.LoggingAdapter;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tjlcast.server.actors.ActorSystemContext;
 import com.tjlcast.server.actors.shared.AbstractContextAwareMsgProcessor;
 import com.tjlcast.server.data.Filter;
@@ -134,6 +136,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
             }
         }
 
+        System.out.println(msg.getName()+":"+result);
         return result;
     }
 
@@ -142,6 +145,24 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
 
         OkHttpClient client = new OkHttpClient();
         String checkRequestbody = transform.getRequestBody();
+
+        JsonObject requestbody = new JsonObject();
+        if(checkRequestbody.contains("telemetry_key")){
+            System.out.println("enter sql post plugin");
+            JsonObject sqlBody = (JsonObject) new JsonParser().parse(checkRequestbody);
+            String key = sqlBody.get("telemetry_key").getAsString();
+            requestbody.addProperty("rule_id",ruleId);
+            requestbody.addProperty("device_id", msg.getDeviceId());
+            for(Item item:msg.getData()){
+                if(item.getKey().equals(key)){
+                    requestbody.addProperty("telemetry_key",key);
+                    requestbody.addProperty("ts",item.getTs());
+                    requestbody.addProperty("str_v",item.getValue());
+                }
+            }
+            checkRequestbody = requestbody.toString();
+        }
+
         if(checkRequestbody.contains("{name}")){
             checkRequestbody = checkRequestbody.replaceAll("\\{name\\}", msg.getName());
         }
@@ -153,6 +174,7 @@ public class RuleActorMessageProcessor extends AbstractContextAwareMsgProcessor 
         if(checkRequestbody.contains("{tenantId}")){
             checkRequestbody = checkRequestbody.replaceAll("\\{tenantId\\}", msg.getTenantId().toString());
         }
+
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
                 , checkRequestbody);

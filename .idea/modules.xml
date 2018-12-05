@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/restful_plugin/restful_plugin.iml" filepath="$PROJECT_DIR$/restful_plugin/restful_plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/smart_ruler.iml" filepath="$PROJECT_DIR$/.idea/smart_ruler.iml" />
       <module fileurl="file://$PROJECT_DIR$/sms_plugin/sms_plugin.iml" filepath="$PROJECT_DIR$/sms_plugin/sms_plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_plugin/sqlPlugin.iml" filepath="$PROJECT_DIR$/sql_plugin/sqlPlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/sql_plugin/sql_plugin.iml" filepath="$PROJECT_DIR$/sql_plugin/sql_plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/update_message_plugin/update_message_plugin.iml" filepath="$PROJECT_DIR$/update_message_plugin/update_message_plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/wechat_plugin/wechat_plugin.iml" filepath="$PROJECT_DIR$/wechat_plugin/wechat_plugin.iml" />
